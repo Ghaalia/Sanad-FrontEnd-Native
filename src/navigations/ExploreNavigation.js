@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 const ExploreNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="explore">
       <Stack.Screen name="explore" component={Explore} />
       <Stack.Screen name="eventDetails" component={EventDetails} />
       <Stack.Screen name="Description" component={Description} />

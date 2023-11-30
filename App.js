@@ -8,8 +8,8 @@ export default function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar style="dark" />
       <NavigationContainer>
-        <SafeAreaView></SafeAreaView>
         <MainNavigation />
       </NavigationContainer>
     </QueryClientProvider>
