@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
@@ -14,18 +14,7 @@ const OtpVerification = () => {
         flex: 1,
       }}
     >
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 15,
-        }}
-      >
-        OTP Verification
-      </Text>
+      <Text style={styles.header}>OTP Verification</Text>
       <View
         style={{
           width: 300,
@@ -62,41 +51,17 @@ const OtpVerification = () => {
         <TextInput
           placeholder=""
           placeholderTextColor="white"
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 69,
-            height: 60,
-            borderRadius: 8,
-            padding: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.boxinput}
         />
         <TextInput
           placeholder=""
           placeholderTextColor="white"
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 69,
-            height: 60,
-            borderRadius: 8,
-            padding: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.boxinput}
         />
         <TextInput
           placeholder=""
           placeholderTextColor="white"
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 69,
-            height: 60,
-            borderRadius: 8,
-            padding: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.boxinput}
         />
         <TextInput
           placeholder=""
@@ -128,12 +93,7 @@ const OtpVerification = () => {
           onPress={() => {
             navigation.navigate("createnewpassword");
           }}
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
+          style={styles.button}
         >
           Verify
         </Text>
@@ -155,3 +115,29 @@ const OtpVerification = () => {
 };
 
 export default OtpVerification;
+
+const styles = StyleSheet.create({
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+  header: {
+    fontFamily: "Urbanist_600SemiBold",
+    fontWeight: "bold",
+    color: "white",
+    justifyContent: "center",
+    fontSize: 24,
+    marginBottom: 15,
+  },
+  boxinput: {
+    backgroundColor: "gray",
+    color: "white",
+    width: 69,
+    height: 60,
+    borderRadius: 8,
+    paddingHorizontal: 20,
+    fontFamily: "Urbanist_400Regular",
+  },
+});

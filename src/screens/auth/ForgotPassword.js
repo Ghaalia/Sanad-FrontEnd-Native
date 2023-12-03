@@ -14,18 +14,7 @@ const ForgotPassword = () => {
         flex: 1,
       }}
     >
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 15,
-        }}
-      >
-        Forgot Password ?
-      </Text>
+      <Text style={styles.header}>Forgot Password ?</Text>
       <View
         style={{
           justifyContent: "center",
@@ -91,12 +80,7 @@ const ForgotPassword = () => {
           onPress={() => {
             navigation.navigate("otpvarification");
           }}
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
+          style={styles.button}
         >
           Send Code
         </Text>
@@ -119,4 +103,19 @@ const ForgotPassword = () => {
 
 export default ForgotPassword;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+  header: {
+    fontFamily: "Urbanist_600SemiBold",
+    fontWeight: "bold",
+    color: "white",
+    justifyContent: "center",
+    fontSize: 24,
+    marginBottom: 15,
+  },
+});

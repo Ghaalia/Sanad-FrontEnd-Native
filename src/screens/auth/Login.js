@@ -23,18 +23,7 @@ const Login = () => {
         flex: 1,
       }}
     >
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 30,
-        }}
-      >
-        Welcome!
-      </Text>
+      <Text style={styles.header}>Welcome!</Text>
       <View
         style={{
           height: 208,
@@ -50,15 +39,7 @@ const Login = () => {
           onChangeText={(text) => {
             setEmail(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
         <TextInput
           placeholder=" Enter your password"
@@ -67,15 +48,7 @@ const Login = () => {
           onChangeText={(text) => {
             setPassword(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
         <Text
           style={{
@@ -102,16 +75,7 @@ const Login = () => {
           borderRadius: 30,
         }}
       >
-        <Text
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
-        >
-          Login
-        </Text>
+        <Text style={styles.button}>Login</Text>
       </View>
 
       <View
@@ -151,4 +115,28 @@ const Login = () => {
 
 export default Login;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textinput: {
+    backgroundColor: "gray",
+    color: "white",
+    width: 339,
+    height: 50,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    fontFamily: "Urbanist_400Regular",
+  },
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+  header: {
+    fontFamily: "Urbanist_600SemiBold",
+    fontWeight: "bold",
+    color: "white",
+    justifyContent: "center",
+    fontSize: 24,
+    marginBottom: 15,
+  },
+});

@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { TextInput } from "react-native-gesture-handler";
+import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 const CreateNewPassword = () => {
   const navigation = useNavigation();
+  const [password, setPassword] = useState("");
   return (
     <View
       style={{
@@ -14,23 +15,11 @@ const CreateNewPassword = () => {
         flex: 1,
       }}
     >
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 15,
-        }}
-      >
-        Create New Password
-      </Text>
+      <Text style={styles.header}>Create New Password</Text>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-
           width: 300,
           height: 48,
           paddingLeft: 5,
@@ -60,9 +49,10 @@ const CreateNewPassword = () => {
       >
         <TextInput
           placeholder="New password"
+          secureTextEntry
           placeholderTextColor="white"
           onChangeText={(text) => {
-            setEmail(text);
+            setPassword(text);
           }}
           style={{
             backgroundColor: "gray",
@@ -77,8 +67,9 @@ const CreateNewPassword = () => {
         <TextInput
           placeholder="Confirm password"
           placeholderTextColor="white"
+          secureTextEntry
           onChangeText={(text) => {
-            setEmail(text);
+            setPassword(text);
           }}
           style={{
             backgroundColor: "gray",
@@ -108,30 +99,30 @@ const CreateNewPassword = () => {
           onPress={() => {
             navigation.navigate("passwordchanged");
           }}
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
+          style={styles.button}
         >
           Reset Password
         </Text>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
-        {/* <View style={{ flexDirection: "row" }}>
-          <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
-        </View> */}
       </View>
     </View>
   );
 };
 
 export default CreateNewPassword;
+
+const styles = StyleSheet.create({
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+  header: {
+    fontFamily: "Urbanist_600SemiBold",
+    fontWeight: "bold",
+    color: "white",
+    justifyContent: "center",
+    fontSize: 24,
+    marginBottom: 15,
+  },
+});

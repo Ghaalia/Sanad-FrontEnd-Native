@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
@@ -14,18 +14,7 @@ const PasswordChanged = () => {
         flex: 1,
       }}
     >
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 15,
-        }}
-      >
-        Password Changed !
-      </Text>
+      <Text style={styles.header}>Password Changed !</Text>
       <View
         style={{
           justifyContent: "center",
@@ -65,12 +54,7 @@ const PasswordChanged = () => {
           onPress={() => {
             navigation.navigate("login");
           }}
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
+          style={styles.button}
         >
           Back to Login
         </Text>
@@ -92,3 +76,20 @@ const PasswordChanged = () => {
 };
 
 export default PasswordChanged;
+
+const styles = StyleSheet.create({
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+  header: {
+    fontFamily: "Urbanist_600SemiBold",
+    fontWeight: "bold",
+    color: "white",
+    justifyContent: "center",
+    fontSize: 24,
+    marginBottom: 15,
+  },
+});

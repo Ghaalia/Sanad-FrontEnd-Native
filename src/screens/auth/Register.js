@@ -51,15 +51,7 @@ const Register = () => {
           onChangeText={(text) => {
             setPhone_number(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
         <TextInput
           placeholder="Email"
@@ -67,15 +59,7 @@ const Register = () => {
           onChangeText={(text) => {
             setEmail(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
         <TextInput
           placeholder="Password"
@@ -84,32 +68,16 @@ const Register = () => {
           onChangeText={(text) => {
             setPassword(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
         <TextInput
-          placeholder=" confirm Password"
+          placeholder="Confirm Password"
           placeholderTextColor="white"
           secureTextEntry
           onChangeText={(text) => {
             setPassword(text);
           }}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-            width: 339,
-            height: 50,
-            borderRadius: 30,
-            paddingHorizontal: 20,
-            fontFamily: "Urbanist_400Regular",
-          }}
+          style={styles.textinput}
         />
       </View>
 
@@ -129,32 +97,31 @@ const Register = () => {
           onPress={() => {
             navigation.navigate("login");
           }}
-          style={{
-            fontSize: 15,
-            fontWeight: "bold",
-            color: "white",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
+          style={styles.button}
         >
           Agree and Register
         </Text>
       </View>
-
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      > */}
-      {/* <View style={{ flexDirection: "row" }}>
-        <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
-      </View> */}
-      {/* </View> */}
     </View>
   );
 };
 
 export default Register;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textinput: {
+    backgroundColor: "gray",
+    color: "white",
+    width: 339,
+    height: 50,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    fontFamily: "Urbanist_400Regular",
+  },
+  button: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "white",
+    fontFamily: "Urbanist_400SemiBold",
+  },
+});
