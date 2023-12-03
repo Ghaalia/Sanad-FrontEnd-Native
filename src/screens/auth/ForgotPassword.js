@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +21,24 @@ const ForgotPassword = () => {
         flex: 1,
       }}
     >
+      <Pressable
+        onPress={() => {
+          navigation.navigate("login");
+        }}
+        style={{
+          justifyContent: "center",
+          alignContent: "center",
+          padding: 30,
+        }}
+      >
+        <Image
+          style={{
+            width: 41,
+            height: 41,
+          }}
+          source={require("../../../assets/back.png")}
+        />
+      </Pressable>
       <Text style={styles.header}>Forgot Password ?</Text>
       <View
         style={{
@@ -66,7 +91,10 @@ const ForgotPassword = () => {
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("otpvarification");
+        }}
         style={{
           backgroundColor: "#F5574E",
           width: 339,
@@ -76,15 +104,8 @@ const ForgotPassword = () => {
           borderRadius: 30,
         }}
       >
-        <Text
-          onPress={() => {
-            navigation.navigate("otpvarification");
-          }}
-          style={styles.button}
-        >
-          Send Code
-        </Text>
-      </View>
+        <Text style={styles.button}>Send Code</Text>
+      </TouchableOpacity>
 
       <View
         style={{

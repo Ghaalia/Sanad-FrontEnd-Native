@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
@@ -23,6 +23,24 @@ const Login = () => {
         flex: 1,
       }}
     >
+      <Pressable
+        onPress={() => {
+          navigation.navigate("login");
+        }}
+        style={{
+          justifyContent: "center",
+          alignContent: "center",
+          padding: 30,
+        }}
+      >
+        <Image
+          style={{
+            width: 41,
+            height: 41,
+          }}
+          source={require("../../../assets/back.png")}
+        />
+      </Pressable>
       <Text style={styles.header}>Welcome!</Text>
       <View
         style={{

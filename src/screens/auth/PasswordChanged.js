@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
+import { Image } from "react-native";
 
 const PasswordChanged = () => {
   const navigation = useNavigation();
@@ -14,12 +15,14 @@ const PasswordChanged = () => {
         flex: 1,
       }}
     >
+      <View style={{ padding: 20 }}>
+        <Image source={require("../../../assets/Sticker.png")} />
+      </View>
       <Text style={styles.header}>Password Changed !</Text>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-
           width: 300,
           height: 48,
           paddingLeft: 5,
@@ -37,9 +40,10 @@ const PasswordChanged = () => {
           Your new password has been changed successfully
         </Text>
       </View>
-
-      {/* <Text> {JSON.stringify(error)}</Text> */}
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("login");
+        }}
         style={{
           backgroundColor: "#F5574E",
           width: 339,
@@ -50,27 +54,8 @@ const PasswordChanged = () => {
           marginTop: 30,
         }}
       >
-        <Text
-          onPress={() => {
-            navigation.navigate("login");
-          }}
-          style={styles.button}
-        >
-          Back to Login
-        </Text>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
-        {/* <View style={{ flexDirection: "row" }}>
-        <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
-      </View> */}
-      </View>
+        <Text style={styles.button}>Back to Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -91,5 +76,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 24,
     marginBottom: 15,
+    marginTop: 15,
   },
 });

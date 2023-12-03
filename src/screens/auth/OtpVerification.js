@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-gesture-handler";
@@ -14,6 +21,24 @@ const OtpVerification = () => {
         flex: 1,
       }}
     >
+      <Pressable
+        onPress={() => {
+          navigation.navigate("forgotpassword");
+        }}
+        style={{
+          justifyContent: "center",
+          alignContent: "center",
+          padding: 30,
+        }}
+      >
+        <Image
+          style={{
+            width: 41,
+            height: 41,
+          }}
+          source={require("../../../assets/back.png")}
+        />
+      </Pressable>
       <Text style={styles.header}>OTP Verification</Text>
       <View
         style={{
@@ -79,7 +104,10 @@ const OtpVerification = () => {
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("createnewpassword");
+        }}
         style={{
           backgroundColor: "#F5574E",
           width: 339,
@@ -89,27 +117,8 @@ const OtpVerification = () => {
           borderRadius: 30,
         }}
       >
-        <Text
-          onPress={() => {
-            navigation.navigate("createnewpassword");
-          }}
-          style={styles.button}
-        >
-          Verify
-        </Text>
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
-        {/* <View style={{ flexDirection: "row" }}>
-          <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
-        </View> */}
-      </View>
+        <Text style={styles.button}>Verify</Text>
+      </TouchableOpacity>
     </View>
   );
 };

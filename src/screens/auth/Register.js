@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, useAnimatedValue } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useAnimatedValue,
+} from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
@@ -24,6 +31,24 @@ const Register = () => {
         flex: 1,
       }}
     >
+      <Pressable
+        onPress={() => {
+          navigation.navigate("login");
+        }}
+        style={{
+          justifyContent: "center",
+          alignContent: "center",
+          padding: 30,
+        }}
+      >
+        <Image
+          style={{
+            width: 41,
+            height: 41,
+          }}
+          source={require("../../../assets/back.png")}
+        />
+      </Pressable>
       <Text
         style={{
           fontFamily: "Urbanist_600SemiBold",
@@ -82,7 +107,10 @@ const Register = () => {
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
-      <View
+      <Pressable
+        onPress={() => {
+          navigation.navigate("login");
+        }}
         style={{
           backgroundColor: "#F5574E",
           width: 339,
@@ -93,15 +121,8 @@ const Register = () => {
           marginTop: 70,
         }}
       >
-        <Text
-          onPress={() => {
-            navigation.navigate("login");
-          }}
-          style={styles.button}
-        >
-          Agree and Register
-        </Text>
-      </View>
+        <Text style={styles.button}>Agree and Register</Text>
+      </Pressable>
     </View>
   );
 };
