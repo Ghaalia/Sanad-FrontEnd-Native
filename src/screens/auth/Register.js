@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../../apis/auth";
 import { TextInput } from "react-native-gesture-handler";
+import styles from "./../../css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -23,126 +24,82 @@ const Register = () => {
     mutationFn: () => register(email, phone_number, password),
   });
   return (
-    <View
-      style={{
-        backgroundColor: "#1B1931",
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1,
-      }}
-    >
-      <Pressable
-        onPress={() => {
-          navigation.navigate("login");
-        }}
-        style={{
-          justifyContent: "center",
-          alignContent: "center",
-          padding: 30,
-        }}
-      >
-        <Image
+    <View style={styles.bg}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("login");
+          }}
           style={{
-            width: 41,
-            height: 41,
+            justifyContent: "center",
+            alignContent: "center",
+            padding: 30,
           }}
-          source={require("../../../assets/back.png")}
-        />
-      </Pressable>
-      <Text
-        style={{
-          fontFamily: "Urbanist_600SemiBold",
-          fontWeight: "bold",
-          color: "white",
-          justifyContent: "center",
-          fontSize: 24,
-          marginBottom: 70,
-        }}
-      >
-        Create Account
-      </Text>
-      <View
-        style={{
-          height: 208,
-          width: 393,
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 20,
-        }}
-      >
-        <TextInput
-          placeholder="phone number"
-          placeholderTextColor="white"
-          onChangeText={(text) => {
-            setPhone_number(text);
-          }}
-          style={styles.textinput}
-        />
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor="white"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          style={styles.textinput}
-        />
-        <TextInput
-          placeholder="Password"
-          placeholderTextColor="white"
-          secureTextEntry
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-          style={styles.textinput}
-        />
-        <TextInput
-          placeholder="Confirm Password"
-          placeholderTextColor="white"
-          secureTextEntry
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
-          style={styles.textinput}
-        />
-      </View>
+        >
+          <Image
+            style={{
+              width: 41,
+              height: 41,
+            }}
+            source={require("../../../assets/back.png")}
+          />
+        </Pressable>
 
-      {/* <Text> {JSON.stringify(error)}</Text> */}
-      <Pressable
-        onPress={() => {
-          navigation.navigate("login");
-        }}
-        style={{
-          backgroundColor: "#F5574E",
-          width: 339,
-          height: 50,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 30,
-          marginTop: 70,
-        }}
-      >
-        <Text style={styles.button}>Agree and Register</Text>
-      </Pressable>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 20,
+          }}
+        >
+          <Text style={styles.header}>Create Account</Text>
+          <TextInput
+            placeholder="Phone number"
+            placeholderTextColor="white"
+            onChangeText={(text) => {
+              setPhone_number(text);
+            }}
+            style={styles.textinput}
+          />
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="white"
+            onChangeText={(text) => {
+              setEmail(text);
+            }}
+            style={styles.textinput}
+          />
+          <TextInput
+            placeholder="Password"
+            placeholderTextColor="white"
+            secureTextEntry
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
+            style={styles.textinput}
+          />
+          <TextInput
+            placeholder="Confirm password"
+            placeholderTextColor="white"
+            secureTextEntry
+            onChangeText={(text) => {
+              setPassword(text);
+            }}
+            style={styles.textinput}
+          />
+        </View>
+
+        <Pressable
+          onPress={() => {
+            navigation.navigate("login");
+          }}
+          style={styles.redbutton}
+        >
+          <Text style={styles.button}>Agree and Register</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 export default Register;
-
-const styles = StyleSheet.create({
-  textinput: {
-    backgroundColor: "gray",
-    color: "white",
-    width: 339,
-    height: 50,
-    borderRadius: 30,
-    paddingHorizontal: 20,
-    fontFamily: "Urbanist_400Regular",
-  },
-  button: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "white",
-    fontFamily: "Urbanist_400SemiBold",
-  },
-});

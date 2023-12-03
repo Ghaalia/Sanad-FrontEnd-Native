@@ -4,6 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../apis/auth";
 import { useNavigation } from "@react-navigation/native";
+import styles from "./../../css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,14 +16,7 @@ const Login = () => {
     mutationFn: () => login(email, password),
   });
   return (
-    <View
-      style={{
-        backgroundColor: "#1B1931",
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1,
-      }}
-    >
+    <View style={styles.bg}>
       <Pressable
         onPress={() => {
           navigation.navigate("login");
@@ -83,16 +77,7 @@ const Login = () => {
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
-      <View
-        style={{
-          backgroundColor: "#F5574E",
-          width: 339,
-          height: 50,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 30,
-        }}
-      >
+      <View style={styles.redbutton}>
         <Text style={styles.button}>Login</Text>
       </View>
 
@@ -120,41 +105,11 @@ const Login = () => {
             fontFamily: "Urbanist_400SemiBold",
           }}
         >
-          {" "}
           Register Now
         </Text>
-        {/* <View style={{ flexDirection: "row" }}>
-          <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
-        </View> */}
       </View>
     </View>
   );
 };
 
 export default Login;
-
-const styles = StyleSheet.create({
-  textinput: {
-    backgroundColor: "gray",
-    color: "white",
-    width: 339,
-    height: 50,
-    borderRadius: 30,
-    paddingHorizontal: 20,
-    fontFamily: "Urbanist_400Regular",
-  },
-  button: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "white",
-    fontFamily: "Urbanist_400SemiBold",
-  },
-  header: {
-    fontFamily: "Urbanist_600SemiBold",
-    fontWeight: "bold",
-    color: "white",
-    justifyContent: "center",
-    fontSize: 24,
-    marginBottom: 15,
-  },
-});
