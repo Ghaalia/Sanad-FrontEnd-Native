@@ -19,7 +19,6 @@ const Register = () => {
     <View
       style={{
         backgroundColor: "#1B1931",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         flex: 1,
@@ -27,13 +26,12 @@ const Register = () => {
     >
       <Text
         style={{
+          fontFamily: "Urbanist_600SemiBold",
           fontWeight: "bold",
           color: "white",
           justifyContent: "center",
-          fontSize: 25,
-          height: 29,
-          backgroundColor: "blue",
-          marginBottom: 30,
+          fontSize: 24,
+          marginBottom: 70,
         }}
       >
         Create Account
@@ -42,43 +40,46 @@ const Register = () => {
         style={{
           height: 208,
           width: 393,
-          backgroundColor: "blue",
           justifyContent: "center",
           alignItems: "center",
           gap: 20,
         }}
       >
         <TextInput
-          placeholder="Phone number"
+          placeholder="phone number"
+          placeholderTextColor="white"
           onChangeText={(text) => {
             setPhone_number(text);
           }}
           style={{
             backgroundColor: "gray",
             color: "white",
-            width: 300,
+            width: 339,
             height: 50,
             borderRadius: 30,
             paddingHorizontal: 20,
+            fontFamily: "Urbanist_400Regular",
           }}
         />
         <TextInput
           placeholder="Email"
+          placeholderTextColor="white"
           onChangeText={(text) => {
             setEmail(text);
           }}
           style={{
             backgroundColor: "gray",
             color: "white",
-            width: 300,
+            width: 339,
             height: 50,
             borderRadius: 30,
             paddingHorizontal: 20,
+            fontFamily: "Urbanist_400Regular",
           }}
         />
-
         <TextInput
-          placeholder=" Enter your password"
+          placeholder="Password"
+          placeholderTextColor="white"
           secureTextEntry
           onChangeText={(text) => {
             setPassword(text);
@@ -86,31 +87,70 @@ const Register = () => {
           style={{
             backgroundColor: "gray",
             color: "white",
-            width: 300,
+            width: 339,
             height: 50,
             borderRadius: 30,
             paddingHorizontal: 20,
+            fontFamily: "Urbanist_400Regular",
+          }}
+        />
+        <TextInput
+          placeholder=" confirm Password"
+          placeholderTextColor="white"
+          secureTextEntry
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
+          style={{
+            backgroundColor: "gray",
+            color: "white",
+            width: 339,
+            height: 50,
+            borderRadius: 30,
+            paddingHorizontal: 20,
+            fontFamily: "Urbanist_400Regular",
           }}
         />
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
-      <Text
-        onPress={mutate}
+      <View
         style={{
           backgroundColor: "#F5574E",
-          color: "white",
-          width: 300,
+          width: 339,
           height: 50,
-          fontSize: 20,
-          fontWeight: "bold",
           justifyContent: "center",
           alignItems: "center",
+          borderRadius: 30,
+          marginTop: 70,
         }}
       >
-        Agree and Register
-      </Text>
-      <View style={{ flexDirection: "row", justifyContent: "center" }}></View>
+        <Text
+          onPress={() => {
+            navigation.navigate("login");
+          }}
+          style={{
+            fontSize: 15,
+            fontWeight: "bold",
+            color: "white",
+            fontFamily: "Urbanist_400SemiBold",
+          }}
+        >
+          Agree and Register
+        </Text>
+      </View>
+
+      {/* <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 20,
+        }}
+      > */}
+      {/* <View style={{ flexDirection: "row" }}>
+        <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
+      </View> */}
+      {/* </View> */}
     </View>
   );
 };

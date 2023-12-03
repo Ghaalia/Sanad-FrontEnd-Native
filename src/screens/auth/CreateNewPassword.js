@@ -1,19 +1,10 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { View, Text } from "react-native";
+import React from "react";
 import { TextInput } from "react-native-gesture-handler";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../apis/auth";
 import { useNavigation } from "@react-navigation/native";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const CreateNewPassword = () => {
   const navigation = useNavigation();
-
-  const { mutate, error } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: () => login(email, password),
-  });
   return (
     <View
       style={{
@@ -30,14 +21,37 @@ const Login = () => {
           color: "white",
           justifyContent: "center",
           fontSize: 24,
-          marginBottom: 30,
+          marginBottom: 15,
         }}
       >
-        Welcome!
+        Create New Password
       </Text>
       <View
         style={{
-          height: 208,
+          justifyContent: "center",
+          alignItems: "center",
+
+          width: 300,
+          height: 48,
+          paddingLeft: 5,
+          paddingRight: 5,
+          fontSize: 16,
+          marginBottom: 30,
+        }}
+      >
+        <Text
+          style={{
+            color: "#6B6893",
+            fontSize: 14,
+            fontFamily: "Urbanist_400Regular",
+          }}
+        >
+          Your new password must be unique from those previously used.
+        </Text>
+      </View>
+      <View
+        style={{
+          height: 100,
           width: 393,
           justifyContent: "center",
           alignItems: "center",
@@ -45,7 +59,7 @@ const Login = () => {
         }}
       >
         <TextInput
-          placeholder="Email"
+          placeholder="New password"
           placeholderTextColor="white"
           onChangeText={(text) => {
             setEmail(text);
@@ -61,11 +75,10 @@ const Login = () => {
           }}
         />
         <TextInput
-          placeholder=" Enter your password"
+          placeholder="Confirm password"
           placeholderTextColor="white"
-          secureTextEntry
           onChangeText={(text) => {
-            setPassword(text);
+            setEmail(text);
           }}
           style={{
             backgroundColor: "gray",
@@ -77,18 +90,6 @@ const Login = () => {
             fontFamily: "Urbanist_400Regular",
           }}
         />
-        <Text
-          style={{
-            color: "#6B6893",
-            fontSize: 14,
-            fontFamily: "Urbanist_600SemiBold",
-          }}
-          onPress={() => {
-            navigation.navigate("forgotpassword");
-          }}
-        >
-          Forgot password ?
-        </Text>
       </View>
 
       {/* <Text> {JSON.stringify(error)}</Text> */}
@@ -100,9 +101,13 @@ const Login = () => {
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 30,
+          marginTop: 30,
         }}
       >
         <Text
+          onPress={() => {
+            navigation.navigate("passwordchanged");
+          }}
           style={{
             fontSize: 15,
             fontWeight: "bold",
@@ -110,7 +115,7 @@ const Login = () => {
             fontFamily: "Urbanist_400SemiBold",
           }}
         >
-          Login
+          Reset Password
         </Text>
       </View>
 
@@ -121,26 +126,6 @@ const Login = () => {
           marginTop: 20,
         }}
       >
-        <Text
-          style={{
-            color: "white",
-            fontFamily: "Urbanist_400Regular",
-          }}
-        >
-          Don't have an account ?{" "}
-        </Text>
-        <Text
-          onPress={() => {
-            navigation.navigate("register");
-          }}
-          style={{
-            color: "#F5574E",
-            fontFamily: "Urbanist_400SemiBold",
-          }}
-        >
-          {" "}
-          Register Now
-        </Text>
         {/* <View style={{ flexDirection: "row" }}>
           <View style={{ borderColor: "white", height: 20, width: 20 }}></View>
         </View> */}
@@ -149,6 +134,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-const styles = StyleSheet.create({});
+export default CreateNewPassword;
