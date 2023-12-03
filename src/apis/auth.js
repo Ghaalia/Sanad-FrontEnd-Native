@@ -8,4 +8,11 @@ const login = async (email, password) => {
   return res.data;
 };
 
-export { login };
+const register = async (email, password, phone_number) => {
+  const res = await instance.post("/register", {
+    email,
+    phone_number,
+    password,
+  });
+};
+export { login, register };
