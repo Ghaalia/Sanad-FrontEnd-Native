@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 20,
     fontFamily: "Urbanist_400Regular",
+    opacity: 0.25,
   },
 
   header: {
@@ -37,6 +38,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     flex: 1,
+    height: "100%",
+    padding: 20,
+    marginBottom: 30,
   },
   redbutton: {
     backgroundColor: "#F5574E",
@@ -57,6 +61,7 @@ const styles = StyleSheet.create({
   },
   boxinput: {
     backgroundColor: "gray",
+    opacity: 0.25,
     color: "white",
     width: 69,
     height: 60,

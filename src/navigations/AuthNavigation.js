@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Register from "../screens/auth/Register";
@@ -14,7 +14,14 @@ const AuthNavigation = () => {
   return (
     <Stack.Navigator
       initialRouteName="login"
-      screenOptions={{ headerTitle: "join SANAD :) " }}
+      screenOptions={{
+        headerBackImage: () => {
+          <Image
+            source={require("../../assets/Frame5.png")}
+            style={{ width: 150, height: 30, resizeMode: "contain" }}
+          />;
+        },
+      }}
     >
       <Stack.Screen name={"register"} component={Register} />
       <Stack.Screen name={"login"} component={Login} />
@@ -28,4 +35,14 @@ const AuthNavigation = () => {
 
 export default AuthNavigation;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: "#1B1931",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     flexDirection: "column",
+//     flex: 1,
+//     padding: 20,
+//     marginBottom: 30,
+//   },
+// });
