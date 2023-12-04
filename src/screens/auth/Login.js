@@ -29,7 +29,7 @@ const Login = () => {
       <View style={styles.bg}>
         <Pressable
           onPress={() => {
-            navigation.navigate("login");
+            navigation.navigate("register");
           }}
           style={{
             justifyContent: "center",

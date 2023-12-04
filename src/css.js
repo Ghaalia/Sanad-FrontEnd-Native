@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: 20,
     fontFamily: "Urbanist_400Regular",
-    opacity: 0.25,
+    opacity: 0.5,
   },
 
   header: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   boxinput: {
     backgroundColor: "gray",
-    opacity: 0.25,
+    opacity: 0.5,
     color: "white",
     width: 69,
     height: 60,
