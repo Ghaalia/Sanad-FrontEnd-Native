@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { login } from "../../apis/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./../../css";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ const Login = () => {
     mutationFn: () => login(email, password),
   });
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={styles.bg}>
         <Pressable
           onPress={() => {
@@ -122,7 +123,7 @@ const Login = () => {
           </Text>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

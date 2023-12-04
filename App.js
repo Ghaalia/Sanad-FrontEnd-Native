@@ -5,6 +5,7 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MainNavigation from "./src/navigations/MainNavigation";
 import AuthNavigation from "./src/navigations/AuthNavigation";
 import AppLoading from "expo-app-loading";
+
 import {
   useFonts,
   Urbanist_400Regular,
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar style="dark" />
+
       <NavigationContainer>
         <AuthNavigation />
         {/* <MainNavigation /> */}

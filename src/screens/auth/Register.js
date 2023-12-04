@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { register } from "../../apis/auth";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -36,7 +37,7 @@ const Register = () => {
     }
   };
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={styles.bg}>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Pressable
@@ -111,7 +112,7 @@ const Register = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
