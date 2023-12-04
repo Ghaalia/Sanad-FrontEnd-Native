@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   boxinput: {
     backgroundColor: "gray",
-    opacity: 0.5,
+    opacity: 0.25,
     color: "white",
     width: 69,
     height: 60,
