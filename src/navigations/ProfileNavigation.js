@@ -10,6 +10,8 @@ import VolunteeringHistory from "../screens/profile/VolunteeringHistory";
 
 const Stack = createStackNavigator();
 
+//// if user signed in then it will show this page, if not it will show auth pages
+
 const ProfileNavigation = () => {
   return (
     <Stack.Navigator

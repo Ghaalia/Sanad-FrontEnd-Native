@@ -15,28 +15,20 @@
     "@react-navigation/stack": "^6.3.20",
     "@tanstack/react-query": "^5.8.7",
     "axios": "^1.6.2",
-<<<<<<< HEAD
     "expo": "^49.0.0",
     "expo-notifications": "~0.20.1",
-=======
     "expo": "~49.0.15",
     "expo-app-loading": "^2.1.1",
     "expo-font": "~11.4.0",
     "expo-secure-store": "^12.5.0",
->>>>>>> e86005cfe05fb2058fc2ed6ad0e21bf687c28711
     "expo-status-bar": "~1.6.0",
     "lucide-react-native": "^0.294.0",
     "react": "18.2.0",
-<<<<<<< HEAD
-    "react-native": "0.72.5",
-    "react-native-gesture-handler": "~2.12.0"
-=======
     "react-native": "0.72.6",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-google-fonts": "^0.0.0",
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5"
->>>>>>> e86005cfe05fb2058fc2ed6ad0e21bf687c28711
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
