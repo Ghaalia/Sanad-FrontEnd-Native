@@ -1,6 +1,14 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import ProfileImage from "../../components/ProfileImage";
 
 const Profile = () => {
   const navigation = useNavigation();
@@ -15,6 +23,14 @@ const Profile = () => {
         flexDirection: "column",
       }}
     >
+      <Text
+        style={{
+          fontSize: 50,
+        }}
+      >
+        My Profile
+      </Text>
+
       <View
         style={{
           backgroundColor: "white",
@@ -34,18 +50,13 @@ const Profile = () => {
           position: "relative",
         }}
       >
-        <View
-          style={{
-            width: 160,
-            height: 160,
-            backgroundColor: "blue",
-            borderRadius: 100,
-            position: "absolute",
-            top: -80,
-          }}
-        ></View>
+        {/*  Profile Image */}
+        <ProfileImage />
 
-        <View
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("volunteeringHistory");
+          }}
           style={{
             backgroundColor: "white",
             height: 124.5,
@@ -62,14 +73,16 @@ const Profile = () => {
         >
           <Text>Volunteernig</Text>
           <Text>History</Text>
-        </View>
+        </TouchableOpacity>
 
         <View
           style={{
-            backgroundColor: "red",
-            width: 265,
+            backgroundColor: "white",
+            width: 330,
             height: 160,
             justifyContent: "space-around",
+            paddingHorizontal: 10,
+            paddingVertical: 15,
           }}
         >
           <Text
@@ -77,7 +90,7 @@ const Profile = () => {
               navigation.navigate("editeProfile");
             }}
             style={{
-              width: "100%",
+              width: "90%",
               backgroundColor: "white",
             }}
           >

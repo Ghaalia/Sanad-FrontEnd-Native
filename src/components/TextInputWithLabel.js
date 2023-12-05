@@ -21,7 +21,7 @@ const TextInputWithLabel = ({
           borderWidth: 0.25,
           paddingHorizontal: 10,
           borderRadius: 20,
-          width: "100%",
+          width: "96%",
         }}
         placeholder={placeholder}
       />
@@ -30,5 +30,3 @@ const TextInputWithLabel = ({
 };
 
 export default TextInputWithLabel;
-
-const styles = StyleSheet.create({});

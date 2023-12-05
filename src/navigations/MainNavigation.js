@@ -13,7 +13,8 @@ const MainNavigation = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
-        options={{ title: "Explore" }}
+        screenOptions={{ headerShown: false }}
+        // options={{ headerShown: false }}
         name={"exploreNavigation"}
         component={ExploreNavigation}
       />
