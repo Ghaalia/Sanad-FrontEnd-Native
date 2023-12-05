@@ -34,7 +34,7 @@ const MainNavigation = () => {
         component={NotificationNavigation}
       />
       <Tab.Screen
-        options={{ title: "My Profile" }}
+        options={{ title: "Profile" }}
         name={"ProfileNavigation"}
         component={ProfileNavigation}
       />
