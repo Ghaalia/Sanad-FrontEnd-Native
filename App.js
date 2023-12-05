@@ -49,8 +49,7 @@ export default function App() {
       <StatusBar style="dark" />
 
       <NavigationContainer>
-        <AuthNavigation />
-        {/* <MainNavigation /> */}
+        <MainNavigation />
       </NavigationContainer>
     </QueryClientProvider>
   );
