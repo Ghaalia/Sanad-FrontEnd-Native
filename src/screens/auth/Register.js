@@ -22,9 +22,7 @@ const Register = () => {
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    onSuccess: () => {},
   });
   formValidation = async () => {
     this.setState({ loading: true });
@@ -104,7 +102,6 @@ const Register = () => {
           <TouchableOpacity
             onPress={() => {
               mutate_register;
-              // navigation.navigate("login");
             }}
             style={styles.redbutton}
           >

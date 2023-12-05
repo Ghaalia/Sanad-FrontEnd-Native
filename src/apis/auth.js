@@ -2,7 +2,7 @@ import { instance } from ".";
 import { saveToken } from "./store";
 
 const login = async (email, password) => {
-  const res = await instance.post("/api/login", {
+  const res = await instance.post("/api/user/signin", {
     email,
     password,
   });
@@ -11,7 +11,7 @@ const login = async (email, password) => {
 };
 
 const register = async (userInfo) => {
-  const res = await instance.post("/api/register", userInfo);
+  const res = await instance.post("/api/user/register", userInfo);
   if (res?.data.token) await saveToken(res.data.token);
   return res.data;
 };
