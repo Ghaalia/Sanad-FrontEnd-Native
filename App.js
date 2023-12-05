@@ -3,7 +3,6 @@ import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MainNavigation from "./src/navigations/MainNavigation";
 import AuthNavigation from "./src/navigations/AuthNavigation";
 import AppLoading from "expo-app-loading";
@@ -37,6 +36,7 @@ export default function App() {
       Notifications.removeNotificationSubscription();
     };
   }, []);
+
   const queryClient = new QueryClient();
   let [fontsLoaded] = useFonts({
     Urbanist_400Regular,
@@ -48,8 +48,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <StatusBar style="dark" />
 
+
       <NavigationContainer>
-        <AuthNavigation />
+      <AuthNavigation />
         {/* <MainNavigation /> */}
       </NavigationContainer>
     </QueryClientProvider>
