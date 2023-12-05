@@ -50,12 +50,7 @@ export default function App() {
 
 
       <NavigationContainer>
-<<<<<<< HEAD
-      <AuthNavigation />
-        {/* <MainNavigation /> */}
-=======
         <MainNavigation />
->>>>>>> dce15e95350e1312ebf7b905d25cb3a72eef082a
       </NavigationContainer>
     </QueryClientProvider>
   );
