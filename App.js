@@ -9,7 +9,6 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <SafeAreaView></SafeAreaView>
         <MainNavigation />
       </NavigationContainer>
     </QueryClientProvider>
