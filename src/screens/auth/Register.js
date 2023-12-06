@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
-  const [user, setUser] = useState(false);
+  // const [user, setUser] = useState(false);
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],

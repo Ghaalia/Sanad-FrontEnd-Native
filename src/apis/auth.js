@@ -26,7 +26,7 @@ const saveToken = async (token) => {
 //get
 const getToken = async () => {
   const token = await SecureStore.getItemAsync("token");
-  ///// check exp time
+  ///// to add check exp time
   return token;
 };
 //delete
