@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -7,23 +8,33 @@ const Search = () => {
     <View
       style={{
         height: 45,
-
         justifyContent: "center",
         alignItems: "center",
+        position: "relative",
       }}
     >
-      <Image
-        style={{ height: 30, width: 30, position: "absolute", left: 25 }}
-        source={{
-          uri: "https://cdn-icons-png.flaticon.com/512/2310/2310707.png",
+      <FontAwesome
+        name="search"
+        size={24}
+        color="#F5574E"
+        style={{
+          position: "absolute",
+          left: 43,
+          zIndex: 100,
         }}
       />
       <TextInput
         style={{
-          width: "90%",
+          width: "85%",
           height: "100%",
-          borderWidth: "1",
-          borderRadius: 17,
+          backgroundColor: "white",
+          shadowColor: "black",
+          shadowOffset: { height: 4, width: 1 },
+          shadowRadius: 4,
+          shadowOpacity: 0.1,
+          borderRadius: 50,
+          // borderWidth: "1",
+          // borderRadius: 10,
           paddingHorizontal: 50,
         }}
         placeholder="Search"

@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
+// import { StatusBar as RNStatusBar } from "react-native";
 import MainNavigation from "./src/navigations/MainNavigation";
 import AuthNavigation from "./src/navigations/AuthNavigation";
 import AppLoading from "expo-app-loading";
@@ -14,6 +15,9 @@ import {
 } from "@expo-google-fonts/urbanist";
 import UserContext from "./context/UserContext";
 import { getToken } from "./src/apis/auth";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
   useEffect(() => {
@@ -54,16 +58,14 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+     
+      <StatusBar animated={true} backgroundColor="transparent" />
       <UserContext.Provider value={{ user, setUser }}>
-        <StatusBar style="dark" />
-
 
         <NavigationContainer>
           <MainNavigation />
         </NavigationContainer>
       </UserContext.Provider>
-
-
     </QueryClientProvider>
   );
 }

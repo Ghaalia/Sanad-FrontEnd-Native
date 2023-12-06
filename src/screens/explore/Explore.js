@@ -19,10 +19,11 @@ const Explore = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: "#EFEFEF", alignItems: "center" }}>
       <View
         style={{
-          flex: 10,
+          flex: 15,
+          width: "100%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
@@ -31,7 +32,6 @@ const Explore = () => {
       >
         <Text
           style={{
-            fontFamily: "urbanist",
             fontSize: 40,
             shadowColor: "black",
             shadowOffset: { height: 2, width: 0 },
@@ -42,49 +42,67 @@ const Explore = () => {
           Explore
         </Text>
         <Image
-          style={{ height: "59.8%", width: "35%" }}
+          style={{ width: "35%", resizeMode: "contain" }}
           source={require("../../../assets/onlylogo.png")}
         />
       </View>
 
-      <View style={{ flex: 10, paddingTop: 10 }}>
+      <View
+        style={{
+          flex: 10,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         <Search />
       </View>
 
       <View
         style={{
           flex: 5,
-          backgroundColor: "white",
+          width: "85%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          // backgroundColor: "green",
         }}
       >
         <View
           style={{
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            alignContent: "flex-start",
+            width: "auto",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            // backgroundColor: "red",
           }}
         >
-          <Text style={{ color: "#b4bfb7", paddingLeft: 10 }}>
-            Available events
+          <Text style={{ color: "#1B1931", fontWeight: "500" }}>
+            Available Events
           </Text>
         </View>
         <View
           style={{
-            width: "50%",
-            alignItems: "flex-end",
-            justifyContent: "flex-end",
+            width: "auto",
+            justifyContent: "center",
+            alignItems: "center",
+            // backgroundColor: "red",
           }}
         >
           <ExploreEventFilter />
         </View>
       </View>
 
-      <View style={{ flex: 70, gab: 5 }}>
-        <ScrollView>
+      <View
+        style={{
+          flex: 70,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          // backgroundColor: "yellow",
+        }}
+      >
+        <ScrollView style={{ width: "100%", paddingVertical: 5 }}>
           <Pressable
             onPress={() => {
               navigation.navigate("eventDetails");

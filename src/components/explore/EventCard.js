@@ -1,74 +1,131 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Feather } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+  Feather,
+  FontAwesome5,
+  Entypo,
+} from "@expo/vector-icons";
 
 const EventCard = () => {
   return (
     <View
       style={{
+        position: "relative",
         backgroundColor: "white",
         shadowColor: "black",
-        shadowOffset: { height: 1, width: 1 },
+        shadowOffset: { height: 4, width: 1 },
         shadowRadius: 5,
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.1,
         height: 200,
-        width: "95%",
+        width: "85%",
         borderRadius: 10,
-        display: "flex",
+        paddingHorizontal: 10,
+        paddingTop: 10,
         margin: 10,
+        marginBottom: 10,
+        gap: 10,
+        alignSelf: "center",
+        justifyContent: "space-between",
       }}
     >
       <View
         style={{
-          flex: 10,
-          display: "flex",
+          position: "absolute",
+          right: 0,
+          top: 21,
           flexDirection: "row",
-          paddingLeft: 15,
-          paddingTop: 10,
-          justifyContent: "space-between",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 2,
+          paddingHorizontal: 5,
+          paddingVertical: 4,
+          borderTopStartRadius: 20,
+          borderBottomStartRadius: 20,
+          backgroundColor: "#F5574E",
         }}
       >
-        <Image
-          source={{
-            //   uri: item.image,
-            uri: "https://images.squarespace-cdn.com/content/v1/5b8f8acb2714e5d519fcaf81/1609947742650-YSD4MGC2I7M9SL6NPFKB/MMKN+new+Logo+2019+%28png%29.png",
+        <MaterialCommunityIcons name="human-male" size={20} color="white" />
+        <Text style={{ color: "white", fontWeight: "500" }}>20</Text>
+        <Text style={{ color: "white", fontWeight: "500" }}>|</Text>
+        <Text style={{ color: "white", fontWeight: "500" }}>50</Text>
+      </View>
+      <View
+        style={{
+          height: "auto",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          // backgroundColor: "red",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+            // backgroundColor: "green",
           }}
-          style={{ height: 50, width: 50, borderRadius: "100" }}
-        />
+        >
+          <Image
+            source={{
+              //   uri: item.image,
+              uri: "https://images.squarespace-cdn.com/content/v1/5b8f8acb2714e5d519fcaf81/1609947742650-YSD4MGC2I7M9SL6NPFKB/MMKN+new+Logo+2019+%28png%29.png",
+            }}
+            style={{ height: 50, width: 50, borderRadius: 100 }}
+          />
 
-        <Text style={{ fontWeight: "bold", paddingLeft: 5, paddingTop: 20 }}>
-          VWC - Voluntary Work Center
-        </Text>
-
-        <Feather
-          style={{ padding: 15 }}
-          name="share-2"
-          size={24}
-          color="black"
-        />
+          <Text
+            style={{
+              fontWeight: "bold",
+              color: "#1B1931",
+            }}
+          >
+            Voluntary Work Center
+          </Text>
+        </View>
       </View>
 
-      <View style={{ flex: 12 }}>
-        <Text> category btns here</Text>
+      <View style={{}}>
+        <Text> category buttons here</Text>
       </View>
 
       <View
         style={{
-          flex: 5,
-          paddingLeft: 5,
+          height: "auto",
           flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          // backgroundColor: "yellow",
         }}
       >
-        <Ionicons name="calendar-outline" size={24} color="black" />
-        <Text style={{ paddingTop: 7 }}> 20/1/2023</Text>
-        <Ionicons
-          style={{ paddingLeft: 90 }}
-          name="time-outline"
-          size={24}
-          color="black"
-        />
-        <Text style={{ paddingTop: 7 }}> 5:00 pm to 7:00 pm</Text>
+        <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+          <Entypo name="calendar" size={20} color="#1B1931" />
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: "500",
+              color: "#1B1931",
+            }}
+          >
+            20/1/2023
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
+          <MaterialIcons
+            style={{}}
+            name="access-time"
+            size={20}
+            color="#1B1931"
+          />
+          <Text style={{ fontSize: 12, fontWeight: "500", color: "#1B1931" }}>
+            5:00 PM to 7:00 PM
+          </Text>
+        </View>
+        <Feather style={{}} name="share-2" size={24} color="#F5574E" />
       </View>
     </View>
   );

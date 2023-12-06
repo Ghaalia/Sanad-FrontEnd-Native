@@ -35,3 +35,8 @@ const logout = async () => {
 };
 
 export { login, register, logout, saveToken, getToken };
+const storeNotificatioToken = async (token) => {
+  const res = await instance.post("/api/register_token", { token });
+  return res.data;
+};
+export { login, register, storeNotificatioToken };

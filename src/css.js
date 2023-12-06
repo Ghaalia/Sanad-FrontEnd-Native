@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "white",
-    fontFamily: "Urbanist_600SemiBold",
+    fontFamily: Urbanist_600SemiBold,
   },
   textinput: {
     backgroundColor: "gray",
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 30,
     paddingHorizontal: 20,
-    fontFamily: "Urbanist_400Regular",
+    fontFamily: Urbanist_400Regular,
     opacity: 0.5,
   },
 
   header: {
-    fontFamily: "Urbanist_600SemiBold",
+    fontFamily: Urbanist_600SemiBold,
     fontWeight: "bold",
     color: "white",
     justifyContent: "center",
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   paragraph: {
     color: "#6B6893",
     fontSize: 14,
-    fontFamily: "Urbanist_400Regular",
+    fontFamily: Urbanist_400Regular,
     textAlign: "center",
     width: 290,
     marginBottom: 30,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 8,
     paddingHorizontal: 20,
-    fontFamily: "Urbanist_400Regular",
+    fontFamily: Urbanist_400Regular,
   },
 });
 

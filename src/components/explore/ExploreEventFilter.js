@@ -1,31 +1,46 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ExploreEventFilter = () => {
   return (
-    <View style={{ display: "flex", flexDirection: "row" }}>
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+      }}
+    >
       <View
         style={{
           height: 30,
-          width: 85,
-          borderRadius: 7,
+          width: "auto",
+          borderRadius: 20,
           backgroundColor: "white",
           margin: 5,
           justifyContent: "center",
-          paddingLeft: 3,
+          alignItems: "center",
+          paddingLeft: 10,
+          paddingRight: 8,
+          gap: 5,
           display: "flex",
           flexDirection: "row",
           backgroundColor: "#c0c2c0",
         }}
       >
-        <Text style={{ textAlign: "center", paddingTop: 5, color: "white" }}>
+        <Text
+          style={{
+            textAlign: "center",
+            color: "white",
+            fontWeight: "500",
+          }}
+        >
           Current
         </Text>
 
         <Ionicons
-          style={{ paddingTop: 3, paddingLeft: 3 }}
-          name="time-outline"
+          style={{}}
+          name="md-checkmark-circle"
           size={20}
           color="white"
         />
@@ -34,24 +49,29 @@ const ExploreEventFilter = () => {
       <View
         style={{
           height: 30,
-          width: 70,
-          borderRadius: 7,
+          width: "auto",
+          borderRadius: 20,
           backgroundColor: "white",
           margin: 5,
           justifyContent: "center",
-          paddingLeft: 3,
+          alignItems: "center",
+          paddingLeft: 10,
+          paddingRight: 8,
+          gap: 5,
           display: "flex",
           flexDirection: "row",
           backgroundColor: "#c0c2c0",
         }}
       >
-        <Text style={{ textAlign: "center", paddingTop: 5, color: "white" }}>
+        <Text
+          style={{ textAlign: "center", color: "white", fontWeight: "500" }}
+        >
           Later
         </Text>
 
-        <Ionicons
-          style={{ paddingTop: 3, paddingLeft: 3 }}
-          name="time-outline"
+        <MaterialCommunityIcons
+          style={{}}
+          name="clock-time-four"
           size={20}
           color="white"
         />
