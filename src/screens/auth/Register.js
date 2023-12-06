@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "../../apis/auth";
+import { getToken, register } from "../../apis/auth";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -18,19 +18,25 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
+  const [user, setUser] = useState(false);
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
-    onSuccess: () => {},
+    onSuccess: () => {
+      setUser(getToken());
+      navigation.navigate("login");
+    },
   });
+  //// to confirm password
   formValidation = async () => {
     this.setState({ loading: true });
     let errorFlag = false;
     if (this.state.password !== this.state.confirmPassword) {
       errorFlag = true;
       this.setState({
-        passwordErrorMessage: "Passwoad and confirm password should be same.",
+        passwordErrorMessage:
+          "Passwoad and confirm password should be the same.",
       });
     }
   };
@@ -95,7 +101,7 @@ const Register = () => {
               placeholderTextColor="white"
               secureTextEntry
               style={styles.textinput}
-              // onChangeText={(text) => this.setState({ password: text })}
+              onChangeText={(text) => this.setState({ password: text })}
             />
           </View>
 
