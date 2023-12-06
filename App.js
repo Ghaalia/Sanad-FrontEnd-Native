@@ -12,6 +12,8 @@ import {
   Urbanist_400Regular,
   Urbanist_600SemiBold,
 } from "@expo-google-fonts/urbanist";
+import UserContext from "./context/UserContext";
+import { getToken } from "./src/apis/auth";
 
 export default function App() {
   useEffect(() => {
@@ -44,14 +46,24 @@ export default function App() {
   });
 
   if (!fontsLoaded) return <AppLoading />;
+
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    setUser(getToken());
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="dark" />
+      <UserContext.Provider value={{ user, setUser }}>
+        <StatusBar style="dark" />
 
 
-      <NavigationContainer>
-        <MainNavigation />
-      </NavigationContainer>
+        <NavigationContainer>
+          <MainNavigation />
+        </NavigationContainer>
+      </UserContext.Provider>
+
+
     </QueryClientProvider>
   );
 }
