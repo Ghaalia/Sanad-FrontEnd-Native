@@ -15,4 +15,9 @@ const register = async (userInfo) => {
   if (res?.data.token) await saveToken(res.data.token);
   return res.data;
 };
-export { login, register };
+
+const storeNotificatioToken = async (token) => {
+  const res = await instance.post("/api/register_token", { token });
+  return res.data;
+};
+export { login, register, storeNotificatioToken };

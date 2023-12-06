@@ -3,6 +3,7 @@ import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
+// import { StatusBar as RNStatusBar } from "react-native";
 import MainNavigation from "./src/navigations/MainNavigation";
 import AuthNavigation from "./src/navigations/AuthNavigation";
 import AppLoading from "expo-app-loading";
@@ -12,6 +13,9 @@ import {
   Urbanist_400Regular,
   Urbanist_600SemiBold,
 } from "@expo-google-fonts/urbanist";
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
   useEffect(() => {
@@ -44,10 +48,10 @@ export default function App() {
   });
 
   if (!fontsLoaded) return <AppLoading />;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="dark" />
-
+      <StatusBar animated={true} backgroundColor="transparent" />
 
       <NavigationContainer>
         <MainNavigation />
