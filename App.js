@@ -50,14 +50,6 @@ export default function App() {
     Urbanist_600SemiBold,
   });
 
-<<<<<<< HEAD
-  if (!fontsLoaded) return <AppLoading />;
-
-  // const { user, setUser } = useState({});
-  // useEffect(() => {
-  //   setUser(getToken());
-  // }, []);
-=======
   const checkUser = async () => {
     const user = await getToken();
     setUser(user);
@@ -65,17 +57,12 @@ export default function App() {
   useEffect(() => {
     checkUser();
   }, []);
->>>>>>> b82b720841b671656ab60bec96d5ea30d9c0426d
 
   if (!fontsLoaded) return <AppLoading />;
 
   return (
     <QueryClientProvider client={queryClient}>
-<<<<<<< HEAD
-      <UserContext.Provider>
-=======
       <UserContext.Provider value={{ user, setUser }}>
->>>>>>> b82b720841b671656ab60bec96d5ea30d9c0426d
         <StatusBar animated={true} backgroundColor="transparent" />
         <NavigationContainer>
           <MainNavigation />
