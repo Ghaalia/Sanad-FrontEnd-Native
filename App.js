@@ -12,6 +12,8 @@ import {
   useFonts,
   Urbanist_400Regular,
   Urbanist_600SemiBold,
+  Urbanist_700Bold,
+  Urbanist_500Medium,
 } from "@expo-google-fonts/urbanist";
 import UserContext from "./context/UserContext";
 import { getToken } from "./src/apis/auth";
@@ -48,6 +50,8 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     Urbanist_400Regular,
     Urbanist_600SemiBold,
+    Urbanist_700Bold,
+    Urbanist_500Medium,
   });
 
   const checkUser = async () => {

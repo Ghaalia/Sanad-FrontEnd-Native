@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B1931",
     justifyContent: "center",
     alignItems: "center",
+
     flexDirection: "column",
     flex: 1,
-    height: "100%",
-    padding: 20,
+    // padding: 10,
     marginBottom: 30,
   },
   redbutton: {

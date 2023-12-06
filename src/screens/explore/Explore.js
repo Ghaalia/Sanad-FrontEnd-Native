@@ -37,6 +37,7 @@ const Explore = () => {
             shadowOffset: { height: 2, width: 0 },
             shadowRadius: 1,
             shadowOpacity: 0.3,
+            fontFamily: "Urbanist_600SemiBold",
           }}
         >
           Explore
@@ -77,7 +78,13 @@ const Explore = () => {
             // backgroundColor: "red",
           }}
         >
-          <Text style={{ color: "#1B1931", fontWeight: "500" }}>
+          <Text
+            style={{
+              color: "#1B1931",
+              fontWeight: "500",
+              fontFamily: "Urbanist_500Medium",
+            }}
+          >
             Available Events
           </Text>
         </View>

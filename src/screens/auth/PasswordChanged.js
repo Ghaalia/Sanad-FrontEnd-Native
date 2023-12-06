@@ -8,24 +8,35 @@ import styles from "./../../css";
 const PasswordChanged = () => {
   const navigation = useNavigation();
   return (
-    <View style={styles.bg}>
-      <View style={{ padding: 20 }}>
-        <Image source={require("../../../assets/Sticker.png")} />
-      </View>
-      <Text style={styles.header}>Password Changed !</Text>
-      <View>
-        <Text style={styles.paragraph}>
-          Your new password has been changed successfully.
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("login");
+    <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
+      <Image source={require("../../../assets/Frame5.png")} />
+
+      <View
+        style={{
+          justifyContent: "center",
+          alignSelf: "center",
+          alignItems: "center",
+          marginTop: 30,
         }}
-        style={styles.redbutton}
       >
-        <Text style={styles.button}>Back to Login</Text>
-      </TouchableOpacity>
+        <View style={{ padding: 20 }}>
+          <Image source={require("../../../assets/Sticker.png")} />
+        </View>
+        <Text style={styles.header}>Password Changed !</Text>
+        <View>
+          <Text style={styles.paragraph}>
+            Your new password has been changed successfully.
+          </Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("login");
+          }}
+          style={styles.redbutton}
+        >
+          <Text style={styles.button}>Back to Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

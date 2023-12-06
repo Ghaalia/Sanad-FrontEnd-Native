@@ -82,6 +82,7 @@ const EventCard = () => {
             style={{
               fontWeight: "bold",
               color: "#1B1931",
+              fontFamily: "Urbanist_700Bold",
             }}
           >
             Voluntary Work Center
@@ -109,6 +110,7 @@ const EventCard = () => {
               fontSize: 12,
               fontWeight: "500",
               color: "#1B1931",
+              fontFamily: "Urbanist_500Medium",
             }}
           >
             20/1/2023
@@ -121,7 +123,14 @@ const EventCard = () => {
             size={20}
             color="#1B1931"
           />
-          <Text style={{ fontSize: 12, fontWeight: "500", color: "#1B1931" }}>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: "500",
+              color: "#1B1931",
+              fontFamily: "Urbanist_500Medium",
+            }}
+          >
             5:00 PM to 7:00 PM
           </Text>
         </View>
