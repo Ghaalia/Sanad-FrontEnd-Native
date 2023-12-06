@@ -7,6 +7,12 @@ import Profile from "../screens/profile/Profile";
 import EditeProfile from "../screens/profile/EditeProfile";
 import Setting from "../screens/profile/Setting";
 import VolunteeringHistory from "../screens/profile/VolunteeringHistory";
+import Register from "../screens/auth/Register";
+import Login from "../screens/auth/Login";
+import ForgotPassword from "../screens/auth/ForgotPassword";
+import OtpVerification from "../screens/auth/OtpVerification";
+import CreateNewPassword from "../screens/auth/CreateNewPassword";
+import PasswordChanged from "../screens/auth/PasswordChanged";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +35,14 @@ const ProfileNavigation = () => {
         name="volunteeringHistory"
         component={VolunteeringHistory}
       />
+      {/* AUTH NAV */}
+      <Stack.Screen name={"register"} component={Register} />
+      <Stack.Screen name={"login"} component={Login} />
+      <Stack.Screen name={"forgotpassword"} component={ForgotPassword} />
+      <Stack.Screen name={"otpvarification"} component={OtpVerification} />
+      <Stack.Screen name={"createnewpassword"} component={CreateNewPassword} />
+      <Stack.Screen name={"passwordchanged"} component={PasswordChanged} />
+      {/* END AUTH NAV */}
     </Stack.Navigator>
   );
 };

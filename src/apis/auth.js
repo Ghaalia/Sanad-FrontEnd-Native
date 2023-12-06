@@ -16,12 +16,13 @@ const register = async (userInfo) => {
 
   const res = await instance.post("/api/user/register", formData);
   if (res?.data.token) await saveToken(res.data.token);
+
   return res.data;
 };
 
 //save
 const saveToken = async (token) => {
-  SecureStore.setItem("token", token);
+  await SecureStore.setItemAsync("token", token);
 };
 //get
 const getToken = async () => {
@@ -34,9 +35,22 @@ const logout = async () => {
   await SecureStore.deleteItemAsync("token");
 };
 
-export { login, register, logout, saveToken, getToken };
 const storeNotificatioToken = async (token) => {
   const res = await instance.post("/api/register_token", { token });
   return res.data;
 };
-export { login, register, storeNotificatioToken };
+
+const getMyProfile = async () => {
+  const { data } = await instance.get("/user/userprofile");
+  return data;
+};
+
+export {
+  login,
+  register,
+  logout,
+  saveToken,
+  getToken,
+  storeNotificatioToken,
+  getMyProfile,
+};

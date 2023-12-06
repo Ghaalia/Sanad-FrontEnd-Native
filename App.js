@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
+  const [user, setUser] = useState(false);
   useEffect(() => {
     // Request permission to receive push notifications (iOS only)
     Notifications.requestPermissionsAsync().then((status) => {
@@ -49,19 +50,20 @@ export default function App() {
     Urbanist_600SemiBold,
   });
 
-  if (!fontsLoaded) return <AppLoading />;
-
-  const [user, setUser] = useState({});
+  const checkUser = async () => {
+    const user = await getToken();
+    setUser(user);
+  };
   useEffect(() => {
-    setUser(getToken());
+    checkUser();
   }, []);
+
+  if (!fontsLoaded) return <AppLoading />;
 
   return (
     <QueryClientProvider client={queryClient}>
-     
-      <StatusBar animated={true} backgroundColor="transparent" />
       <UserContext.Provider value={{ user, setUser }}>
-
+        <StatusBar animated={true} backgroundColor="transparent" />
         <NavigationContainer>
           <MainNavigation />
         </NavigationContainer>
