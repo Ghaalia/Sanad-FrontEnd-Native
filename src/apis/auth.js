@@ -1,5 +1,5 @@
 import { instance } from ".";
-import { saveToken } from "./store";
+import * as SecureStore from "expo-secure-store";
 
 const login = async (email, password) => {
   const res = await instance.post("/api/user/signin", {
@@ -11,8 +11,27 @@ const login = async (email, password) => {
 };
 
 const register = async (userInfo) => {
-  const res = await instance.post("/api/user/register", userInfo);
+  const formData = new FormData();
+  for (let key in userInfo) formData.append(key, userInfo[key]);
+
+  const res = await instance.post("/api/user/register", formData);
   if (res?.data.token) await saveToken(res.data.token);
   return res.data;
 };
-export { login, register };
+
+//save
+const saveToken = async (token) => {
+  SecureStore.setItem("token", token);
+};
+//get
+const getToken = async () => {
+  const token = await SecureStore.getItemAsync("token");
+  ///// check exp time
+  return token;
+};
+//delete
+const logout = async () => {
+  await SecureStore.deleteItemAsync("token");
+};
+
+export { login, register, logout, saveToken, getToken };
