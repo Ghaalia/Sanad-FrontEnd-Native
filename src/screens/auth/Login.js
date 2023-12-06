@@ -8,22 +8,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../apis/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import UserContext from "../../../context/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
 
   const { mutate: login_mutate, error } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(email, password),
+    onSuccess: () => {
+      setUser(true);
+      navigation.navigate("profile");
+    },
   });
   return (
     <View>
