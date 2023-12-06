@@ -39,9 +39,6 @@ const storeNotificatioToken = async (token) => {
   const res = await instance.post("/api/register_token", { token });
   return res.data;
 };
-<<<<<<< HEAD
-export { login, register, logout, saveToken, getToken, storeNotificatioToken };
-=======
 
 const getMyProfile = async () => {
   const { data } = await instance.get("/user/userprofile");
@@ -57,4 +54,3 @@ export {
   storeNotificatioToken,
   getMyProfile,
 };
->>>>>>> b82b720841b671656ab60bec96d5ea30d9c0426d
