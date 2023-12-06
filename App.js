@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -51,17 +51,15 @@ export default function App() {
 
   if (!fontsLoaded) return <AppLoading />;
 
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    setUser(getToken());
-  }, []);
+  // const { user, setUser } = useState({});
+  // useEffect(() => {
+  //   setUser(getToken());
+  // }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-     
-      <StatusBar animated={true} backgroundColor="transparent" />
-      <UserContext.Provider value={{ user, setUser }}>
-
+      <UserContext.Provider>
+        <StatusBar animated={true} backgroundColor="transparent" />
         <NavigationContainer>
           <MainNavigation />
         </NavigationContainer>
@@ -69,3 +67,5 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+
+// value={{ user, setUser }}
