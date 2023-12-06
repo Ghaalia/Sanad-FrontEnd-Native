@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ProfileImage from "../../components/ProfileImage";
 import {
@@ -15,10 +15,16 @@ import {
   MaterialIcons,
   Feather,
 } from "@expo/vector-icons";
+import UserContext from "../../../context/UserContext";
 
 const Profile = () => {
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
 
+  if (!user) {
+    // navigation
+    navigation.replace("login");
+  }
   return (
     <View
       style={{

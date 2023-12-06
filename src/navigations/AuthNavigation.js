@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+
 import { createStackNavigator } from "@react-navigation/stack";
 import Register from "../screens/auth/Register";
 import Login from "../screens/auth/Login";

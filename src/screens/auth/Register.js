@@ -7,23 +7,29 @@ import {
   View,
   useAnimatedValue,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import { register } from "../../apis/auth";
+import { getToken, register } from "../../apis/auth";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import UserContext from "../../../context/UserContext";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
-    onSuccess: () => {},
+    onSuccess: () => {
+      setUser(true);
+      navigation.navigate("profile");
+    },
   });
+
   formValidation = async () => {
     this.setState({ loading: true });
     let errorFlag = false;
@@ -95,13 +101,12 @@ const Register = () => {
               placeholderTextColor="white"
               secureTextEntry
               style={styles.textinput}
-              // onChangeText={(text) => this.setState({ password: text })}
             />
           </View>
 
           <TouchableOpacity
             onPress={() => {
-              mutate_register;
+              mutate_register();
             }}
             style={styles.redbutton}
           >
