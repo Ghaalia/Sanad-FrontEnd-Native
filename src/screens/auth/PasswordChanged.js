@@ -9,8 +9,10 @@ const PasswordChanged = () => {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
-      <Image source={require("../../../assets/Frame5.png")} />
-
+      <Image
+        style={{ height: 180, width: 395 }}
+        source={require("../../../assets/Group143.png")}
+      />
       <View
         style={{
           justifyContent: "center",

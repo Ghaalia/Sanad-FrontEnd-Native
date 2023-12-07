@@ -18,8 +18,10 @@ const OtpVerification = () => {
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
       <View>
-        <Image source={require("../../../assets/Frame5.png")} />
-
+        <Image
+          style={{ height: 180, width: 395 }}
+          source={require("../../../assets/Group143.png")}
+        />
         <ScrollView>
           <View style={styles.bg}>
             <Pressable
