@@ -1,10 +1,33 @@
-import { StyleSheet, Switch, Text, View } from "react-native";
-import React, { useState } from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useContext, useState } from "react";
 import { Moon } from "lucide-react-native";
+import { logout } from "../../apis/auth";
+import { useMutation } from "@tanstack/react-query";
+import { setStatusBarStyle } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/native";
+import UserContext from "../../../context/UserContext";
 
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const { user, setUser } = useContext(UserContext);
+  const navigation = useNavigation();
+
+  const { mutate: logout_mutate, error } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: () => logout(),
+    onSuccess: () => {
+      setUser(false);
+      // navigation.navigate("login");
+    },
+  });
   return (
     <View
       style={{
@@ -98,8 +121,13 @@ const Setting = () => {
             value={isEnabled}
           />
         </View>
-
-        <Text style={styles.logout}>Logout</Text>
+        <TouchableOpacity
+          onPress={() => {
+            logout_mutate();
+          }}
+        >
+          <Text style={styles.logout}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

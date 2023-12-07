@@ -33,6 +33,7 @@ const ExploreEventFilter = () => {
             textAlign: "center",
             color: "white",
             fontWeight: "500",
+            fontFamily: "Urbanist_500Medium",
           }}
         >
           Current
@@ -64,7 +65,12 @@ const ExploreEventFilter = () => {
         }}
       >
         <Text
-          style={{ textAlign: "center", color: "white", fontWeight: "500" }}
+          style={{
+            textAlign: "center",
+            color: "white",
+            fontWeight: "500",
+            fontFamily: "Urbanist_500Medium",
+          }}
         >
           Later
         </Text>

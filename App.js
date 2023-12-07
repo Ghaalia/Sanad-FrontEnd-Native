@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -12,6 +12,8 @@ import {
   useFonts,
   Urbanist_400Regular,
   Urbanist_600SemiBold,
+  Urbanist_700Bold,
+  Urbanist_500Medium,
 } from "@expo-google-fonts/urbanist";
 import UserContext from "./context/UserContext";
 import { getToken } from "./src/apis/auth";
@@ -20,6 +22,7 @@ LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 export default function App() {
+  const [user, setUser] = useState(false);
   useEffect(() => {
     // Request permission to receive push notifications (iOS only)
     Notifications.requestPermissionsAsync().then((status) => {
@@ -47,20 +50,26 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     Urbanist_400Regular,
     Urbanist_600SemiBold,
+    Urbanist_700Bold,
+    Urbanist_500Medium,
   });
+
+  const checkUser = async () => {
+    const user = await getToken();
+    setUser(user);
+  };
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   if (!fontsLoaded) return <AppLoading />;
 
-  // const [user, setUser] = useState({});
-  // useEffect(() => {
-  //   setUser(getToken());
-  // }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
+     
       <StatusBar animated={true} backgroundColor="transparent" />
-      <UserContext.Provider>
-        {/* value={{ user, setUser }} */}
+      <UserContext.Provider value={{ user, setUser }}>
+
         <NavigationContainer>
           <MainNavigation />
         </NavigationContainer>
@@ -68,3 +77,5 @@ export default function App() {
     </QueryClientProvider>
   );
 }
+
+// value={{ user, setUser }}

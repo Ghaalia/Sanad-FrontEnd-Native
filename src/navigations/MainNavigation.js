@@ -96,6 +96,7 @@ const MainNavigation = () => {
                   color: focused ? "#F5574E" : "white",
                   fontSize: 10,
                   opacity: focused ? 1 : 0.3,
+                  fontFamily: "Urbanist_500Medium",
                 }}
               >
                 Explore
@@ -134,6 +135,7 @@ const MainNavigation = () => {
                   color: focused ? "#F5574E" : "white",
                   fontSize: 10,
                   opacity: focused ? 1 : 0.3,
+                  fontFamily: "Urbanist_500Medium",
                 }}
               >
                 Rewards
@@ -199,6 +201,7 @@ const MainNavigation = () => {
                   color: focused ? "#F5574E" : "white",
                   fontSize: 10,
                   opacity: focused ? 1 : 0.3,
+                  fontFamily: "Urbanist_500Medium",
                 }}
               >
                 Notifications
@@ -236,6 +239,7 @@ const MainNavigation = () => {
                   color: focused ? "#F5574E" : "white",
                   fontSize: 10,
                   opacity: focused ? 1 : 0.3,
+                  fontFamily: "Urbanist_500Medium",
                 }}
               >
                 Profile
