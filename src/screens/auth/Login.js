@@ -52,25 +52,6 @@ const Login = () => {
               alignItems: "center",
             }}
           >
-            {/* <Pressable
-          onPress={() => {
-            navigation.navigate("register");
-          }}
-          style={{
-            justifyContent: "center",
-            alignContent: "center",
-            padding: 30,
-          }}
-        >
-          <Image
-            style={{
-              width: 41,
-              height: 41,
-            }}
-            source={require("../../../assets/back.png")}
-          />
-        </Pressable> */}
-
             <Text style={styles.header}>Welcome!</Text>
             <View
               style={{
@@ -115,7 +96,12 @@ const Login = () => {
             {/* <Text style={{ fontSize: 14, color: "red" }}>
           {JSON.stringify(error?.message)}{" "}
         </Text> */}
-            <TouchableOpacity style={styles.redbutton} onPress={login_mutate}>
+            <TouchableOpacity
+              style={styles.redbutton}
+              onPress={() => {
+                login_mutate();
+              }}
+            >
               <Text style={styles.button}>Login</Text>
             </TouchableOpacity>
 

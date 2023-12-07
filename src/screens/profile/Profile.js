@@ -20,7 +20,7 @@ import UserContext from "../../../context/UserContext";
 const Profile = () => {
   const navigation = useNavigation();
   const { user } = useContext(UserContext);
-
+  console.log(user);
   if (!user) {
     // navigation
     navigation.replace("login");
