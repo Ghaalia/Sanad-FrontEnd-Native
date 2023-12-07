@@ -51,17 +51,16 @@ export default function App() {
 
   if (!fontsLoaded) return <AppLoading />;
 
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    setUser(getToken());
-  }, []);
+  // const [user, setUser] = useState({});
+  // useEffect(() => {
+  //   setUser(getToken());
+  // }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
-     
       <StatusBar animated={true} backgroundColor="transparent" />
-      <UserContext.Provider value={{ user, setUser }}>
-
+      <UserContext.Provider>
+        {/* value={{ user, setUser }} */}
         <NavigationContainer>
           <MainNavigation />
         </NavigationContainer>

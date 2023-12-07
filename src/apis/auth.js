@@ -34,9 +34,8 @@ const logout = async () => {
   await SecureStore.deleteItemAsync("token");
 };
 
-export { login, register, logout, saveToken, getToken };
 const storeNotificatioToken = async (token) => {
   const res = await instance.post("/api/register_token", { token });
   return res.data;
 };
-export { login, register, storeNotificatioToken };
+export { login, register, logout, saveToken, getToken, storeNotificatioToken };
