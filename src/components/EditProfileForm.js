@@ -38,6 +38,7 @@ const EditProfileForm = () => {
       />
       <Text style={{ color: "black" }}> {profile?.email}</Text>
       <Text style={{ color: "black" }}> {profile?.first_name}</Text>
+      <Text style={{ color: "black" }}> {profile?.gender}</Text>
       {/* <View>{profile?.image}</View> */}
 
       <TextInputWithLabel

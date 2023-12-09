@@ -16,11 +16,13 @@ import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UserContext from "../../../context/UserContext";
 import { FileInput } from "lucide-react-native";
+import { Icon } from "react-native-elements";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  const [gender, setGender] = useState(null);
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
@@ -30,6 +32,9 @@ const Register = () => {
       navigation.navigate("profile");
     },
   });
+  const handleGenderSelect = (selectedGender) => {
+    setGender(selectedGender);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
