@@ -6,26 +6,43 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import { colors } from "../config/theme";
+import { saveSecurely } from "../../src/utils/storage";
+
+import { useState, useContext } from "react";
 import TextInputWithLabel from "./TextInputWithLabel";
+import UploadModal from "./profile/UploadModal";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getMyProfile } from "../apis/auth";
+import UserContext from "../../context/UserContext";
 
 const EditProfileForm = () => {
+  const { user, setUser } = useContext(UserContext);
+  const queryClient = useQueryClient();
+
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+
+  console.log(profile);
+
   return (
     <ScrollView
       style={{
-        width: "90%",
-        padding: 10,
+        width: "100%",
+        paddingTop: 100,
       }}
       contentContainerStyle={{
-        display: "flex",
+        height: "100%",
         flexDirection: "column",
         gap: 15,
       }}
     >
-      <TextInputWithLabel
-        label="First name"
-        placeholder="Enter your first name"
-      />
+      <TextInputWithLabel label="First name" placeholder={profile?.email} />
+      <Text style={{ color: "black" }}> {profile?.email}</Text>
 
       <TextInputWithLabel
         label="Last name"
@@ -41,8 +58,18 @@ const EditProfileForm = () => {
             gap: 15,
           }}
         >
-          <Text style={styles.button}>Female</Text>
-          <Text style={styles.button}>Male</Text>
+          <Text
+            style={styles.button}
+            // onPress={setFemale}
+          >
+            Female
+          </Text>
+          <Text
+            style={styles.button}
+            // onPress={setMale}
+          >
+            Male
+          </Text>
         </View>
       </View>
 
@@ -96,6 +123,15 @@ const EditProfileForm = () => {
           />
         </View>
       </View>
+      {/* <UploadModal
+        modalVisible={modalVisible}
+        onBackPress={() => {
+          setModalVisible(false);
+        }}
+        onCameraPress={() => uploadImage()}
+        onGalleryPress={() => uploadImage("gallery")}
+        onRemovePress={() => removeImage()}
+      /> */}
     </ScrollView>
   );
 };

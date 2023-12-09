@@ -41,7 +41,7 @@ const storeNotificatioToken = async (token) => {
 };
 
 const getMyProfile = async () => {
-  const { data } = await instance.get("/user/userprofile");
+  const { data } = await instance.get("/api/user/userprofile");
   return data;
 };
 

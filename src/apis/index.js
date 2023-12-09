@@ -5,4 +5,12 @@ const instance = axios.create({
   baseURL: BaseURL,
 });
 
+instance.interceptors.request.use(async (config) => {
+  const token = await getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer${token}`;
+  }
+  return config;
+});
+
 export { BaseURL, instance };

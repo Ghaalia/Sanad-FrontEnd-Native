@@ -8,14 +8,12 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
-
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "transparent",
       "barStyle": "dark-content"
     }
   },
-  
   "dependencies": {
     "@expo-google-fonts/urbanist": "^0.2.3",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -36,7 +34,10 @@
     "react-native-google-fonts": "^0.0.0",
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
-    "expo-linear-gradient": "~12.3.0"
+    "expo-linear-gradient": "~12.3.0",
+    "expo-image-picker": "~14.3.2",
+    "expo-file-system": "~15.4.5",
+    "expo-sharing": "~11.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
