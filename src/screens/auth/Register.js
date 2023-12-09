@@ -32,9 +32,9 @@ const Register = () => {
       navigation.navigate("profile");
     },
   });
-  const handleGenderSelect = (selectedGender) => {
-    setGender(selectedGender);
-  };
+  // const handleGenderSelect = (selectedGender) => {
+  //   setGender(selectedGender);
+  // };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
