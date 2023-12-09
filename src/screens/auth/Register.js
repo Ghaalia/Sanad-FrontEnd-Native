@@ -21,8 +21,6 @@ const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
@@ -85,7 +83,6 @@ const Register = () => {
                 />
                 <TextInput
                   placeholder="Email"
-                  textContentType="emailAddress"
                   placeholderTextColor="white"
                   onChangeText={(text) => {
                     setUserInfo({ ...userInfo, email: text });
@@ -163,10 +160,3 @@ export default Register;
                   }}
                 /> */
 }
-
-// const handleSubmit = () => {
-// // Check if passwords match
-// if (password !== confirmPassword) {
-//   alert('Passwords do not match');
-//   return;
-// }
