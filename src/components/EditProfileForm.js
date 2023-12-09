@@ -6,29 +6,20 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
-import { colors } from "../config/theme";
-import { saveSecurely } from "../../src/utils/storage";
-
-import { useState, useContext } from "react";
+import React, { useContext } from "react";
 import TextInputWithLabel from "./TextInputWithLabel";
-import UploadModal from "./profile/UploadModal";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMyProfile } from "../apis/auth";
 import UserContext from "../../context/UserContext";
 
 const EditProfileForm = () => {
   const { user, setUser } = useContext(UserContext);
-  const queryClient = useQueryClient();
 
   const { data: profile } = useQuery({
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
-
   console.log(profile);
-
   return (
     <ScrollView
       style={{
@@ -41,8 +32,13 @@ const EditProfileForm = () => {
         gap: 15,
       }}
     >
-      <TextInputWithLabel label="First name" placeholder={profile?.email} />
+      <TextInputWithLabel
+        label="First name"
+        placeholder="Enter your first name"
+      />
       <Text style={{ color: "black" }}> {profile?.email}</Text>
+      <Text style={{ color: "black" }}> {profile?.first_name}</Text>
+      {/* <View>{profile?.image}</View> */}
 
       <TextInputWithLabel
         label="Last name"

@@ -24,6 +24,7 @@ const Profile = () => {
   const [image, setImage] = useState(user?.image);
   const [modalVisible, setModalVisible] = useState(false);
 
+  console.log(user);
   if (!user) {
     // navigation
     navigation.replace("login");

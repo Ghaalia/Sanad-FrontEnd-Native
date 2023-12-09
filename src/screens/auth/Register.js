@@ -113,6 +113,24 @@ const Register = () => {
                   secureTextEntry
                   style={styles.textinput}
                 />
+                <TextInput
+                  placeholder="First name"
+                  placeholderTextColor="white"
+                  secureTextEntry
+                  onChangeText={(text) => {
+                    setUserInfo({ ...userInfo, first_name: text });
+                  }}
+                  style={styles.textinput}
+                />
+                <TextInput
+                  placeholder="Last name"
+                  placeholderTextColor="white"
+                  secureTextEntry
+                  onChangeText={(text) => {
+                    setUserInfo({ ...userInfo, last_name: text });
+                  }}
+                  style={styles.textinput}
+                />
               </View>
 
               <TouchableOpacity
