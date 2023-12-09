@@ -15,11 +15,14 @@ import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UserContext from "../../../context/UserContext";
+import { FileInput } from "lucide-react-native";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
@@ -30,16 +33,6 @@ const Register = () => {
     },
   });
 
-  formValidation = async () => {
-    this.setState({ loading: true });
-    let errorFlag = false;
-    if (this.state.password !== this.state.confirmPassword) {
-      errorFlag = true;
-      this.setState({
-        passwordErrorMessage: "Passwoad and confirm password should be same.",
-      });
-    }
-  };
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
       <View>
@@ -92,6 +85,7 @@ const Register = () => {
                 />
                 <TextInput
                   placeholder="Email"
+                  textContentType="emailAddress"
                   placeholderTextColor="white"
                   onChangeText={(text) => {
                     setUserInfo({ ...userInfo, email: text });
@@ -116,7 +110,6 @@ const Register = () => {
                 <TextInput
                   placeholder="First name"
                   placeholderTextColor="white"
-                  secureTextEntry
                   onChangeText={(text) => {
                     setUserInfo({ ...userInfo, first_name: text });
                   }}
@@ -125,7 +118,6 @@ const Register = () => {
                 <TextInput
                   placeholder="Last name"
                   placeholderTextColor="white"
-                  secureTextEntry
                   onChangeText={(text) => {
                     setUserInfo({ ...userInfo, last_name: text });
                   }}
@@ -150,3 +142,31 @@ const Register = () => {
 };
 
 export default Register;
+
+// formValidation = async () => {
+//   this.setState({ loading: true });
+//   let errorFlag = false;
+//   if (this.state.password !== this.state.confirmPassword) {
+//     errorFlag = true;
+//     this.setState({
+//       passwordErrorMessage: "Passwoad and confirm password should be same.",
+//     });
+//   }
+// };
+
+{
+  /* <FileInput
+                  placeholder="image"
+                  type="file"
+                  onChange={(image) => {
+                    setUserInfo({ ...userInfo, image: image });
+                  }}
+                /> */
+}
+
+// const handleSubmit = () => {
+// // Check if passwords match
+// if (password !== confirmPassword) {
+//   alert('Passwords do not match');
+//   return;
+// }

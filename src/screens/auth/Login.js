@@ -1,13 +1,4 @@
-import {
-  Button,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
@@ -41,7 +32,6 @@ const Login = () => {
 
         <KeyboardAwareScrollView
           style={{
-            // backgroundColor: "red",
             height: 600,
             marginTop: 40,
           }}
@@ -65,6 +55,7 @@ const Login = () => {
               <TextInput
                 placeholder="Email"
                 placeholderTextColor="white"
+                textContentType="emailAddress"
                 onChangeText={(text) => {
                   setEmail(text);
                 }}
@@ -93,9 +84,10 @@ const Login = () => {
               </Text>
             </View>
 
-            {/* <Text style={{ fontSize: 14, color: "red" }}>
-          {JSON.stringify(error?.message)}{" "}
-        </Text> */}
+            <Text style={{ fontSize: 14, color: "white" }}>
+              {" "}
+              {JSON.stringify(error?.name)}
+            </Text>
             <TouchableOpacity
               style={styles.redbutton}
               onPress={() => {

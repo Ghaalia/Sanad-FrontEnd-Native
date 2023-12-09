@@ -8,14 +8,13 @@ const styles = StyleSheet.create({
     fontFamily: "Urbanist_600SemiBold",
   },
   textinput: {
-    backgroundColor: "gray",
+    backgroundColor: "rgba(105,105,105, 0.25)",
     color: "white",
     width: 339,
     height: 50,
     borderRadius: 30,
     paddingHorizontal: 20,
     fontFamily: "Urbanist_400Regular",
-    opacity: 0.5,
   },
 
   header: {
@@ -55,8 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   boxinput: {
-    backgroundColor: "gray",
-    opacity: 0.25,
+    backgroundColor: "rgba(105,105,105, 0.25)",
     color: "white",
     width: 69,
     height: 60,
