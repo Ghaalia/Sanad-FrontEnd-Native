@@ -17,12 +17,7 @@ import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UserContext from "../../../context/UserContext";
-<<<<<<< HEAD
-import { FileInput } from "lucide-react-native";
-import { Icon } from "react-native-elements";
-=======
 import * as ImagePicker from "expo-image-picker";
->>>>>>> 6366591c1ce66dd05c6e9e428b7e465d2a113e5a
 
 const Register = () => {
   const [selectedImage, setSelectedImage] = useState(null);
