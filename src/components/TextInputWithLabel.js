@@ -1,9 +1,14 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
+import { colors } from "../config/theme";
 
 const TextInputWithLabel = ({
   label = "please enter a label ",
   placeholder = "Please Enter a placeholder",
+  value,
+  onChangeText,
+  keyboardType = "default",
+  isPassword = false,
 }) => {
   return (
     <View
@@ -14,16 +19,20 @@ const TextInputWithLabel = ({
         gap: 5,
       }}
     >
-      <Text> {label} </Text>
+      <Text style={{ color: colors.SanadBlue1 }}> {label} </Text>
       <TextInput
         style={{
           height: 40,
-          borderWidth: 0.25,
+          backgroundColor: colors.SanadBgGrey,
           paddingHorizontal: 10,
           borderRadius: 20,
-          width: "96%",
+          width: "100%",
         }}
         placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+        keyboardType={keyboardType}
+        secureTextEntry={isPassword}
       />
     </View>
   );

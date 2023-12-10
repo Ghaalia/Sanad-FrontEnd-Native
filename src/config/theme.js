@@ -6,3 +6,10 @@ export const colors = {
   SanadBgGrey: "#EFEFEF",
   SanadMedGrey: "#989898",
 };
+
+export const fonts = {
+  regular: "400",
+  medium: "500",
+  semibold: "600",
+  bold: "700",
+};

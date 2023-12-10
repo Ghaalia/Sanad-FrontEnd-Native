@@ -5,6 +5,7 @@ import { colors } from "../config/theme";
 import placeholder from "./../../assets/profile/profile.jpg";
 
 const ProfileImage = ({ onButtonPress, uri }) => {
+  // console.log("Image URI:", uri);
   return (
     <View
       style={{
@@ -22,6 +23,7 @@ const ProfileImage = ({ onButtonPress, uri }) => {
             borderColor: colors.SanadBgGrey,
             borderWidth: 5,
             resizeMode: "contain",
+            backgroundColor: colors.SanadWhite,
           }}
         />
       </TouchableOpacity>

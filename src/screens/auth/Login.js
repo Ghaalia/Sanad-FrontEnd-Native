@@ -32,7 +32,7 @@ const Login = () => {
     },
   });
   return (
-    <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
+    <View style={{ flex: 1, width: "100%", backgroundColor: "#1B1931" }}>
       <View>
         <Image
           style={{ height: 180, width: 395 }}
@@ -44,6 +44,7 @@ const Login = () => {
             // backgroundColor: "red",
             height: 600,
             marginTop: 40,
+            paddingHorizontal: 30,
           }}
         >
           <View
@@ -56,7 +57,7 @@ const Login = () => {
             <View
               style={{
                 height: 208,
-                width: 393,
+                width: "100%",
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 20,

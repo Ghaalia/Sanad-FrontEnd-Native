@@ -8,6 +8,7 @@ import {
   FontAwesome5,
   Entypo,
 } from "@expo/vector-icons";
+import { colors } from "../../config/theme";
 
 const EventCard = () => {
   return (
@@ -44,7 +45,7 @@ const EventCard = () => {
           paddingVertical: 4,
           borderTopStartRadius: 20,
           borderBottomStartRadius: 20,
-          backgroundColor: "#F5574E",
+          backgroundColor: colors.SanadRed,
         }}
       >
         <MaterialCommunityIcons name="human-male" size={20} color="white" />

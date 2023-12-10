@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Instagram, MailIcon, MessageCircle } from "lucide-react-native";
+import { colors } from "../../config/theme";
 
 const ContactUs = () => {
   return (
@@ -12,33 +13,51 @@ const ContactUs = () => {
         alignItems: "center",
       }}
     >
+      <Text
+        style={{
+          flex: 1,
+          width: "100%",
+          color: "white",
+          fontWeight: "600",
+          marginTop: 75,
+          paddingTop: 35,
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: 28,
+        }}
+      >
+        Contact Us
+      </Text>
       <View
         style={{
           backgroundColor: "white",
-          height: "65%",
-          width: "80%",
+          height: "75%",
+          width: "88%",
+          paddingHorizontal: 30,
+          gap: 30,
+          paddingTop: 30,
           flexDirection: "column",
+          justifyContent: "flex-start",
           alignItems: "center",
           shadowColor: "black",
-          shadowOffset: { height: -1, width: -10 },
+          shadowOffset: { height: 1, width: 1 },
+          shadowRadius: 10,
           shadowOpacity: 0.25,
-          borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
+          borderTopLeftRadius: 16,
           position: "relative",
-          paddingTop: 40,
-          paddingHorizontal: 20,
-          gap: 25,
         }}
       >
         <View
           style={{
-            width: "90%",
+            width: "100%",
 
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
             borderRadius: 20,
-            borderWidth: 0.25,
+            backgroundColor: colors.SanadBgGrey,
             padding: 10,
           }}
         >
@@ -48,12 +67,12 @@ const ContactUs = () => {
 
         <View
           style={{
-            width: "90%",
+            width: "100%",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
             borderRadius: 20,
-            borderWidth: 0.25,
+            backgroundColor: colors.SanadBgGrey,
             padding: 10,
           }}
         >
@@ -63,12 +82,12 @@ const ContactUs = () => {
 
         <View
           style={{
-            width: "90%",
+            width: "100%",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
             borderRadius: 20,
-            borderWidth: 0.25,
+            backgroundColor: colors.SanadBgGrey,
             padding: 10,
           }}
         >

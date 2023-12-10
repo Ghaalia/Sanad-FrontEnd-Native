@@ -11,6 +11,7 @@ import ProfileNavigation from "./ProfileNavigation";
 import * as Notifications from "expo-notifications";
 import { useMutation } from "@tanstack/react-query";
 import { storeNotificatioToken } from "../apis/auth";
+import { colors } from "../config/theme";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,12 +59,12 @@ const MainNavigation = () => {
           left: 0,
           right: 0,
           elevation: 0,
-          backgroundColor: "#1B1931",
-          borderStartEndRadius: 30,
-          borderTopStartRadius: 30,
+          backgroundColor: colors.SanadBlue1,
+          borderStartEndRadius: 40,
+          borderTopStartRadius: 40,
           height: 100,
           shadowColor: "black",
-          shadowOffset: { height: -10, width: 4 },
+          shadowOffset: { height: -8, width: 4 },
           shadowRadius: 8,
           shadowOpacity: 0.2,
         },

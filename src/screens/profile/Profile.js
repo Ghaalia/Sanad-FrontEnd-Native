@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ProfileImage from "../../components/ProfileImage";
 import {
@@ -17,12 +17,25 @@ import {
 } from "@expo/vector-icons";
 import UserContext from "../../../context/UserContext";
 import UploadModal from "../../components/profile/UploadModal";
+import { BaseURL } from "../../apis";
+import { saveSecurely } from "../../utils/storage";
+import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../apis/auth";
+import { colors } from "../../config/theme";
 
 const Profile = () => {
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [image, setImage] = useState(user?.image);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+  console.log(profile);
 
   console.log(user);
   if (!user) {
@@ -30,9 +43,11 @@ const Profile = () => {
     navigation.replace("login");
   }
 
-  // useEffect(() => {
-  // get data from API
-  // })
+  useEffect(() => {
+    if (profile && profile.image) {
+      setImage(`${BaseURL}/${profile.image}`);
+    }
+  }, [profile]);
 
   const uploadImage = async (mode) => {
     try {
@@ -74,64 +89,52 @@ const Profile = () => {
       setModalVisible(false);
     }
   };
+  const getFilenameFromUri = (uri) => {
+    return uri.split("/").pop(); // This will return the last segment after '/' which is typically the filename
+  };
 
-  const saveImage = async (image) => {
+  const saveImage = async (uri) => {
     try {
-      // update displayed image
-      setImage(image);
+      let filename = null;
+      if (uri) {
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          uri,
+          [{ resize: { width: 800 } }],
+          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+        );
 
-      // make api call to save
-      // sendToBackend();
+        // get filename from URI
+        filename = getFilenameFromUri(resizedImage.uri);
 
+        // update displayed image with full URI
+        setImage(resizedImage.uri);
+      } else {
+        // in case of removing the image
+        setImage(null);
+      }
+
+      // update user data with filename instead of full URI
       const updatedUserData = {
         ...user,
-        image,
+        image: filename,
       };
-      await setAppUser(updatedUserData);
-      await saveSecurely("profileAppUser", updatedUserData);
+      await setUser(updatedUserData);
+
+      const minimalUserData = {
+        id: user._id,
+        token: user.token,
+        image: filename, // save only the filename
+      };
+      await saveSecurely("profileAppUser", JSON.stringify(minimalUserData));
 
       setModalVisible(false);
     } catch (error) {
-      throw error;
+      console.error("Error in saveImage:", error);
+      alert("Error while saving image");
+      setModalVisible(false);
     }
   };
-
-  // const sendToBackend = async () => {
-  //   try {
-  //     const formData = new FormData();
-
-  //     formData.append("image", {
-  //       uri: image,
-  //       type: "image/png",
-  //       name: "profile-image",
-  //     });
-
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //       transformRequest: () => {
-  //         return formData;
-  //       },
-  //     };
-
-  //     await axios.post("https://your-api-endpoint", formData, config);
-
-  //     alert("success");
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // };
-
-  // const onLogout = async () => {
-  //   try {
-  //     await setAppUser(null);
-  //     await saveSecurely("profileAppUser", null);
-  //   } catch ({ message }) {
-  //     alert("Logout Error! " + message);
-  //   }
-  // };
-
+  // console.log(image);
   return (
     <View
       style={{
@@ -180,7 +183,7 @@ const Profile = () => {
         <TouchableOpacity style={{ position: "absolute", top: -80 }}>
           <ProfileImage
             onButtonPress={() => setModalVisible(true)}
-            uri={image || user?.image}
+            uri={image}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -232,15 +235,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -276,15 +277,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -324,15 +323,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -372,15 +369,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
