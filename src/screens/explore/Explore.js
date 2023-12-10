@@ -13,13 +13,19 @@ import Search from "../../components/explore/Search";
 import { ScrollView } from "react-native-gesture-handler";
 import EventCard from "../../components/explore/EventCard";
 import ExploreEventFilter from "../../components/explore/ExploreEventFilter";
-import logoSanad from "../../../assets/slogo.jpg";
+import { colors } from "../../config/theme";
 
 const Explore = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#EFEFEF", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.SanadBgGrey,
+        alignItems: "center",
+      }}
+    >
       <View
         style={{
           flex: 15,
@@ -28,15 +34,24 @@ const Explore = () => {
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
+          paddingTop: 30,
+          backgroundColor: colors.SanadBlue1,
+          borderEndEndRadius: 40,
+          borderEndStartRadius: 40,
+          shadowColor: "black",
+          shadowOffset: { height: 8, width: 4 },
+          shadowRadius: 8,
+          shadowOpacity: 0.2,
         }}
       >
         <Text
           style={{
+            color: colors.SanadWhite,
             fontSize: 40,
-            shadowColor: "black",
-            shadowOffset: { height: 2, width: 0 },
-            shadowRadius: 1,
-            shadowOpacity: 0.3,
+            // shadowColor: "black",
+            // shadowOffset: { height: 2, width: 0 },
+            // shadowRadius: 1,
+            // shadowOpacity: 0.3,
             fontFamily: "Urbanist_600SemiBold",
           }}
         >

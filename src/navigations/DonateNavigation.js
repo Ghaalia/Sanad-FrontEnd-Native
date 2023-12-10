@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const DonateNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="album" component={Album} />
       <Stack.Screen name="donate" component={Donate} />
       <Stack.Screen name="generateLinkPage" component={GenerateLinkPage} />

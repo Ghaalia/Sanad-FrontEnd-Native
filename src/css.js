@@ -1,16 +1,19 @@
 import { StyleSheet } from "react-native";
+import { colors } from "./config/theme";
 
 const styles = StyleSheet.create({
   button: {
+    width: "100%",
     fontSize: 15,
     fontWeight: "bold",
     color: "white",
+    textAlign: "center",
     fontFamily: "Urbanist_600SemiBold",
   },
   textinput: {
     backgroundColor: "rgba(105,105,105, 0.25)",
     color: "white",
-    width: 339,
+    width: "100%",
     height: 50,
     borderRadius: 30,
     paddingHorizontal: 20,
@@ -30,15 +33,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B1931",
     justifyContent: "center",
     alignItems: "center",
-
     flexDirection: "column",
     flex: 1,
-    // padding: 10,
-    marginBottom: 30,
+    width: "100%",
+    paddingTop: 10,
+    marginBottom: 40,
+    paddingBottom: 30,
   },
   redbutton: {
-    backgroundColor: "#F5574E",
-    width: 339,
+    backgroundColor: colors.SanadRed,
+    width: "100%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -61,6 +65,50 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 20,
     fontFamily: "Urbanist_400Regular",
+  },
+  genderButtonSelected: {
+    borderRadius: 30,
+    width: "48%",
+    height: 120,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: 10,
+    opacity: 1, // Full opacity for selected button
+  },
+  genderButton: {
+    borderRadius: 30,
+    width: "48%",
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: 10,
+    opacity: 0.3, // Default opacity for unselected buttons
+  },
+  genderButtonText: {
+    color: colors.SanadWhite,
+    fontWeight: "600",
+  },
+  selectDate: {
+    width: "100%",
+    height: 50,
+    backgroundColor: colors.SanadWhite,
+    borderColor: colors.SanadBgGrey,
+    borderWidth: 3,
+    marginTop: 30,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 30,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  selectDateText: {
+    color: colors.SanadRed,
+    fontWeight: "600",
+    fontSize: 15,
   },
 });
 

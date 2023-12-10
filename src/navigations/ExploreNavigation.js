@@ -10,14 +10,12 @@ const Stack = createStackNavigator();
 
 const ExploreNavigation = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="explore" component={Explore} />
-        <Stack.Screen name="eventDetails" component={EventDetails} />
-        <Stack.Screen name="Description" component={Description} />
-        <Stack.Screen name="location" component={Location} />
-      </Stack.Navigator>
-    </SafeAreaView>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="explore" component={Explore} />
+      <Stack.Screen name="eventDetails" component={EventDetails} />
+      <Stack.Screen name="Description" component={Description} />
+      <Stack.Screen name="location" component={Location} />
+    </Stack.Navigator>
   );
 };
 

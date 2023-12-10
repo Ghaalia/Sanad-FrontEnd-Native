@@ -10,17 +10,62 @@ const login = async (email, password) => {
   return res.data;
 };
 
-const register = async (userInfo) => {
+const register = async (userInfo, imageUri) => {
   const formData = new FormData();
-  for (let key in userInfo) formData.append(key, userInfo[key]);
+  for (let key in userInfo) {
+    formData.append(key, userInfo[key]);
+  }
 
-  const res = await instance.post("/api/user/register", formData);
-  if (res?.data.token) await saveToken(res.data.token);
+  if (imageUri) {
+    const imageName = imageUri.split("/").pop();
+    formData.append("image", {
+      uri: imageUri,
+      type: "image/jpeg", // or the correct type based on the image
+      name: imageName,
+    });
+  }
+
+  const res = await instance.post("/api/user/register", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  if (res?.data.token) {
+    await saveToken(res.data.token);
+  }
 
   return res.data;
 };
 
+// const register = async (userInfo, imageFile) => {
+//   const formData = new FormData();
+
+//   for (let key in userInfo) {
+//     formData.append(key, userInfo[key]); //other info
+//   }
+//   if (imageFile) {
+//     formData.append("image", imageFile); //only image
+//   }
+//   const res = await instance.post("/api/user/register", formData); //send formdata to server
+//   if (res?.data.token) {
+//     await saveToken(res.data.token);
+//   }
+//   return res.data;
+// };
+
+// const register = async (userInfo) => {
+//   const formData = new FormData();
+//   for (let key in userInfo) formData.append(key, userInfo[key]);
+
+//   const res = await instance.post("/api/user/register", formData);
+//   if (res?.data.token) await saveToken(res.data.token);
+
+//   return res.data;
+// };
+
 //save
+
 const saveToken = async (token) => {
   await SecureStore.setItemAsync("token", token);
 };

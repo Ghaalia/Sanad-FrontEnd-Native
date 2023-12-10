@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ProfileImage from "../../components/ProfileImage";
 import {
@@ -16,15 +16,125 @@ import {
   Feather,
 } from "@expo/vector-icons";
 import UserContext from "../../../context/UserContext";
+import UploadModal from "../../components/profile/UploadModal";
+import { BaseURL } from "../../apis";
+import { saveSecurely } from "../../utils/storage";
+import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../apis/auth";
+import { colors } from "../../config/theme";
 
 const Profile = () => {
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [image, setImage] = useState(user?.image);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+  console.log(profile);
+
   console.log(user);
   if (!user) {
     // navigation
     navigation.replace("login");
   }
+
+  useEffect(() => {
+    if (profile && profile.image) {
+      setImage(`${BaseURL}/${profile.image}`);
+    }
+  }, [profile]);
+
+  const uploadImage = async (mode) => {
+    try {
+      let result = {};
+
+      if (mode === "gallery") {
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+        result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+      } else {
+        await ImagePicker.requestCameraPermissionsAsync();
+        result = await ImagePicker.launchCameraAsync({
+          cameraType: ImagePicker.CameraType.front,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+      }
+
+      if (!result.canceled) {
+        // save image
+        await saveImage(result.assets[0].uri);
+      }
+    } catch (error) {
+      alert("Error uploading image: " + error.message);
+      setModalVisible(false);
+    }
+  };
+
+  const removeImage = async () => {
+    try {
+      saveImage(null);
+    } catch ({ message }) {
+      alert(message);
+      setModalVisible(false);
+    }
+  };
+  const getFilenameFromUri = (uri) => {
+    return uri.split("/").pop(); // This will return the last segment after '/' which is typically the filename
+  };
+
+  const saveImage = async (uri) => {
+    try {
+      let filename = null;
+      if (uri) {
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          uri,
+          [{ resize: { width: 800 } }],
+          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+        );
+
+        // get filename from URI
+        filename = getFilenameFromUri(resizedImage.uri);
+
+        // update displayed image with full URI
+        setImage(resizedImage.uri);
+      } else {
+        // in case of removing the image
+        setImage(null);
+      }
+
+      // update user data with filename instead of full URI
+      const updatedUserData = {
+        ...user,
+        image: filename,
+      };
+      await setUser(updatedUserData);
+
+      const minimalUserData = {
+        id: user._id,
+        token: user.token,
+        image: filename, // save only the filename
+      };
+      await saveSecurely("profileAppUser", JSON.stringify(minimalUserData));
+
+      setModalVisible(false);
+    } catch (error) {
+      console.error("Error in saveImage:", error);
+      alert("Error while saving image");
+      setModalVisible(false);
+    }
+  };
+  // console.log(image);
   return (
     <View
       style={{
@@ -41,10 +151,10 @@ const Profile = () => {
           color: "white",
           fontWeight: "600",
           marginTop: 75,
-          // backgroundColor: "green",
           justifyContent: "flex-start",
           alignItems: "flex-start",
           fontSize: 28,
+          // backgroundColor: "green",
         }}
       >
         My Profile
@@ -56,8 +166,6 @@ const Profile = () => {
           height: "75%",
           width: "88%",
           paddingHorizontal: 30,
-          // paddingBottom: 40,
-          // paddingTop: 20,
           gap: 45,
           flexDirection: "column",
           justifyContent: "center",
@@ -72,8 +180,12 @@ const Profile = () => {
         }}
       >
         {/*  Profile Image */}
-        <ProfileImage />
-
+        <TouchableOpacity style={{ position: "absolute", top: -80 }}>
+          <ProfileImage
+            onButtonPress={() => setModalVisible(true)}
+            uri={image}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("volunteeringHistory");
@@ -93,7 +205,7 @@ const Profile = () => {
             borderTopLeftRadius: 16,
           }}
         >
-          <FontAwesome5 name="handshake" size={24} color="#F5574E" />
+          <FontAwesome5 name="handshake" size={28} color="#F5574E" />
           <View
             style={{
               flexDirection: "column",
@@ -110,7 +222,6 @@ const Profile = () => {
 
         <View
           style={{
-            // backgroundColor: "yellow",
             width: "100%",
             height: 200,
             justifyContent: "space-between",
@@ -124,15 +235,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -168,15 +277,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -216,15 +323,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -264,15 +369,13 @@ const Profile = () => {
             style={{
               width: "100%",
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: colors.SanadBgGrey,
               flexDirection: "row",
               alignItems: "center",
               borderRadius: 30,
               paddingHorizontal: 5,
               justifyContent: "space-between",
-              borderStyle: "solid",
-              borderWidth: 0.5,
-              borderColor: "#F5574E",
+              borderColor: colors.SanadRed,
             }}
           >
             <View
@@ -307,6 +410,15 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <UploadModal
+        modalVisible={modalVisible}
+        onBackPress={() => {
+          setModalVisible(false);
+        }}
+        onCameraPress={() => uploadImage()}
+        onGalleryPress={() => uploadImage("gallery")}
+        onRemovePress={() => removeImage()}
+      />
     </View>
   );
 };

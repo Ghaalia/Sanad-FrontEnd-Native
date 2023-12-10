@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { setStatusBarStyle } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import UserContext from "../../../context/UserContext";
+import { colors, fonts } from "../../config/theme";
 
 const Setting = () => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -37,52 +38,84 @@ const Setting = () => {
         alignItems: "center",
       }}
     >
+      <Text
+        style={{
+          flex: 1,
+          width: "100%",
+          color: "white",
+          fontWeight: "600",
+          marginTop: 75,
+          paddingTop: 35,
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: 28,
+        }}
+      >
+        Settings
+      </Text>
       <View
         style={{
           backgroundColor: "white",
-          height: "65%",
-          width: "80%",
+          height: "75%",
+          width: "88%",
+          paddingHorizontal: 30,
+          gap: 30,
+          paddingTop: 30,
           flexDirection: "column",
+          justifyContent: "flex-start",
           alignItems: "center",
           shadowColor: "black",
-          shadowOffset: { height: -1, width: -10 },
+          shadowOffset: { height: 1, width: 1 },
+          shadowRadius: 10,
           shadowOpacity: 0.25,
-          borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
+          borderTopLeftRadius: 16,
           position: "relative",
-          paddingTop: 40,
-          paddingHorizontal: 20,
-          gap: 25,
         }}
       >
         <View
           style={{
-            width: "90%",
+            width: "100%",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             alignItems: "center",
             paddingVertical: 10,
+            paddingHorizontal: 10,
+            backgroundColor: colors.SanadBgGrey,
+            borderRadius: 30,
           }}
         >
           <Text
             style={{
+              width: "50%",
               fontSize: 17,
             }}
           >
             Language
           </Text>
-
-          <Text style={styles.button}>AR</Text>
-          <Text style={styles.button}>EN</Text>
+          <View
+            style={{
+              width: "50%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={styles.button}>AR</Text>
+            <Text style={styles.button}>EN</Text>
+          </View>
         </View>
 
         <View
           style={{
             width: "100%",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             alignItems: "center",
             paddingVertical: 10,
+            paddingHorizontal: 10,
+            backgroundColor: colors.SanadBgGrey,
+            borderRadius: 30,
           }}
         >
           <Text
@@ -100,9 +133,12 @@ const Setting = () => {
           style={{
             width: "100%",
             flexDirection: "row",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             alignItems: "center",
             paddingVertical: 10,
+            paddingHorizontal: 10,
+            backgroundColor: colors.SanadBgGrey,
+            borderRadius: 30,
           }}
         >
           <Text
@@ -122,11 +158,20 @@ const Setting = () => {
           />
         </View>
         <TouchableOpacity
+          style={styles.logout}
           onPress={() => {
             logout_mutate();
           }}
         >
-          <Text style={styles.logout}>Logout</Text>
+          <Text
+            style={{
+              color: colors.SanadWhite,
+              fontWeight: fonts.bold,
+              fontSize: 15,
+            }}
+          >
+            Logout
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -141,18 +186,21 @@ const styles = StyleSheet.create({
     borderWidth: 0.25,
     paddingVertical: 10,
     borderRadius: 20,
-    width: "20%",
+    width: "45%",
     textAlign: "center",
   },
   logout: {
+    marginTop: 40,
+    width: "100%",
     color: "white",
-    height: 40,
+    height: 50,
     paddingVertical: 10,
     paddingHorizontal: 30,
-    borderRadius: 20,
-    width: "60%",
+    width: "100%",
+    justifyContent: "center",
     textAlign: "center",
+    alignItems: "center",
     backgroundColor: "#F5574E",
-    overflow: "hidden",
+    borderRadius: 40,
   },
 });

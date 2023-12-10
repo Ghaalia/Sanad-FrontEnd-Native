@@ -1,30 +1,51 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { colors } from "../config/theme";
+import placeholder from "./../../assets/profile/profile.jpg";
 
-const ProfileImage = () => {
+const ProfileImage = ({ onButtonPress, uri }) => {
+  // console.log("Image URI:", uri);
   return (
     <View
       style={{
-        width: 160,
-        height: 160,
-        borderRadius: 100,
-        position: "absolute",
-        top: -80,
+        alignItems: "center",
+        position: "relative",
       }}
     >
-      <Text>
+      <TouchableOpacity onPress={onButtonPress}>
         <Image
-          source={require("../../assets/profile/profile-demo.png")}
+          source={uri ? { uri } : placeholder}
           style={{
+            borderRadius: 90,
             width: 160,
             height: 160,
-            // borderBlockColor: "white",
-            // borderWidth: 7,
-            // borderStyle: "solid",
+            borderColor: colors.SanadBgGrey,
+            borderWidth: 5,
             resizeMode: "contain",
+            backgroundColor: colors.SanadWhite,
           }}
         />
-      </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          backgroundColor: colors.SanadWhite,
+          borderRadius: 24,
+          padding: 8,
+          position: "absolute",
+          right: 5,
+          bottom: 5,
+          borderColor: colors.SanadBgGrey,
+          borderWidth: 1,
+        }}
+        onPress={onButtonPress}
+      >
+        <MaterialCommunityIcons
+          name="camera-outline"
+          size={30}
+          color={colors.SanadRed}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
