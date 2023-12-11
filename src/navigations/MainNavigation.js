@@ -60,8 +60,8 @@ const MainNavigation = () => {
           right: 0,
           elevation: 0,
           backgroundColor: colors.SanadBlue1,
-          borderStartEndRadius: 40,
-          borderTopStartRadius: 40,
+          borderStartEndRadius: 30,
+          borderTopStartRadius: 30,
           height: 100,
           shadowColor: "black",
           shadowOffset: { height: -8, width: 4 },
@@ -158,15 +158,24 @@ const MainNavigation = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
+                position: "absolute",
+                top: -15,
+                shadowColor: "black",
+                shadowOffset: { height: -3, width: 0 },
+                shadowRadius: 4,
+                shadowOpacity: 0.2,
+                borderColor: colors.SanadBlue1,
+                borderWidth: 10,
+                borderRadius: 50,
               }}
             >
               <Image
                 source={require("../../assets/donation/donation-tab.png")}
                 resizeMode="contain"
                 style={{
-                  width: 40,
-                  height: 40,
-                  opacity: focused ? 1 : 0.3,
+                  width: 60,
+                  height: 60,
+                  opacity: focused ? 1 : 1,
                 }}
               />
             </View>
