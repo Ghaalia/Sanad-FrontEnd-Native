@@ -84,3 +84,54 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
+// GenderSelection.js
+// import React, { useState } from "react";
+// import { View, TouchableOpacity, StyleSheet } from "react-native";
+// import Icon from "react-native-vector-icons/FontAwesome";
+
+// const GenderSelection = ({ onSelect }) => {
+//   const [selectedGender, setSelectedGender] = useState(null);
+
+//   const handleGenderSelect = (gender) => {
+//     setSelectedGender(gender);
+//     onSelect(gender);
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <TouchableOpacity
+//         style={selectedGender === "male" ? styles.selectedIcon : styles.icon}
+//         onPress={() => handleGenderSelect("male")}
+//       >
+//         <Icon name="mars" size={30} color="blue" />
+//       </TouchableOpacity>
+//       <TouchableOpacity
+//         style={selectedGender === "female" ? styles.selectedIcon : styles.icon}
+//         onPress={() => handleGenderSelect("female")}
+//       >
+//         <Icon name="venus" size={30} color="pink" />
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flexDirection: "row",
+//     justifyContent: "center",
+//     marginVertical: 10,
+//     marginTop: 100,
+//   },
+//   icon: {
+//     marginHorizontal: 10,
+//   },
+//   selectedIcon: {
+//     marginHorizontal: 10,
+//     backgroundColor: "lightblue",
+//     padding: 10,
+//     borderRadius: 20,
+//   },
+// });
+
+// export default GenderSelection;

@@ -24,6 +24,7 @@ const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  const [gender, setGender] = useState(null);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -75,17 +76,10 @@ const Register = () => {
       navigation.navigate("profile");
     },
   });
+  // const handleGenderSelect = (selectedGender) => {
+  //   setGender(selectedGender);
+  // };
 
-  formValidation = async () => {
-    this.setState({ loading: true });
-    let errorFlag = false;
-    if (this.state.password !== this.state.confirmPassword) {
-      errorFlag = true;
-      this.setState({
-        passwordErrorMessage: "Passwoad and confirm password should be same.",
-      });
-    }
-  };
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
       <View>
@@ -273,3 +267,24 @@ const Register = () => {
 };
 
 export default Register;
+
+// formValidation = async () => {
+//   this.setState({ loading: true });
+//   let errorFlag = false;
+//   if (this.state.password !== this.state.confirmPassword) {
+//     errorFlag = true;
+//     this.setState({
+//       passwordErrorMessage: "Passwoad and confirm password should be same.",
+//     });
+//   }
+// };
+
+{
+  /* <FileInput
+                  placeholder="image"
+                  type="file"
+                  onChange={(image) => {
+                    setUserInfo({ ...userInfo, image: image });
+                  }}
+                /> */
+}

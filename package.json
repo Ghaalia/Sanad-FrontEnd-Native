@@ -16,7 +16,11 @@
   },
   "dependencies": {
     "@expo-google-fonts/urbanist": "^0.2.3",
+<<<<<<< HEAD
     "@react-native-async-storage/async-storage": "^1.21.0",
+=======
+    "@expo/vector-icons": "^13.0.0",
+>>>>>>> 119adfd0c2654c1d807dfe1d4157a350099bdb46
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
@@ -38,12 +42,24 @@
     "lucide-react-native": "^0.294.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-google-fonts": "^0.0.0",
+<<<<<<< HEAD
+    "react-native-image-picker": "^7.1.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-reanimated": "^3.6.1",
+    "react-native-vector-icons": "^10.0.2"
+=======
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^17.1.0",
+<<<<<<< HEAD
     "expo-print": "~12.4.2"
+=======
+    "expo-image-manipulator": "~11.3.0"
+>>>>>>> 6366591c1ce66dd05c6e9e428b7e465d2a113e5a
+>>>>>>> 119adfd0c2654c1d807dfe1d4157a350099bdb46
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

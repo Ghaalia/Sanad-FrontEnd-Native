@@ -1,13 +1,4 @@
-import {
-  Button,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
@@ -16,12 +7,14 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import UserContext from "../../../context/UserContext";
+import { Ionicons } from "@expo/vector-icons";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate: login_mutate, error } = useMutation({
     mutationKey: ["login"],
@@ -31,6 +24,10 @@ const Login = () => {
       navigation.navigate("profile");
     },
   });
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <View style={{ flex: 1, width: "100%", backgroundColor: "#1B1931" }}>
       <View>
@@ -41,7 +38,6 @@ const Login = () => {
 
         <KeyboardAwareScrollView
           style={{
-            // backgroundColor: "red",
             height: 600,
             marginTop: 40,
             paddingHorizontal: 30,
@@ -66,20 +62,42 @@ const Login = () => {
               <TextInput
                 placeholder="Email"
                 placeholderTextColor="white"
+                textContentType="emailAddress"
                 onChangeText={(text) => {
                   setEmail(text);
                 }}
                 style={styles.textinput}
               />
-              <TextInput
-                placeholder=" Enter your password"
-                placeholderTextColor="white"
-                secureTextEntry
-                onChangeText={(text) => {
-                  setPassword(text);
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  backgroundColor: "rgba(105,105,105, 0.25)",
+                  width: 339,
+                  height: 50,
+                  borderRadius: 30,
+                  paddingHorizontal: 20,
+                  fontFamily: "Urbanist_400Regular",
                 }}
-                style={styles.textinput}
-              />
+              >
+                <TextInput
+                  placeholder=" Enter your password"
+                  placeholderTextColor="white"
+                  secureTextEntry={!showPassword}
+                  onChangeText={(text) => {
+                    setPassword(text);
+                  }}
+                  style={{ color: "white" }}
+                />
+                <TouchableOpacity onPress={togglePasswordVisibility}>
+                  <Ionicons
+                    name={showPassword ? "ios-eye-off" : "ios-eye"}
+                    size={20}
+                    color="gray"
+                  />
+                </TouchableOpacity>
+              </View>
               <Text
                 style={{
                   color: "#6B6893",
@@ -94,9 +112,11 @@ const Login = () => {
               </Text>
             </View>
 
-            {/* <Text style={{ fontSize: 14, color: "red" }}>
-          {JSON.stringify(error?.message)}{" "}
-        </Text> */}
+            <Text style={{ fontSize: 14, color: "white" }}>
+              {JSON.stringify(error?.name)}
+            </Text>
+            {/* <Alert> {JSON.stringify(error?.name)}</Alert> */}
+
             <TouchableOpacity
               style={styles.redbutton}
               onPress={() => {
@@ -142,3 +162,5 @@ const Login = () => {
 };
 
 export default Login;
+
+// alert.alert

@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   boxinput: {
-    backgroundColor: "gray",
-    opacity: 0.25,
+    backgroundColor: "rgba(105,105,105, 0.25)",
     color: "white",
     width: 69,
     height: 60,
