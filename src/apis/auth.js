@@ -101,13 +101,11 @@ const getMyProfile = async () => {
 //   const res = await instance.put(`/api/user/updateuser/${userId}`);
 //   return res.data;
 // };
-const updateProfile = async ({ userId, updatedUserData }) => {
-  const response = await instance.put(
-    `/api/user/updateuser/${userId}`,
-    updatedUserData
-  );
-
-  return response.data;
+const updateProfile = async (updatedUserData) => {
+  console.log("HELLO FROM UPDATE PROFILE");
+  const res = await instance.put(`/api/user/updateuser`, updatedUserData);
+  console.log("RESSS");
+  return res.data;
 };
 
 // const useUpdateProfile = () => {

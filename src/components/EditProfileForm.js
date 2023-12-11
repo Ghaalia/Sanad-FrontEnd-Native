@@ -37,10 +37,7 @@ const EditProfileForm = () => {
     queryFn: () => getMyProfile(),
   });
 
-  console.log(profile);
-
   useEffect(() => {
-    console.log(profile);
     if (profile) {
       setFirstName(profile.first_name);
       setLastName(profile.last_name);
@@ -49,12 +46,17 @@ const EditProfileForm = () => {
     }
   }, [profile]);
 
-  const { data: update_mutate, error } = useMutation({
+  const { mutate: updateFunc, error } = useMutation({
     mutationKey: ["update"],
-    mutationFn: () => updateProfile(userId, updatedUserData),
-    onSuccess: queryClient.invalidateQueries(["profile"]),
+    mutationFn: () => updateProfile({ first_name: firstName }),
+    // onSuccess: (data) => {
+    //   setFirstName(data.first_name);
+    //   setLastName(data.last_name);
+    //   setGender(data.gender);
+    //   setDob(data.dob);
+    //   queryClient.invalidateQueries(["profile"]);
+    // },
   });
-
   // const useUpdateProfile = () => {
   //   const queryClient = useQueryClient();
 
@@ -71,10 +73,10 @@ const EditProfileForm = () => {
       last_name: lastName,
       // Add other fields as needed...
     };
-    await update_mutate();
+    await updateFunc(updatedUserData);
   };
 
-  // const { data: update_mutate, error } = useMutation({
+  // const { data: updateFunc, error } = useMutation({
   //   mutationKey: ["update"],
   //   mutationFn: () => updateMyProfile(userId, formData),
   //   onSuccess: () => {
@@ -214,9 +216,7 @@ const EditProfileForm = () => {
             backgroundColor: colors.SanadRed,
             marginTop: 10,
           }}
-          onPress={() => {
-            handleSave();
-          }}
+          onPress={() => handleSave()}
         >
           <Text
             style={{

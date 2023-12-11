@@ -37,10 +37,10 @@ const Register = () => {
 
   const handleConfirm = (date) => {
     setDate(date);
-    const formattedDate = `${("0" + date.getDate()).slice(-2)}-${(
+    const formattedDate = `${("0" + date.getDate()).slice(-2)}/${(
       "0" +
       (date.getMonth() + 1)
-    ).slice(-2)}-${date.getFullYear()}`;
+    ).slice(-2)}/${date.getFullYear()}`;
     setUserInfo({
       ...userInfo,
       dob: formattedDate, // Now in DD-MM-YYYY format
