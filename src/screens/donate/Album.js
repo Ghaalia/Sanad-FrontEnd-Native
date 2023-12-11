@@ -6,19 +6,81 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { colors, fonts } from "../../config/theme";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import * as ImageManipulator from "expo-image-manipulator";
-import { BaseURL } from "../../apis";
-import { saveSecurely } from "../../utils/storage";
-import UploadModal from "../../components/profile/UploadModal";
+import { saveSecurely, fetchSecurely } from "../../utils/storage";
+import DonateUploadModal from "../../components/profile/DonateUploadModal";
+import UserContext from "../../../context/UserContext";
+import * as FileSystem from "expo-file-system";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { printToFileAsync } from "expo-print";
+import * as Sharing from "expo-sharing";
+
+const downloadImage = async (imageUrl) => {
+  const fileName = imageUrl.split("/").pop(); // Extract the filename
+  const fileUri = FileSystem.documentDirectory + fileName;
+
+  try {
+    await FileSystem.downloadAsync(imageUrl, fileUri);
+    return fileUri;
+  } catch (error) {
+    console.error("Error downloading the image:", error);
+  }
+};
 
 const Album = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(null);
+  const [isRemovalMode, setIsRemovalMode] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const [categoryImages, setCategoryImages] = useState({
+    Furniture: [],
+    Devices: [],
+    Electronics: [],
+    Clothes: [],
+  });
 
-  const uploadImage = async (mode) => {
+  const onGalleryPress = async () => {
+    if (!currentCategory) {
+      console.error("No category selected");
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      if (result.assets.length > 12) {
+        alert("You can only select up to 12 images.");
+        return;
+      }
+
+      const newImages = result.assets.map((asset) => asset.uri);
+      setCategoryImages((prevImages) => {
+        const updatedImages = { ...prevImages };
+        updatedImages[currentCategory] = [
+          ...updatedImages[currentCategory],
+          ...newImages,
+        ].slice(0, 12); // You may need to adjust this logic based on your requirements
+        return updatedImages;
+      });
+    }
+  };
+
+  const handleImagePicked = async (pickedImageUri, category) => {
+    await saveImage(pickedImageUri, category);
+  };
+
+  const handleImageRemoved = async (removedImageUri, category) => {
+    await saveImage(null, category, removedImageUri);
+  };
+
+  const uploadImage = async (mode, category) => {
     try {
       let result = {};
 
@@ -41,8 +103,18 @@ const Album = () => {
       }
 
       if (!result.canceled) {
-        // save image
-        await saveImage(result.assets[0].uri);
+        const newImage = result.assets[0].uri;
+        handleImagePicked(newImage, category);
+        setCategoryImages((prevImages) => {
+          // Create a copy of the current state
+          const updatedImages = { ...prevImages };
+          // Update only the specified category
+          updatedImages[category] = [
+            ...updatedImages[category],
+            newImage,
+          ].slice(0, 30);
+          return updatedImages;
+        });
       }
     } catch (error) {
       alert("Error uploading image: " + error.message);
@@ -50,58 +122,194 @@ const Album = () => {
     }
   };
 
-  const removeImage = async () => {
+  const removeImage = async (removeUri, category) => {
     try {
-      saveImage(null);
-    } catch ({ message }) {
-      alert(message);
-      setModalVisible(false);
+      handleImageRemoved(removeUri, category);
+      console.log("Removing image from category:", category);
+      setCategoryImages((prevImages) => {
+        const updatedImages = prevImages[category].filter(
+          (imageUri) => imageUri !== removeUri
+        );
+        const newState = { ...prevImages, [category]: updatedImages };
+        console.log("New state after removal:", newState);
+        return newState;
+      });
+    } catch (error) {
+      console.error("Error in removeImage:", error);
+      alert("Error while removing image");
     }
   };
-  const getFilenameFromUri = (uri) => {
-    return uri.split("/").pop(); // This will return the last segment after '/' which is typically the filename
+
+  const toggleRemovalMode = () => {
+    setIsRemovalMode(!isRemovalMode); // Toggle the removal mode
   };
 
-  const saveImage = async (uri) => {
-    try {
-      let filename = null;
-      if (uri) {
-        const resizedImage = await ImageManipulator.manipulateAsync(
-          uri,
-          [{ resize: { width: 800 } }],
-          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
-        );
+  // const loadImages = async () => {
+  //   try {
+  //     const storedImages = await AsyncStorage.getItem("categoryImages");
+  //     if (storedImages !== null) {
+  //       setCategoryImages(JSON.parse(storedImages));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching images from AsyncStorage:", error);
+  //   }
+  // };
 
-        // get filename from URI
-        filename = getFilenameFromUri(resizedImage.uri);
+  // const saveImagesToStorage = async (images) => {
+  //   try {
+  //     const jsonValue = JSON.stringify(images);
+  //     await AsyncStorage.setItem("categoryImages", jsonValue);
+  //   } catch (error) {
+  //     console.error("Error saving images to AsyncStorage:", error);
+  //   }
+  // };
 
-        // update displayed image with full URI
-        setImage(resizedImage.uri);
-      } else {
-        // in case of removing the image
-        setImage(null);
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const storedImagesString = await fetchSecurely("categoryImages");
+        if (storedImagesString) {
+          const storedImages = JSON.parse(storedImagesString);
+          setCategoryImages(storedImages);
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
       }
+    };
 
-      // update user data with filename instead of full URI
-      const updatedUserData = {
-        ...user,
-        image: filename,
-      };
-      await setUser(updatedUserData);
+    loadImages();
+  }, []);
 
-      const minimalUserData = {
-        id: user._id,
-        token: user.token,
-        image: filename, // save only the filename
-      };
-      await saveSecurely("profileAppUser", JSON.stringify(minimalUserData));
-
-      setModalVisible(false);
+  const saveImage = async (uri, category, removeUri = null) => {
+    try {
+      if (uri) {
+        const localUri = await downloadImage(uri);
+        const updatedImages = [...categoryImages[category], localUri];
+        const newCategoryImages = {
+          ...categoryImages,
+          [category]: updatedImages,
+        };
+        setCategoryImages(newCategoryImages);
+        await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
+      } else if (removeUri) {
+        const updatedImages = categoryImages[category].filter(
+          (imageUri) => imageUri !== removeUri
+        );
+        const newCategoryImages = {
+          ...categoryImages,
+          [category]: updatedImages,
+        };
+        setCategoryImages(newCategoryImages);
+        await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
+      }
     } catch (error) {
       console.error("Error in saveImage:", error);
       alert("Error while saving image");
-      setModalVisible(false);
     }
+  };
+
+  const imageToBase64 = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const createCategoryPage = async (categoryName, imageUris) => {
+    if (!Array.isArray(imageUris)) {
+      console.error(`Invalid image URIs for category ${categoryName}`);
+      return "";
+    }
+    const base64Images = await Promise.all(
+      imageUris.map((uri) => imageToBase64(uri))
+    );
+
+    const imagesHtml = base64Images
+      .slice(0, 12)
+      .map(
+        (base64, index) => `<div class="image-container">
+        <img src="${base64}" alt="Image ${index + 1}" class="image" />
+        <div class="image-number"><h4 class="text-number">${
+          index + 1
+        }</h4></div>
+      </div>`
+      )
+      .join("");
+
+    return `
+      <div class="page">
+      <h2 style="color: #F5574E;">${categoryName}</h2>
+        <div class="grid-container">
+          ${imagesHtml}
+        </div>
+      </div>
+    `;
+  };
+
+  const createAndSharePDF = async (categories) => {
+    let pagesHtml = "";
+    for (const [categoryName, imageUris] of Object.entries(categories)) {
+      pagesHtml += await createCategoryPage(categoryName, imageUris);
+    }
+
+    const html = `
+    <html>
+    <head>
+      <style>
+        body { margin: 0; padding: 0; }
+        .page { width: 210mm; height: 297mm; page-break-after: always; }
+        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); grid-gap: 5mm; }
+        .image-container {
+          position: relative;
+          padding-top: 100%; /* This ensures a square aspect ratio */
+          overflow: hidden;
+        }
+        .image-number {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background-color: red;
+          color: white;
+          border-radius: 50%;
+          padding: 5px;
+          font-size: 12px;
+          width: 20px;
+          height: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .text-number{
+          color: #F5574E;
+          font-size: 16px;
+        }
+        .image {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        h2 { text-align: center; }
+      </style>
+    </head>
+    <body>
+      ${pagesHtml}
+    </body>
+  </html>
+`;
+
+    const { uri } = await printToFileAsync({ html });
+    await Sharing.shareAsync(uri);
+  };
+
+  const handleSharePress = async () => {
+    await createAndSharePDF(categoryImages);
   };
 
   return (
@@ -122,8 +330,8 @@ const Album = () => {
           alignItems: "center",
           paddingTop: 30,
           backgroundColor: colors.SanadBlue1,
-          borderEndEndRadius: 40,
-          borderEndStartRadius: 40,
+          borderEndEndRadius: 30,
+          borderEndStartRadius: 30,
           shadowColor: "black",
           shadowOffset: { height: 8, width: 4 },
           shadowRadius: 8,
@@ -133,20 +341,50 @@ const Album = () => {
         <Text
           style={{
             color: colors.SanadWhite,
-            fontSize: 40,
-            fontFamily: fonts.semibold,
+            fontSize: 32,
+            fontFamily: "Urbanist_600SemiBold",
           }}
         >
           Donate
         </Text>
         <Image
-          style={{ width: "35%", resizeMode: "contain" }}
+          style={{ width: "30%", resizeMode: "contain" }}
           source={require("../../../assets/onlylogo.png")}
         />
       </View>
       <View style={styles.container}>
         <View style={styles.container_title}>
           <Text style={styles.container_title_text}>Item Categories</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <TouchableOpacity
+              onPress={handleSharePress}
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 10,
+                backgroundColor: colors.SanadRed,
+                paddingTop: 8,
+                paddingBottom: 8,
+                paddingHorizontal: 20,
+                borderRadius: 40,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: fonts.semibold,
+                  fontSize: 16,
+                  color: colors.SanadWhite,
+                }}
+              >
+                Share
+              </Text>
+              <Entypo name="export" size={20} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleRemovalMode}>
+              <Ionicons name="ios-trash" size={24} color="#9e9e9e" />
+            </TouchableOpacity>
+          </View>
         </View>
         <ScrollView
           style={{ height: "75%", width: "88%", flexDirection: "column" }}
@@ -162,19 +400,40 @@ const Album = () => {
                 <Text style={styles.category_name}>Furniture</Text>
               </View>
               <View style={styles.photo_counter_container}>
-                <Text>0</Text>
+                <Text>{categoryImages.Furniture.length}</Text>
                 <Text>|</Text>
-                <Text>30</Text>
+                <Text>12</Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.photos_container_wrap}
-              onPress={() => setModalVisible(true)}
-            >
-              <View style={styles.add_button}>
-                <Text style={{ fontSize: 30 }}>+</Text>
+            {categoryImages.Furniture.map((imageUri, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <View style={styles.imageNumber}>
+                  <Text style={styles.number_text}>{index + 1}</Text>
+                </View>
+                {isRemovalMode && (
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(imageUri, "Furniture")}
+                  >
+                    <Text style={styles.removeButtonText}>X</Text>
+                  </TouchableOpacity>
+                )}
               </View>
-            </TouchableOpacity>
+            ))}
+            {categoryImages.Furniture.length < 12 && (
+              <TouchableOpacity
+                style={styles.photos_container_wrap}
+                onPress={() => {
+                  setCurrentCategory("Furniture");
+                  setModalVisible(true);
+                }}
+              >
+                <View style={styles.add_button}>
+                  <Text style={{ fontSize: 30 }}>+</Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
 
           <View style={styles.category_photos_container}>
@@ -188,20 +447,42 @@ const Album = () => {
                 <Text style={styles.category_name}>Home Devices</Text>
               </View>
               <View style={styles.photo_counter_container}>
-                <Text>0</Text>
+                <Text>{categoryImages.Devices.length}</Text>
                 <Text>|</Text>
-                <Text>30</Text>
+                <Text>12</Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.photos_container_wrap}
-              onPress={() => setModalVisible(true)}
-            >
-              <View style={styles.add_button}>
-                <Text style={{ fontSize: 30 }}>+</Text>
+            {categoryImages.Devices.map((imageUri, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <View style={styles.imageNumber}>
+                  <Text style={styles.number_text}>{index + 1}</Text>
+                </View>
+                {isRemovalMode && (
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(imageUri, "Devices")}
+                  >
+                    <Text style={styles.removeButtonText}>X</Text>
+                  </TouchableOpacity>
+                )}
               </View>
-            </TouchableOpacity>
+            ))}
+            {categoryImages.Devices.length < 12 && (
+              <TouchableOpacity
+                style={styles.photos_container_wrap}
+                onPress={() => {
+                  setCurrentCategory("Devices");
+                  setModalVisible(true);
+                }}
+              >
+                <View style={styles.add_button}>
+                  <Text style={{ fontSize: 30 }}>+</Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={styles.category_photos_container}>
             <View style={styles.category_container}>
               <View style={styles.iconAndName}>
@@ -213,20 +494,42 @@ const Album = () => {
                 <Text style={styles.category_name}>Electronics</Text>
               </View>
               <View style={styles.photo_counter_container}>
-                <Text>0</Text>
+                <Text>{categoryImages.Electronics.length}</Text>
                 <Text>|</Text>
-                <Text>30</Text>
+                <Text>12</Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.photos_container_wrap}
-              onPress={() => setModalVisible(true)}
-            >
-              <View style={styles.add_button}>
-                <Text style={{ fontSize: 30 }}>+</Text>
+            {categoryImages.Electronics.map((imageUri, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <View style={styles.imageNumber}>
+                  <Text style={styles.number_text}>{index + 1}</Text>
+                </View>
+                {isRemovalMode && (
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(imageUri, "Electronics")}
+                  >
+                    <Text style={styles.removeButtonText}>X</Text>
+                  </TouchableOpacity>
+                )}
               </View>
-            </TouchableOpacity>
+            ))}
+            {categoryImages.Electronics.length < 12 && (
+              <TouchableOpacity
+                style={styles.photos_container_wrap}
+                onPress={() => {
+                  setCurrentCategory("Electronics");
+                  setModalVisible(true);
+                }}
+              >
+                <View style={styles.add_button}>
+                  <Text style={{ fontSize: 30 }}>+</Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={styles.category_photos_container}>
             <View style={styles.category_container}>
               <View style={styles.iconAndName}>
@@ -234,30 +537,52 @@ const Album = () => {
                 <Text style={styles.category_name}>Clothes</Text>
               </View>
               <View style={styles.photo_counter_container}>
-                <Text>0</Text>
+                <Text>{categoryImages.Clothes.length}</Text>
                 <Text>|</Text>
-                <Text>30</Text>
+                <Text>12</Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.photos_container_wrap}
-              onPress={() => setModalVisible(true)}
-            >
-              <View style={styles.add_button}>
-                <Text style={{ fontSize: 30 }}>+</Text>
+            {categoryImages.Clothes.map((imageUri, index) => (
+              <View key={index} style={styles.imageContainer}>
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <View style={styles.imageNumber}>
+                  <Text style={styles.number_text}>{index + 1}</Text>
+                </View>
+                {isRemovalMode && (
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(imageUri, "Clothes")}
+                  >
+                    <Text style={styles.removeButtonText}>X</Text>
+                  </TouchableOpacity>
+                )}
               </View>
-            </TouchableOpacity>
+            ))}
+            {categoryImages.Clothes.length < 12 && (
+              <TouchableOpacity
+                style={styles.photos_container_wrap}
+                onPress={() => {
+                  setCurrentCategory("Clothes");
+                  setModalVisible(true);
+                }}
+              >
+                <View style={styles.add_button}>
+                  <Text style={{ fontSize: 30 }}>+</Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </View>
 
-      <UploadModal
+      <DonateUploadModal
         modalVisible={modalVisible}
+        currentCategory={currentCategory}
         onBackPress={() => {
           setModalVisible(false);
         }}
-        onCameraPress={() => uploadImage()}
-        onGalleryPress={() => uploadImage("gallery")}
+        onCameraPress={() => uploadImage("camera", currentCategory)}
+        onGalleryPress={onGalleryPress}
         onRemovePress={() => removeImage()}
       />
     </View>
@@ -277,10 +602,13 @@ const styles = StyleSheet.create({
   container_title: {
     width: "100%",
     paddingVertical: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   container_title_text: {
     textAlign: "center",
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: fonts.semibold,
   },
 
@@ -316,8 +644,8 @@ const styles = StyleSheet.create({
   },
   photos_container_wrap: {
     flexWrap: "wrap",
-    paddingVertical: 10,
-    gap: 10,
+    paddingVertical: 20,
+    gap: 6.5,
   },
   add_button: {
     width: 100,
@@ -326,5 +654,52 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: colors.SanadWhite,
     borderRadius: 10,
+  },
+  category_photos_container: {
+    flexDirection: "row", // Line items up in a row
+    flexWrap: "wrap", // Allow items to wrap to the next line
+    justifyContent: "center", // Center items (optional)
+    alignItems: "center",
+    gap: 6.5,
+  },
+  imageContainer: {
+    position: "relative",
+    margin: 5,
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  removeButton: {
+    position: "absolute",
+    top: 2,
+    right: 2,
+    backgroundColor: "rgba(105,105,105, 0.9)",
+    borderRadius: 15,
+    width: 22,
+    height: 22,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  removeButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  imageNumber: {
+    position: "absolute",
+    backgroundColor: colors.SanadRed,
+    borderRadius: 10,
+    width: 22,
+    height: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    left: 2,
+    top: 2,
+  },
+  number_text: {
+    color: colors.SanadWhite,
+    fontWeight: "bold",
+    fontSize: 16, // Adjust size as needed
   },
 });

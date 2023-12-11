@@ -28,7 +28,7 @@ const Explore = () => {
     >
       <View
         style={{
-          flex: 15,
+          height: "15%",
           width: "100%",
           display: "flex",
           flexDirection: "row",
@@ -36,8 +36,8 @@ const Explore = () => {
           alignItems: "center",
           paddingTop: 30,
           backgroundColor: colors.SanadBlue1,
-          borderEndEndRadius: 40,
-          borderEndStartRadius: 40,
+          borderEndEndRadius: 30,
+          borderEndStartRadius: 30,
           shadowColor: "black",
           shadowOffset: { height: 8, width: 4 },
           shadowRadius: 8,
@@ -47,7 +47,7 @@ const Explore = () => {
         <Text
           style={{
             color: colors.SanadWhite,
-            fontSize: 40,
+            fontSize: 32,
             // shadowColor: "black",
             // shadowOffset: { height: 2, width: 0 },
             // shadowRadius: 1,
@@ -58,14 +58,14 @@ const Explore = () => {
           Explore
         </Text>
         <Image
-          style={{ width: "35%", resizeMode: "contain" }}
+          style={{ width: "30%", resizeMode: "contain" }}
           source={require("../../../assets/onlylogo.png")}
         />
       </View>
 
       <View
         style={{
-          flex: 10,
+          height: "10%",
           width: "100%",
           justifyContent: "center",
         }}
@@ -117,7 +117,7 @@ const Explore = () => {
 
       <View
         style={{
-          flex: 70,
+          flex: 75,
           width: "100%",
           justifyContent: "center",
           alignItems: "center",
