@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { instance } from ".";
 import * as SecureStore from "expo-secure-store";
 
@@ -90,6 +91,36 @@ const getMyProfile = async () => {
   return res.data;
 };
 
+// const updateMyProfile = async (userId, formData) => {
+//   // const formData = new FormData();
+//   // for (let key in userInfo) {
+//   //   formData.append(key, userInfo[key]);
+//   // }
+//   // (`/api/user/updateuser/${userId}`, formData);
+
+//   const res = await instance.put(`/api/user/updateuser/${userId}`);
+//   return res.data;
+// };
+const updateProfile = async ({ userId, updatedUserData }) => {
+  const response = await instance.put(
+    `/api/user/updateuser/${userId}`,
+    updatedUserData
+  );
+
+  return response.data;
+};
+
+// const useUpdateProfile = () => {
+//   const queryClient = useQueryClient();
+
+//   return useMutation(updateProfile, {
+//     onSuccess: (data, variables) => {
+//       // Invalidate and refetch the user profile query after a successful update
+//       queryClient.invalidateQueries(["profile"]);
+//     },
+//   });
+// };
+
 export {
   login,
   register,
@@ -98,4 +129,7 @@ export {
   getToken,
   storeNotificatioToken,
   getMyProfile,
+  updateProfile,
+  // updateMyProfile,
+  // useUpdateProfile,
 };

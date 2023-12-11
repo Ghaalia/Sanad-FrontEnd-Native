@@ -20,24 +20,9 @@ import UserContext from "../../../context/UserContext";
 import * as ImagePicker from "expo-image-picker";
 
 const Register = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
-  const [gender, setGender] = useState(null);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setSelectedImage(result.uri);
-    }
-  };
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -58,7 +43,7 @@ const Register = () => {
     ).slice(-2)}-${date.getFullYear()}`;
     setUserInfo({
       ...userInfo,
-      date_of_birth: formattedDate, // Now in DD-MM-YYYY format
+      dob: formattedDate, // Now in DD-MM-YYYY format
     });
     hideDatePicker();
   };
@@ -76,9 +61,6 @@ const Register = () => {
       navigation.navigate("profile");
     },
   });
-  // const handleGenderSelect = (selectedGender) => {
-  //   setGender(selectedGender);
-  // };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#1B1931" }}>
@@ -179,18 +161,6 @@ const Register = () => {
                 />
               </View>
 
-              <TouchableOpacity onPress={pickImage} style={styles.selectDate}>
-                <FontAwesome name="photo" size={20} color="#F5574E" />
-                <Text style={styles.selectDateText}>Pick an Image</Text>
-              </TouchableOpacity>
-
-              {selectedImage && (
-                <Image
-                  source={{ uri: selectedImage }}
-                  style={{ width: 160, height: 160 }}
-                />
-              )}
-
               <TouchableOpacity
                 onPress={showDatePicker}
                 style={styles.selectDate}
@@ -250,9 +220,10 @@ const Register = () => {
                 onCancel={hideDatePicker}
                 maximumDate={new Date()} // To set the maximum selectable date to the current date
               />
+              <Text> {JSON.stringify(error?.message)}</Text>
               <TouchableOpacity
                 onPress={() => {
-                  mutate_register(userInfo, selectedImage);
+                  mutate_register(userInfo);
                 }}
                 style={styles.redbutton}
               >

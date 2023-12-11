@@ -9,16 +9,26 @@ import {
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import TextInputWithLabel from "./TextInputWithLabel";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMyProfile } from "../apis/auth";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getMyProfile,
+  updateMyProfile,
+  updateProfile,
+  // useUpdateProfile,
+} from "../apis/auth";
 import UserContext from "../../context/UserContext";
 import { colors } from "../config/theme";
 
 const EditProfileForm = () => {
+  const userContext = useContext(UserContext);
+  const { userId } = userContext.user;
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState(profile?.gender || "");
   const [dob, setDob] = useState("");
+
+  // const updateProfileMutation = useUpdateProfile();
 
   const queryClient = useQueryClient();
 
@@ -26,6 +36,7 @@ const EditProfileForm = () => {
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
+
   console.log(profile);
 
   useEffect(() => {
@@ -38,13 +49,46 @@ const EditProfileForm = () => {
     }
   }, [profile]);
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
+  const { data: update_mutate, error } = useMutation({
+    mutationKey: ["update"],
+    mutationFn: () => updateProfile(userId, updatedUserData),
+    onSuccess: queryClient.invalidateQueries(["profile"]),
+  });
+
+  // const useUpdateProfile = () => {
+  //   const queryClient = useQueryClient();
+
+  //   return useMutation(updateProfile, {
+  //     onSuccess: (data, variables) => {
+  //       // Invalidate and refetch the user profile query after a successful update
+  //       queryClient.invalidateQueries(["profile"]);
+  //     },
+  //   });
+  // };
+  const handleSave = async () => {
+    const updatedUserData = {
+      first_name: firstName,
+      last_name: lastName,
+      // Add other fields as needed...
+    };
+    await update_mutate();
   };
 
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
-  };
+  // const { data: update_mutate, error } = useMutation({
+  //   mutationKey: ["update"],
+  //   mutationFn: () => updateMyProfile(userId, formData),
+  //   onSuccess: () => {
+  //     navigation.navigate("profile");
+  //   },
+  // });
+
+  // const handleFirstNameChange = (e) => {
+  //   setFirstName(e.target.value);
+  // };
+
+  // const handleLastNameChange = (e) => {
+  //   setLastName(e.target.value);
+  // };
 
   return (
     <ScrollView
@@ -60,14 +104,14 @@ const EditProfileForm = () => {
         label="First name"
         placeholder="Enter your first name"
         value={firstName}
-        onChangeText={handleFirstNameChange}
+        onChangeText={setFirstName}
       />
 
       <TextInputWithLabel
         label="Last name"
         placeholder="Enter your last name"
         value={lastName}
-        onChangeText={handleLastNameChange}
+        // onChangeText={handleLastNameChange}
       />
 
       <View style={{ gap: 5 }}>
@@ -169,6 +213,9 @@ const EditProfileForm = () => {
             borderRadius: 30,
             backgroundColor: colors.SanadRed,
             marginTop: 10,
+          }}
+          onPress={() => {
+            handleSave();
           }}
         >
           <Text

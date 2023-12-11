@@ -39,17 +39,10 @@
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-google-fonts": "^0.0.0",
-<<<<<<< HEAD
-    "react-native-image-picker": "^7.1.0",
-    "react-native-keyboard-aware-scroll-view": "^0.9.5",
-    "react-native-reanimated": "^3.6.1",
-    "react-native-vector-icons": "^10.0.2"
-=======
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^17.1.0",
     "expo-image-manipulator": "~11.3.0"
->>>>>>> 6366591c1ce66dd05c6e9e428b7e465d2a113e5a
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
