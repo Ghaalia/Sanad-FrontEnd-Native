@@ -7,7 +7,9 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useQuery } from "@tanstack/react-query";
+
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { MapPin } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import {
@@ -17,8 +19,16 @@ import {
   MaterialCommunityIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
+import { getOneEvent } from "../../../apis/event";
+import { BaseURL } from "../../../apis";
+import { colors } from "../../../config/theme";
 
 const EventDetails = () => {
+  const route = useRoute();
+  const { event } = route.params || {};
+  // console.log(oneEvent._id);
+  // console.log(oneEvent.event_title);
+  console.log(event?._id);
   const navigation = useNavigation();
   const [DescriptionClicked, setDescriptionClicked] = useState(true);
   const [LocationClicked, setLocationClicked] = useState(false);
@@ -77,7 +87,7 @@ const EventDetails = () => {
         >
           <Image
             source={{
-              uri: "https://images.squarespace-cdn.com/content/v1/5b8f8acb2714e5d519fcaf81/1609947742650-YSD4MGC2I7M9SL6NPFKB/MMKN+new+Logo+2019+%28png%29.png",
+              uri: `${BaseURL}/${event?.organization.logo}`,
             }}
             style={{
               height: 50,
@@ -93,7 +103,10 @@ const EventDetails = () => {
               color: "white",
             }}
           >
-            VWC - Voluntary Work Center
+            {event?.event_title}
+            {/* {eventId} */}
+            {/* {event?.event_title} */}
+            {/* {event?.event_title}{" "} */}
           </Text>
         </View>
       </View>
@@ -152,22 +165,7 @@ const EventDetails = () => {
               >
                 Description
               </Text>
-              <Text style={{ color: "#1B1931" }}>
-                Join us for a fulfilling day of environmental stewardship and
-                community bonding! Our "Beach Cleanup Extravaganza" is a
-                volunteering event where individuals of all ages can come
-                together to make a positive impact on our beautiful coastline.
-                Bring your friends and family for a day filled with fun and
-                purpose. We'll provide all the necessary cleaning supplies,
-                including gloves and trash bags, to ensure a safe and effective
-                cleanup. Together, we'll remove litter, plastic waste, and
-                debris from the beach, preserving the natural beauty of our
-                shores and protecting marine life. As we work hand in hand to
-                beautify our coastline, you'll have the chance to connect with
-                like-minded individuals, enjoy the fresh sea breeze, and
-                contribute to a cleaner, healthier environment. Let's make a
-                difference, one piece of trash at a time!
-              </Text>
+              <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
             </View>
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -189,43 +187,7 @@ const EventDetails = () => {
                       color: "#1B1931",
                     }}
                   >
-                    22
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    /
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    06
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    /
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    2024
+                    {event?.event_date}
                   </Text>
                 </View>
               </View>
@@ -246,7 +208,7 @@ const EventDetails = () => {
                 <Text
                   style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
                 >
-                  5:00 PM | 7:00 PM
+                  {event?.event_start_time} | {event?.event_end_time}
                 </Text>
               </View>
               <View
@@ -265,7 +227,7 @@ const EventDetails = () => {
                 <Text
                   style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
                 >
-                  EventDetails
+                  {event?.volunteer_list.length} | {event?.no_of_volunteer}
                 </Text>
               </View>
             </View>
@@ -282,7 +244,9 @@ const EventDetails = () => {
               >
                 WhatsApp
               </Text>
-              <Text style={{ color: "#1B1931" }}>+965 88989766</Text>
+              <Text style={{ color: "#1B1931" }}>
+                +965 {event?.organization.phone_number}
+              </Text>
             </View>
           </View>
         ) : (
@@ -296,6 +260,23 @@ const EventDetails = () => {
             <Text>EventDetails</Text>
           </View>
         )}
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: colors.SanadRed,
+            width: "100%",
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 30,
+            marginTop: 30,
+          }}
+          onPress={() => {
+            login_mutate();
+          }}
+        >
+          <Text style={styles.button}>Volunteer Now</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

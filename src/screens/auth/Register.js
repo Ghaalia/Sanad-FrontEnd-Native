@@ -250,6 +250,8 @@ const Register = () => {
                 onCancel={hideDatePicker}
                 maximumDate={new Date()} // To set the maximum selectable date to the current date
               />
+
+              <Text>{JSON.stringify(error)} </Text>
               <TouchableOpacity
                 onPress={() => {
                   mutate_register(userInfo, selectedImage);

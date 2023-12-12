@@ -7,17 +7,27 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Search from "../../components/explore/Search";
 import { ScrollView } from "react-native-gesture-handler";
 import EventCard from "../../components/explore/EventCard";
 import ExploreEventFilter from "../../components/explore/ExploreEventFilter";
 import { colors } from "../../config/theme";
+import { getAllEvents } from "../../apis/event";
+import { useQuery } from "@tanstack/react-query";
 
 const Explore = () => {
+  const { data: events } = useQuery({
+    queryKey: ["events"],
+    queryFn: () => getAllEvents(),
+  });
   const navigation = useNavigation();
 
+  // useEffect(() => {
+  //   console.log(events);
+  // }, [events]);
+  // console.log(events[0]?._id);
   return (
     <View
       style={{
@@ -124,18 +134,16 @@ const Explore = () => {
           // backgroundColor: "yellow",
         }}
       >
-        <ScrollView style={{ width: "100%", paddingVertical: 5 }}>
+        <ScrollView scrollEnabled style={{ width: "100%", paddingVertical: 5 }}>
           <Pressable
             onPress={() => {
               navigation.navigate("eventDetails");
             }}
           >
-            <EventCard />
+            {events?.map((el) => (
+              <EventCard event={el} id={el._id} />
+            ))}
           </Pressable>
-
-          <EventCard />
-          <EventCard />
-          <EventCard />
         </ScrollView>
       </View>
     </View>
