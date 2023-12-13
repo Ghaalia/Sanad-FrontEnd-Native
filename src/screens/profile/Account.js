@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TextInputWithLabel from "../../components/TextInputWithLabel";
 import { colors } from "../../config/theme";
-import { getMyProfile } from "../../apis/auth";
-import { useQuery } from "@tanstack/react-query";
+import { getMyProfile, updateProfile } from "../../apis/auth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import UserContext from "../../../context/UserContext";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Account = () => {
+  const userContext = useContext(UserContext);
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(0);
+  const [phone_number, setPhone_number] = useState(0);
+  const [password, setPassword] = useState("");
 
   const { data: profile } = useQuery({
     queryKey: ["profile"],
@@ -15,24 +19,35 @@ const Account = () => {
   });
 
   useEffect(() => {
-    console.log(profile);
     if (profile) {
       setEmail(profile?.email);
-      setPhoneNumber(profile?.phone_number.toString());
+      setPhone_number(profile?.phone_number.toString());
+      setPassword(profile?.password);
     }
   }, [profile]);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const { mutate: updateFunc, error } = useMutation({
+    mutationKey: ["update"],
+    mutationFn: () =>
+      updateProfile({
+        email,
+        phone_number,
+        password,
+      }),
+  });
 
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
+  const handleSave = async () => {
+    const updatedUserData = {
+      email,
+      phone_number,
+      password,
+    };
+    await updateFunc(updatedUserData);
   };
-
   return (
     <View
       style={{
+        width: "100%",
         flex: 1,
         backgroundColor: colors.SanadRed,
         justifyContent: "center",
@@ -77,15 +92,15 @@ const Account = () => {
           label="Email"
           placeholder="Enter your Email"
           value={email}
-          onChangeText={handleEmailChange}
+          onChangeText={setEmail}
           keyboardType="default"
         />
 
         <TextInputWithLabel
           label="Phone Number"
           placeholder="Enter your Phone Number"
-          value={phoneNumber}
-          onChangeText={handlePhoneNumberChange}
+          value={phone_number}
+          onChangeText={setPhone_number}
           keyboardType="numeric"
         />
         <View
@@ -110,7 +125,9 @@ const Account = () => {
           <TextInputWithLabel
             label="New Password"
             placeholder="Enter your New Password"
-            isPassword={true}
+            // isPassword={true}
+            // value={password}
+            onChangeText={setPassword}
           />
 
           <TextInputWithLabel
@@ -119,16 +136,28 @@ const Account = () => {
             isPassword={true}
           />
 
-          <View
+          <TouchableOpacity
             style={{
               width: "100%",
-              justifyContent: "center",
+              height: 40,
               alignItems: "center",
-              paddingTop: 50,
+              justifyContent: "center",
+              borderRadius: 30,
+              backgroundColor: colors.SanadRed,
+              marginTop: 10,
             }}
+            onPress={() => handleSave()}
           >
-            <Text style={styles.button}>Save Changes</Text>
-          </View>
+            <Text
+              style={{
+                color: colors.SanadWhite,
+                fontWeight: "600",
+                fontSize: 20,
+              }}
+            >
+              Save Changes
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

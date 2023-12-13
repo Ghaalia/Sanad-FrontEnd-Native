@@ -35,9 +35,7 @@ const Profile = () => {
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
-  console.log(profile);
 
-  console.log(user);
   if (!user) {
     // navigation
     navigation.replace("login");
@@ -134,7 +132,7 @@ const Profile = () => {
       setModalVisible(false);
     }
   };
-  // console.log(image);
+
   return (
     <View
       style={{

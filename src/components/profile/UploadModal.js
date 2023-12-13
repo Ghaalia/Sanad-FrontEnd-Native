@@ -6,9 +6,11 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Text,
+  Image,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../../config/theme";
+import placeholder from "../../../assets/profile/profile.jpg";
 
 const UploadModal = ({
   modalVisible,
@@ -16,93 +18,112 @@ const UploadModal = ({
   onCameraPress,
   onGalleryPress,
   onRemovePress,
+  uri,
   isLoading = false,
 }) => {
+  console.log("IM HERE");
   return (
-    <Modal animationType="slide" visible={modalVisible} transparent={true}>
-      <Pressable style={styles.container} onPress={onBackPress}>
-        {isLoading && <ActivityIndicator size={70} color={colors.SanadBlue1} />}
+    <View>
+      {/* <Image
+        source={uri ? { uri } : placeholder}
+        style={{
+          borderRadius: 90,
+          width: 160,
+          height: 160,
+          borderColor: colors.SanadBgGrey,
+          borderWidth: 5,
+          resizeMode: "contain",
+          backgroundColor: colors.SanadWhite,
+        }}
+      /> */}
 
-        {!isLoading && (
-          <View
-            style={[styles.modalView, { backgroundColor: colors.SanadWhite }]}
-          >
-            <Text
-              style={{
-                marginBottom: 10,
-                fontSize: 15,
-                fontWeight: "700",
-                color: colors.SanadBlue1,
-              }}
+      <Modal animationType="slide" visible={modalVisible} transparent={true}>
+        <Pressable style={styles.container} onPress={onBackPress}>
+          {isLoading && (
+            <ActivityIndicator size={70} color={colors.SanadBlue1} />
+          )}
+
+          {!isLoading && (
+            <View
+              style={[styles.modalView, { backgroundColor: colors.SanadWhite }]}
             >
-              Profile Photo
-            </Text>
-
-            <View style={styles.decisionRow}>
-              <TouchableOpacity
-                style={styles.optionBtn}
-                onPress={onCameraPress}
+              <Text
+                style={{
+                  marginBottom: 10,
+                  fontSize: 15,
+                  fontWeight: "700",
+                  color: colors.SanadBlue1,
+                }}
               >
-                <MaterialCommunityIcons
-                  name="camera-outline"
-                  size={30}
-                  color={colors.SanadRed}
-                />
-                <Text
-                  style={{
-                    fontWeight: "500",
-                    fontSize: 13,
-                    color: colors.SanadBlue1,
-                  }}
-                >
-                  Camera
-                </Text>
-              </TouchableOpacity>
+                Profile Photo
+              </Text>
 
-              <TouchableOpacity
-                style={styles.optionBtn}
-                onPress={onGalleryPress}
-              >
-                <MaterialCommunityIcons
-                  name="image-outline"
-                  size={30}
-                  color={colors.SanadRed}
-                />
-                <Text
-                  style={{
-                    fontWeight: "500",
-                    fontSize: 13,
-                    color: colors.SanadBlue1,
-                  }}
+              <View style={styles.decisionRow}>
+                <TouchableOpacity
+                  style={styles.optionBtn}
+                  onPress={onCameraPress}
                 >
-                  Gallery
-                </Text>
-              </TouchableOpacity>
+                  <MaterialCommunityIcons
+                    name="camera-outline"
+                    size={30}
+                    color={colors.SanadRed}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      fontSize: 13,
+                      color: colors.SanadBlue1,
+                    }}
+                  >
+                    Camera
+                  </Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.optionBtn}
-                onPress={onRemovePress}
-              >
-                <MaterialCommunityIcons
-                  name="trash-can-outline"
-                  size={30}
-                  color={colors.SanadMedGrey}
-                />
-                <Text
-                  style={{
-                    fontWeight: "500",
-                    fontSize: 13,
-                    color: colors.SanadBlue1,
-                  }}
+                <TouchableOpacity
+                  style={styles.optionBtn}
+                  onPress={onGalleryPress}
                 >
-                  Remove
-                </Text>
-              </TouchableOpacity>
+                  <MaterialCommunityIcons
+                    name="image-outline"
+                    size={30}
+                    color={colors.SanadRed}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      fontSize: 13,
+                      color: colors.SanadBlue1,
+                    }}
+                  >
+                    Gallery
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.optionBtn}
+                  onPress={onRemovePress}
+                >
+                  <MaterialCommunityIcons
+                    name="trash-can-outline"
+                    size={30}
+                    color={colors.SanadMedGrey}
+                  />
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      fontSize: 13,
+                      color: colors.SanadBlue1,
+                    }}
+                  >
+                    Remove
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
-      </Pressable>
-    </Modal>
+          )}
+        </Pressable>
+      </Modal>
+    </View>
   );
 };
 

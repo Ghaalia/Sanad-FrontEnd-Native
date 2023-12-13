@@ -5,7 +5,6 @@ import { colors } from "../config/theme";
 import placeholder from "./../../assets/profile/profile.jpg";
 
 const ProfileImage = ({ onButtonPress, uri }) => {
-  // console.log("Image URI:", uri);
   return (
     <View
       style={{

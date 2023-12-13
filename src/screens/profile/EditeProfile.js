@@ -20,7 +20,6 @@ const EditeProfile = () => {
     queryKey: ["profile"],
     queryFn: () => getMyProfile(),
   });
-  console.log(profile);
 
   useEffect(() => {
     if (profile && profile.image) {
