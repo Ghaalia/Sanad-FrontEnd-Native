@@ -118,6 +118,7 @@ const Account = () => {
               fontWeight: "600",
               fontSize: 16,
               color: colors.SanadBlue1,
+              fontFamily: "Urbanist_600SemiBold",
             }}
           >
             Change Password
@@ -153,6 +154,7 @@ const Account = () => {
                 color: colors.SanadWhite,
                 fontWeight: "600",
                 fontSize: 20,
+                fontFamily: "Urbanist_600SemiBold",
               }}
             >
               Save Changes

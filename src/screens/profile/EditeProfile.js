@@ -131,6 +131,7 @@ const EditeProfile = () => {
           justifyContent: "flex-start",
           alignItems: "flex-start",
           fontSize: 28,
+          fontFamily: "Urbanist_600SemiBold",
           // backgroundColor: "green",
         }}
       >

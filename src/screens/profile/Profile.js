@@ -152,7 +152,7 @@ const Profile = () => {
           justifyContent: "flex-start",
           alignItems: "flex-start",
           fontSize: 28,
-          // backgroundColor: "green",
+          fontFamily: "Urbanist_600SemiBold",
         }}
       >
         My Profile
@@ -211,10 +211,24 @@ const Profile = () => {
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "#1B1931", fontWeight: "600" }}>
+            <Text
+              style={{
+                color: "#1B1931",
+                fontWeight: "600",
+                fontFamily: "Urbanist_600SemiBold",
+              }}
+            >
               Volunteering
             </Text>
-            <Text style={{ color: "#1B1931", fontWeight: "600" }}>History</Text>
+            <Text
+              style={{
+                color: "#1B1931",
+                fontWeight: "600",
+                fontFamily: "Urbanist_600SemiBold",
+              }}
+            >
+              History
+            </Text>
           </View>
         </TouchableOpacity>
 
@@ -261,6 +275,7 @@ const Profile = () => {
                   fontWeight: "600",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontFamily: "Urbanist_600SemiBold",
                 }}
               >
                 Edit My Profile
@@ -307,6 +322,7 @@ const Profile = () => {
                   fontWeight: "600",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontFamily: "Urbanist_600SemiBold",
                 }}
               >
                 Account
@@ -353,6 +369,7 @@ const Profile = () => {
                   fontWeight: "600",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontFamily: "Urbanist_600SemiBold",
                 }}
               >
                 Settings
@@ -399,6 +416,7 @@ const Profile = () => {
                   fontWeight: "600",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontFamily: "Urbanist_600SemiBold",
                 }}
               >
                 Contact Us

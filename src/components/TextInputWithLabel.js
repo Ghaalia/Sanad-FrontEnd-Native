@@ -19,7 +19,12 @@ const TextInputWithLabel = ({
         gap: 5,
       }}
     >
-      <Text style={{ color: colors.SanadBlue1 }}> {label} </Text>
+      <Text
+        style={{ color: colors.SanadBlue1, fontFamily: "Urbanist_400Regular" }}
+      >
+        {" "}
+        {label}{" "}
+      </Text>
       <TextInput
         style={{
           height: 40,
@@ -27,6 +32,7 @@ const TextInputWithLabel = ({
           paddingHorizontal: 10,
           borderRadius: 20,
           width: "100%",
+          fontFamily: "Urbanist_400Regular",
         }}
         placeholder={placeholder}
         value={value}

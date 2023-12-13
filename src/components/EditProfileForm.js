@@ -77,6 +77,7 @@ const EditProfileForm = () => {
         placeholder="Enter your first name"
         value={firstName}
         onChangeText={setFirstName}
+        style
       />
 
       <TextInputWithLabel
@@ -87,7 +88,15 @@ const EditProfileForm = () => {
       />
 
       <View style={{ gap: 5 }}>
-        <Text style={{ color: colors.SanadBlue1 }}> Gender </Text>
+        <Text
+          style={{
+            color: colors.SanadBlue1,
+            fontFamily: "Urbanist_400Regular",
+          }}
+        >
+          {" "}
+          Gender{" "}
+        </Text>
         <View
           style={{
             display: "flex",
@@ -108,6 +117,7 @@ const EditProfileForm = () => {
                   gender === "Male" ? colors.SanadWhite : colors.SanadBlue1,
                 fontWeight: gender === "Male" ? "700" : "400",
                 textAlign: "center",
+                fontFamily: "Urbanist_400Regular",
               }}
             >
               Male
@@ -126,6 +136,7 @@ const EditProfileForm = () => {
                   gender === "Female" ? colors.SanadWhite : colors.SanadBlue1,
                 fontWeight: gender === "Female" ? "700" : "400",
                 textAlign: "center",
+                fontFamily: "Urbanist_400Regular",
               }}
             >
               Female
@@ -135,7 +146,7 @@ const EditProfileForm = () => {
       </View>
 
       <View style={{ gap: 5, width: "100%" }}>
-        <Text> Date of Birth </Text>
+        <Text style={{ fontFamily: "Urbanist_400Regular" }}>Date of Birth</Text>
         <View
           style={{
             display: "flex",
@@ -155,7 +166,10 @@ const EditProfileForm = () => {
       </View>
 
       <View style={{ gap: 5 }}>
-        <Text> Biography / Skills </Text>
+        <Text style={{ fontFamily: "Urbanist_400Regular" }}>
+          {" "}
+          Biography / Skills{" "}
+        </Text>
         <View
           style={{
             width: "100%",
@@ -195,6 +209,7 @@ const EditProfileForm = () => {
               color: colors.SanadWhite,
               fontWeight: "600",
               fontSize: 20,
+              fontFamily: "Urbanist_400Regular",
             }}
           >
             Save
