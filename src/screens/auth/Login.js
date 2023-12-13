@@ -113,7 +113,7 @@ const Login = () => {
             </View>
 
             <Text style={{ fontSize: 14, color: "white" }}>
-              {JSON.stringify(error?.name)}
+              {JSON.stringify(error)}
             </Text>
             {/* <Alert> {JSON.stringify(error?.name)}</Alert> */}
 
