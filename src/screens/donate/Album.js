@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Pressable,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { colors, fonts } from "../../config/theme";
@@ -12,29 +13,18 @@ import { MaterialCommunityIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { saveSecurely, fetchSecurely } from "../../utils/storage";
 import DonateUploadModal from "../../components/profile/DonateUploadModal";
-import UserContext from "../../../context/UserContext";
 import * as FileSystem from "expo-file-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { printToFileAsync } from "expo-print";
 import * as Sharing from "expo-sharing";
-
-const downloadImage = async (imageUrl) => {
-  const fileName = imageUrl.split("/").pop(); // Extract the filename
-  const fileUri = FileSystem.documentDirectory + fileName;
-
-  try {
-    await FileSystem.downloadAsync(imageUrl, fileUri);
-    return fileUri;
-  } catch (error) {
-    console.error("Error downloading the image:", error);
-  }
-};
+import { useNavigation } from "@react-navigation/native";
+import { uploadImages } from "../../apis/donation";
 
 const Album = () => {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [isRemovalMode, setIsRemovalMode] = useState(false);
-  const { user, setUser } = useContext(UserContext);
   const [categoryImages, setCategoryImages] = useState({
     Furniture: [],
     Devices: [],
@@ -122,6 +112,18 @@ const Album = () => {
     }
   };
 
+  const handleUpload = async () => {
+    try {
+      const allImages = [].concat(...Object.values(categoryImages));
+      const response = await uploadImages(allImages);
+      console.log("Images uploaded successfully:", response);
+      // Handle success, such as showing a message
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      // Handle error, such as showing an error message
+    }
+  };
+
   const removeImage = async (removeUri, category) => {
     try {
       handleImageRemoved(removeUri, category);
@@ -139,9 +141,9 @@ const Album = () => {
       alert("Error while removing image");
     }
   };
-
+  // TOGGLE REMOVE IMAGES
   const toggleRemovalMode = () => {
-    setIsRemovalMode(!isRemovalMode); // Toggle the removal mode
+    setIsRemovalMode(!isRemovalMode);
   };
 
   // const loadImages = async () => {
@@ -338,15 +340,21 @@ const Album = () => {
           shadowOpacity: 0.2,
         }}
       >
-        <Text
-          style={{
-            color: colors.SanadWhite,
-            fontSize: 32,
-            fontFamily: "Urbanist_600SemiBold",
+        <Pressable
+          onPress={() => {
+            navigation.navigate("donate");
           }}
         >
-          Donate
-        </Text>
+          <Text
+            style={{
+              color: colors.SanadWhite,
+              fontSize: 32,
+              fontFamily: "Urbanist_600SemiBold",
+            }}
+          >
+            Donate
+          </Text>
+        </Pressable>
         <Image
           style={{ width: "30%", resizeMode: "contain" }}
           source={require("../../../assets/onlylogo.png")}
@@ -416,7 +424,7 @@ const Album = () => {
                     style={styles.removeButton}
                     onPress={() => removeImage(imageUri, "Furniture")}
                   >
-                    <Text style={styles.removeButtonText}>X</Text>
+                    <Text style={styles.removeButtonText}>x</Text>
                   </TouchableOpacity>
                 )}
               </View>
@@ -572,6 +580,9 @@ const Album = () => {
               </TouchableOpacity>
             )}
           </View>
+          <TouchableOpacity style={styles.redbutton} onPress={handleUpload}>
+            <Text style={styles.button}>Done</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
 
@@ -598,6 +609,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: 40,
   },
   container_title: {
     width: "100%",
@@ -702,4 +714,35 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16, // Adjust size as needed
   },
+
+  //Done
+  redbutton: {
+    backgroundColor: colors.SanadRed,
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginVertical: 30,
+  },
+  button: {
+    width: "100%",
+    fontSize: 20,
+    fontWeight: fonts.semibold,
+    color: "white",
+    textAlign: "center",
+    fontFamily: "Urbanist_600SemiBold",
+  },
 });
+
+// const downloadImage = async (imageUrl) => {
+//   const fileName = imageUrl.split("/").pop(); // Extract the filename
+//   const fileUri = FileSystem.documentDirectory + fileName;
+
+//   try {
+//     await FileSystem.downloadAsync(imageUrl, fileUri);
+//     return fileUri;
+//   } catch (error) {
+//     console.error("Error downloading the image:", error);
+//   }
+// };
