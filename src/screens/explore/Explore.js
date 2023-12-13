@@ -27,6 +27,7 @@ const Explore = () => {
   // useEffect(() => {
   //   console.log(events);
   // }, [events]);
+
   // console.log(events[0]?._id);
   return (
     <View

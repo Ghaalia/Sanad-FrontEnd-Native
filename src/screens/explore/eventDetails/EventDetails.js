@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MapPin } from "lucide-react-native";
@@ -19,16 +19,19 @@ import {
   MaterialCommunityIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
-import { getOneEvent } from "../../../apis/event";
+import {
+  getOneEvent,
+  getParticipationsOnEvent,
+  requestVolunterNow,
+} from "../../../apis/event";
 import { BaseURL } from "../../../apis";
 import { colors } from "../../../config/theme";
 
 const EventDetails = () => {
   const route = useRoute();
-  const { event } = route.params || {};
-  // console.log(oneEvent._id);
-  // console.log(oneEvent.event_title);
-  console.log(event?._id);
+  const { event, id } = route.params || {};
+
+  console.log({ event: id });
   const navigation = useNavigation();
   const [DescriptionClicked, setDescriptionClicked] = useState(true);
   const [LocationClicked, setLocationClicked] = useState(false);
@@ -42,6 +45,16 @@ const EventDetails = () => {
     setDescriptionClicked(false);
     setLocationClicked(true);
   };
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["getParticipationsOnEvent", id],
+    queryFn: () => getParticipationsOnEvent(id),
+  });
+  const { mutate } = useMutation({
+    mutationFn: () => requestVolunterNow(id),
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -261,22 +274,41 @@ const EventDetails = () => {
           </View>
         )}
 
-        <TouchableOpacity
-          style={{
-            backgroundColor: colors.SanadRed,
-            width: "100%",
-            height: 50,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 30,
-            marginTop: 30,
-          }}
-          onPress={() => {
-            login_mutate();
-          }}
-        >
-          <Text style={styles.button}>Volunteer Now</Text>
-        </TouchableOpacity>
+        {data ? (
+          <>
+            <View
+              style={{
+                backgroundColor: colors.SanadRed,
+                width: "100%",
+                height: 50,
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 30,
+                marginTop: 30,
+              }}
+            >
+              <Text style={styles.button}>{data.status}</Text>
+            </View>
+          </>
+        ) : (
+          <TouchableOpacity
+            style={{
+              backgroundColor: colors.SanadRed,
+              width: "100%",
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: 30,
+              marginTop: 30,
+            }}
+            onPress={() => {
+              // login_mutate();
+              mutate();
+            }}
+          >
+            <Text style={styles.button}>Volunteer Now</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

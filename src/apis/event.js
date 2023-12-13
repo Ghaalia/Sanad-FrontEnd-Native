@@ -11,4 +11,19 @@ const getOneEvent = async (eventID) => {
   return res.data;
 };
 
-export { getAllEvents, getOneEvent };
+const requestVolunterNow = async (eventID) => {
+  const res = await instance.post(`/api/participation/${eventID}`);
+  return res.data;
+};
+
+const getParticipationsOnEvent = async (eventID) => {
+  const res = await instance.get(`/api/participation/event/${eventID}`);
+  return res.data;
+};
+
+export {
+  getAllEvents,
+  getOneEvent,
+  requestVolunterNow,
+  getParticipationsOnEvent,
+};

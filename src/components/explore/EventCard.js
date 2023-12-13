@@ -17,10 +17,30 @@ const EventCard = ({ event, id }) => {
   const navigation = new useNavigation();
   const oneEvent = event;
   const test_event = { name: "hi" };
+
+  const eventCategoryNames = event?.event_category?.map((category) => {
+    return (
+      <View
+        style={{
+          width: 95,
+          height: 30,
+          justifyContent: "center",
+          padding: 5,
+          backgroundColor: "white",
+          borderColor: "red",
+          borderRadius: 13,
+          borderWidth: 1,
+          alignItems: "center",
+        }}
+      >
+        <Text>{category.category_name}</Text>
+      </View>
+    );
+  });
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("eventDetails", { event });
+        navigation.navigate("eventDetails", { event, id: event._id });
       }}
     >
       <View
@@ -106,20 +126,15 @@ const EventCard = ({ event, id }) => {
 
         <View
           style={{
-            width: 100,
-            height: 30,
-            justifyContent: "center",
-            padding: 5,
-            backgroundColor: "white",
-            borderColor: "red",
-            borderRadius: 13,
-            borderWidth: 1,
+            display: "flex",
+            flexDirection: "row",
+            gap: 5,
           }}
         >
-          <Text>{event?.event_category}</Text>
+          {eventCategoryNames}
         </View>
-        <Text>{event?.organization.name}</Text>
-        <Text>{id}</Text>
+        {/* <Text>{event?.organization.name}</Text>
+        <Text>{id}</Text> */}
         <View
           style={{
             height: "auto",
