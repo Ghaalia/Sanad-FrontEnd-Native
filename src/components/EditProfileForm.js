@@ -10,12 +10,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import TextInputWithLabel from "./TextInputWithLabel";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  getMyProfile,
-  updateMyProfile,
-  updateProfile,
-  // useUpdateProfile,
-} from "../apis/auth";
+import { getMyProfile, updateProfile } from "../apis/auth";
 import UserContext from "../../context/UserContext";
 import { colors } from "../config/theme";
 
@@ -27,10 +22,7 @@ const EditProfileForm = () => {
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState(profile?.gender || "");
   const [dob, setDob] = useState("");
-
-  // const updateProfileMutation = useUpdateProfile();
-
-  const queryClient = useQueryClient();
+  const [skills, setSkills] = useState("");
 
   const { data: profile } = useQuery({
     queryKey: ["profile"],
@@ -43,54 +35,32 @@ const EditProfileForm = () => {
       setLastName(profile.last_name);
       setGender(profile.gender);
       setDob(profile.dob);
+      setSkills(profile.skills);
     }
   }, [profile]);
 
   const { mutate: updateFunc, error } = useMutation({
     mutationKey: ["update"],
-    mutationFn: () => updateProfile({ first_name: firstName }),
-    // onSuccess: (data) => {
-    //   setFirstName(data.first_name);
-    //   setLastName(data.last_name);
-    //   setGender(data.gender);
-    //   setDob(data.dob);
-    //   queryClient.invalidateQueries(["profile"]);
-    // },
+    mutationFn: () =>
+      updateProfile({
+        first_name: firstName,
+        last_name: lastName,
+        gender: gender,
+        dob: dob,
+        skills: skills,
+      }),
   });
-  // const useUpdateProfile = () => {
-  //   const queryClient = useQueryClient();
 
-  //   return useMutation(updateProfile, {
-  //     onSuccess: (data, variables) => {
-  //       // Invalidate and refetch the user profile query after a successful update
-  //       queryClient.invalidateQueries(["profile"]);
-  //     },
-  //   });
-  // };
   const handleSave = async () => {
     const updatedUserData = {
       first_name: firstName,
       last_name: lastName,
-      // Add other fields as needed...
+      gender: gender,
+      dob: dob,
+      skills: skills,
     };
     await updateFunc(updatedUserData);
   };
-
-  // const { data: updateFunc, error } = useMutation({
-  //   mutationKey: ["update"],
-  //   mutationFn: () => updateMyProfile(userId, formData),
-  //   onSuccess: () => {
-  //     navigation.navigate("profile");
-  //   },
-  // });
-
-  // const handleFirstNameChange = (e) => {
-  //   setFirstName(e.target.value);
-  // };
-
-  // const handleLastNameChange = (e) => {
-  //   setLastName(e.target.value);
-  // };
 
   return (
     <ScrollView
@@ -113,7 +83,7 @@ const EditProfileForm = () => {
         label="Last name"
         placeholder="Enter your last name"
         value={lastName}
-        // onChangeText={handleLastNameChange}
+        onChangeText={setLastName}
       />
 
       <View style={{ gap: 5 }}>
@@ -204,6 +174,8 @@ const EditProfileForm = () => {
               padding: 10,
               width: "100%",
             }}
+            value={skills}
+            onChangeText={setSkills}
           />
         </View>
         <TouchableOpacity
