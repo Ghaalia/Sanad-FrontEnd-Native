@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Entypo, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import ExploreNavigation from "./ExploreNavigation";
 import RewardsNavigation from "./RewardsNavigation";
 import DonateNavigation from "./DonateNavigation";
@@ -72,7 +72,7 @@ const MainNavigation = () => {
     >
       <Tab.Screen
         options={{
-          title: "Home",
+          title: "Donate",
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -83,8 +83,8 @@ const MainNavigation = () => {
                 gap: 1,
               }}
             >
-              <Entypo
-                name="home"
+              <FontAwesome5
+                name="hand-holding-heart"
                 size={24}
                 style={{
                   color: focused ? "white" : "white",
@@ -100,14 +100,14 @@ const MainNavigation = () => {
                   fontFamily: "Urbanist_500Medium",
                 }}
               >
-                Explore
+                Donate
               </Text>
             </View>
           ),
         }}
         screenOptions={{ headerShown: false }}
-        name={"exploreNavigation"}
-        component={ExploreNavigation}
+        name={"donateNavigation"}
+        component={DonateNavigation}
       />
       <Tab.Screen
         options={{
@@ -149,7 +149,7 @@ const MainNavigation = () => {
       />
       <Tab.Screen
         options={{
-          title: "Donate",
+          title: "Explore",
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -170,7 +170,7 @@ const MainNavigation = () => {
               }}
             >
               <Image
-                source={require("../../assets/donation/donation-tab.png")}
+                source={require("../../assets/explore/explore-floating.png")}
                 resizeMode="contain"
                 style={{
                   width: 60,
@@ -181,8 +181,8 @@ const MainNavigation = () => {
             </View>
           ),
         }}
-        name={"donateNavigation"}
-        component={DonateNavigation}
+        name={"exploreNavigation"}
+        component={ExploreNavigation}
       />
       <Tab.Screen
         options={{
