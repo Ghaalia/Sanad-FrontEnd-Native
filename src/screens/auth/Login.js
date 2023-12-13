@@ -24,6 +24,7 @@ const Login = () => {
       navigation.navigate("profile");
     },
   });
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -113,7 +114,7 @@ const Login = () => {
             </View>
 
             <Text style={{ fontSize: 14, color: "white" }}>
-              {JSON.stringify(error)}
+              {JSON.stringify(error?.message)}
             </Text>
             {/* <Alert> {JSON.stringify(error?.name)}</Alert> */}
 
