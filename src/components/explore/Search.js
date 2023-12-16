@@ -9,45 +9,45 @@ import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import { instance } from "../../apis";
 import filter from "lodash.filter";
 
-const Search = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  // const [data, setData] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
+const Search = ({ setFiltered }) => {
+  // const [searchQuery, setSearchQuery] = useState("");
+  // // const [data, setData] = useState([]);
+  // const [filteredEvents, setFilteredEvents] = useState([]);
+  // const [allEvents, setAllEvents] = useState([]);
   // const handleSearch = (query) => {
   //   setSearchQuery(query);
   //   // const filteredData = filter(allEvents)
   // };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await instance.get("/api/event");
-        // setData(response.data);
-        console.log("im here ");
-        console.log(response.data);
-        setAllEvents(response.data);
-        setFilteredEvents(response.data);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await instance.get("/api/event");
+  //       // setData(response.data);
+  //       console.log("im here ");
+  //       console.log(response.data);
+  //       setAllEvents(response.data);
+  //       setFilteredEvents(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   // console.log("hello this is the data");
   // console.log(allEvents);
 
-  const searchEvents = (query) => {
-    const lowerCaseQuery = query.toLowerCase();
-    const filtered = allEvents.filter(
-      (event) =>
-        event?.event_title.toLowerCase().includes(lowerCaseQuery) ||
-        event?.organization?.name.toLowerCase().includes(lowerCaseQuery)
-    );
-    setFilteredEvents(filtered);
-  };
+  // const searchEvents = (query) => {
+  //   const lowerCaseQuery = query.toLowerCase();
+  //   const filtered = allEvents.filter(
+  //     (event) =>
+  //       event?.event_title.toLowerCase().includes(lowerCaseQuery) ||
+  //       event?.organization?.name.toLowerCase().includes(lowerCaseQuery)
+  //   );
+  //   setFilteredEvents(filtered);
+  // };
 
   return (
     <View
@@ -84,29 +84,12 @@ const Search = () => {
         }}
         placeholder="Search"
         clearButtonMode="always"
-        onChangeText={(text) => {
-          setSearchQuery(text);
-          searchEvents(text);
-        }}
+        onChangeText={setFiltered}
         // onChangeText={(query) => handleSearch(query)}
-        value={searchQuery}
+        // value={searchQuery}
         autoCapitalize="none"
         autoCorrect={false}
         // onChange={handleSearch}
-      />
-      <FlatList
-        data={filteredEvents}
-        keyExtractor={(item) =>
-          item.id ? item.id.toString() : Math.random().toString()
-        }
-        renderItem={({ item }) => (
-          // <EventCard
-          //   event_title={item.event_title}
-          //   organization_name={item.event?.organization?.name}
-          //   // Add other event details as needed
-          // />
-          <View>{/* <Text> {item.event_title} </Text> */}</View>
-        )}
       />
     </View>
   );

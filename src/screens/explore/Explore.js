@@ -18,6 +18,7 @@ import { getAllEvents } from "../../apis/event";
 import { useQuery } from "@tanstack/react-query";
 
 const Explore = () => {
+  const [filtered, setFiltered] = useState("");
   const { data: events } = useQuery({
     queryKey: ["events"],
     queryFn: () => getAllEvents(),
@@ -81,7 +82,7 @@ const Explore = () => {
           justifyContent: "center",
         }}
       >
-        <Search />
+        <Search setFiltered={setFiltered} />
       </View>
 
       <View
@@ -141,9 +142,14 @@ const Explore = () => {
               navigation.navigate("eventDetails");
             }}
           >
-            {events?.map((el) => (
-              <EventCard event={el} id={el._id} />
-            ))}
+            {events
+              ?.filter((e) => {
+                return e.organization?.name.includes(filtered);
+                // return e.events_category[0]?.category_name.includes(filtered);
+              })
+              .map((el) => (
+                <EventCard event={el} id={el._id} />
+              ))}
           </Pressable>
         </ScrollView>
       </View>
