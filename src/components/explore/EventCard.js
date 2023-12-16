@@ -124,7 +124,7 @@ const EventCard = ({ event, id }) => {
                 {event?.event_title}
               </Text>
             </View>
-            <Text> organization name</Text>
+            <Text>{event?.organization?.name}</Text>
           </View>
         </View>
 
