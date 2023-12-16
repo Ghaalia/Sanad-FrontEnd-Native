@@ -64,6 +64,7 @@ const Login = () => {
                 placeholder="Email"
                 placeholderTextColor="white"
                 textContentType="emailAddress"
+                autoCapitalize="none"
                 onChangeText={(text) => {
                   setEmail(text);
                 }}

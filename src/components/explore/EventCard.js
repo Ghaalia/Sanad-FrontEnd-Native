@@ -12,6 +12,7 @@ import { colors } from "../../config/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Navigation } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/core";
+import { BaseURL } from "../../apis";
 
 const EventCard = ({ event, id }) => {
   const navigation = new useNavigation();
@@ -109,8 +110,11 @@ const EventCard = ({ event, id }) => {
               }}
             >
               <Image
+                // source={{
+                //   uri: event.event_image,
+                // }}
                 source={{
-                  uri: event.event_image,
+                  uri: `${BaseURL}/${event?.organization?.logo}`,
                 }}
                 style={{ height: 50, width: 50, borderRadius: 100 }}
               />

@@ -123,6 +123,7 @@ const Register = () => {
                 <TextInput
                   placeholder="Email"
                   placeholderTextColor="white"
+                  autoCapitalize="none"
                   onChangeText={(text) => {
                     setUserInfo({ ...userInfo, email: text });
                   }}
