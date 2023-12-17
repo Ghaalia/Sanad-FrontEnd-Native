@@ -12,7 +12,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import { getToken, register } from "../../apis/auth";
+import { checkToken, getToken, register } from "../../apis/auth";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -71,8 +71,8 @@ const Register = () => {
   const { mutate: mutate_register, error } = useMutation({
     mutationKey: ["register"],
     mutationFn: () => register(userInfo),
-    onSuccess: () => {
-      setUser(true);
+    onSuccess: async () => {
+      setUser(await checkToken());
       navigation.navigate("profile");
     },
   });

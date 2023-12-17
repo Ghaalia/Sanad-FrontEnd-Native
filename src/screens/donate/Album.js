@@ -6,22 +6,25 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
+  Clipboard,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { colors, fonts } from "../../config/theme";
 import { MaterialCommunityIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { saveSecurely, fetchSecurely } from "../../utils/storage";
+// import Clipboard from "@react-native-community/clipboard";
+
 import DonateUploadModal from "../../components/profile/DonateUploadModal";
-import * as FileSystem from "expo-file-system";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { printToFileAsync } from "expo-print";
 import * as Sharing from "expo-sharing";
 import { useNavigation } from "@react-navigation/native";
 import { uploadImages } from "../../apis/donation";
-
+import { WEBSITE_URL } from "../../apis";
+import UserContext from "../../../context/UserContext";
 const Album = () => {
   const navigation = useNavigation();
+  const { user, setUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [isRemovalMode, setIsRemovalMode] = useState(false);
@@ -50,7 +53,10 @@ const Album = () => {
         return;
       }
 
-      const newImages = result.assets.map((asset) => asset.uri);
+      const newImages = result.assets.map((asset) => ({
+        image: asset.uri,
+        category: currentCategory,
+      }));
       setCategoryImages((prevImages) => {
         const updatedImages = { ...prevImages };
         updatedImages[currentCategory] = [
@@ -62,9 +68,9 @@ const Album = () => {
     }
   };
 
-  const handleImagePicked = async (pickedImageUri, category) => {
-    await saveImage(pickedImageUri, category);
-  };
+  // const handleImagePicked = async (pickedImageUri, category) => {
+  //   await saveImage(pickedImageUri, category);
+  // };
 
   const handleImageRemoved = async (removedImageUri, category) => {
     await saveImage(null, category, removedImageUri);
@@ -73,7 +79,7 @@ const Album = () => {
   const uploadImage = async (mode, category) => {
     try {
       let result = {};
-
+      console.log("jkhsjksh");
       if (mode === "gallery") {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
         result = await ImagePicker.launchImageLibraryAsync({
@@ -93,8 +99,9 @@ const Album = () => {
       }
 
       if (!result.canceled) {
-        const newImage = result.assets[0].uri;
-        handleImagePicked(newImage, category);
+        const newImage = { image: result.assets[0].uri, category };
+        console.log(newImage);
+        // handleImagePicked(newImage, category);
         setCategoryImages((prevImages) => {
           // Create a copy of the current state
           const updatedImages = { ...prevImages };
@@ -112,15 +119,36 @@ const Album = () => {
     }
   };
 
+  // const handleUpload = async () => {
+  //   try {
+  //     // Iterate over each category
+  //     for (const category of Object.keys(categoryImages)) {
+  //       // Get up to 12 images for the current category
+  //       const imagesForCategory = categoryImages[category].slice(0, 12);
+
+  //       // If there are images to upload
+  //       if (imagesForCategory.length > 0) {
+  //         console.log(`Uploading images for category: ${category}`);
+  //         const response = await uploadImages(imagesForCategory);
+  //         console.log(
+  //           `Images uploaded successfully for ${category}:`,
+  //           response
+  //         );
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error uploading images:", error);
+  //   }
+  // };
+
   const handleUpload = async () => {
     try {
       const allImages = [].concat(...Object.values(categoryImages));
+      console.log(categoryImages);
       const response = await uploadImages(allImages);
       console.log("Images uploaded successfully:", response);
-      // Handle success, such as showing a message
     } catch (error) {
       console.error("Error uploading images:", error);
-      // Handle error, such as showing an error message
     }
   };
 
@@ -166,49 +194,49 @@ const Album = () => {
   //   }
   // };
 
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const storedImagesString = await fetchSecurely("categoryImages");
-        if (storedImagesString) {
-          const storedImages = JSON.parse(storedImagesString);
-          setCategoryImages(storedImages);
-        }
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const loadImages = async () => {
+  //     try {
+  //       const storedImagesString = await fetchSecurely("categoryImages");
+  //       if (storedImagesString) {
+  //         const storedImages = JSON.parse(storedImagesString);
+  //         setCategoryImages(storedImages);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching images:", error);
+  //     }
+  //   };
 
-    loadImages();
-  }, []);
+  //   loadImages();
+  // }, []);
 
-  const saveImage = async (uri, category, removeUri = null) => {
-    try {
-      if (uri) {
-        const localUri = await downloadImage(uri);
-        const updatedImages = [...categoryImages[category], localUri];
-        const newCategoryImages = {
-          ...categoryImages,
-          [category]: updatedImages,
-        };
-        setCategoryImages(newCategoryImages);
-        await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
-      } else if (removeUri) {
-        const updatedImages = categoryImages[category].filter(
-          (imageUri) => imageUri !== removeUri
-        );
-        const newCategoryImages = {
-          ...categoryImages,
-          [category]: updatedImages,
-        };
-        setCategoryImages(newCategoryImages);
-        await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
-      }
-    } catch (error) {
-      console.error("Error in saveImage:", error);
-      alert("Error while saving image");
-    }
-  };
+  // const saveImage = async (uri, category, removeUri = null) => {
+  //   try {
+  //     if (uri) {
+  //       const localUri = await downloadImage(uri);
+  //       const updatedImages = [...categoryImages[category], localUri];
+  //       const newCategoryImages = {
+  //         ...categoryImages,
+  //         [category]: updatedImages,
+  //       };
+  //       setCategoryImages(newCategoryImages);
+  //       await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
+  //     } else if (removeUri) {
+  //       const updatedImages = categoryImages[category].filter(
+  //         (imageUri) => imageUri !== removeUri
+  //       );
+  //       const newCategoryImages = {
+  //         ...categoryImages,
+  //         [category]: updatedImages,
+  //       };
+  //       setCategoryImages(newCategoryImages);
+  //       await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in saveImage:", error);
+  //     alert("Error while saving image");
+  //   }
+  // };
 
   const imageToBase64 = async (uri) => {
     const response = await fetch(uri);
@@ -310,8 +338,8 @@ const Album = () => {
     await Sharing.shareAsync(uri);
   };
 
-  const handleSharePress = async () => {
-    await createAndSharePDF(categoryImages);
+  const handleSharePress = () => {
+    Clipboard.setString(`${WEBSITE_URL}/image-gallery/${user.id}`);
   };
 
   return (
@@ -392,6 +420,9 @@ const Album = () => {
             <TouchableOpacity onPress={toggleRemovalMode}>
               <Ionicons name="ios-trash" size={24} color="#9e9e9e" />
             </TouchableOpacity>
+            <TouchableOpacity onPress={createAndSharePDF}>
+              <Entypo name="export" size={20} color="red" />
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView
@@ -415,7 +446,10 @@ const Album = () => {
             </View>
             {categoryImages.Furniture.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <Image
+                  style={styles.imageStyle}
+                  source={{ uri: imageUri.image }}
+                />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -462,7 +496,10 @@ const Album = () => {
             </View>
             {categoryImages.Devices.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <Image
+                  style={styles.imageStyle}
+                  source={{ uri: imageUri.image }}
+                />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -509,7 +546,10 @@ const Album = () => {
             </View>
             {categoryImages.Electronics.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <Image
+                  style={styles.imageStyle}
+                  source={{ uri: imageUri.image }}
+                />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -552,7 +592,10 @@ const Album = () => {
             </View>
             {categoryImages.Clothes.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
+                <Image
+                  style={styles.imageStyle}
+                  source={{ uri: imageUri.image }}
+                />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>

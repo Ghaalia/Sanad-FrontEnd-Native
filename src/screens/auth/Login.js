@@ -2,7 +2,7 @@ import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../apis/auth";
+import { checkToken, login } from "../../apis/auth";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./../../css";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -19,15 +19,15 @@ const Login = () => {
   const { mutate: login_mutate, error } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(email, password),
-    onSuccess: () => {
-      setUser(true);
+    onSuccess: async () => {
+      setUser(await checkToken());
       navigation.navigate("profile");
     },
   });
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
+  console.log(error);
   return (
     <View style={{ flex: 1, width: "100%", backgroundColor: "#1B1931" }}>
       <View>
@@ -113,7 +113,7 @@ const Login = () => {
             </View>
 
             <Text style={{ fontSize: 14, color: "white" }}>
-              {JSON.stringify(error?.name)}
+              {JSON.stringify(error)}
             </Text>
             {/* <Alert> {JSON.stringify(error?.name)}</Alert> */}
 
