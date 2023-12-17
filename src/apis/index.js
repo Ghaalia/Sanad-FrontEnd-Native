@@ -2,7 +2,7 @@ import { getToken } from "./auth";
 
 const { default: axios } = require("axios");
 
-const BaseURL = "http://192.168.0.196:8081";
+const BaseURL = "http://172.20.10.6:8000";
 const instance = axios.create({
   baseURL: BaseURL,
 });

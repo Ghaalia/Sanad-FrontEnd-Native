@@ -12,6 +12,7 @@ import { colors } from "../../config/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Navigation } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/core";
+import { BaseURL } from "../../apis";
 
 const EventCard = ({ event, id }) => {
   const navigation = new useNavigation();
@@ -98,29 +99,36 @@ const EventCard = ({ event, id }) => {
             // backgroundColor: "red",
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 10,
-              //backgroundColor: "green",
-            }}
-          >
-            <Image
-              source={{
-                uri: event.event_image,
-              }}
-              style={{ height: 50, width: 50, borderRadius: 100 }}
-            />
-            <Text
+          <View style={{ flexDirection: "column" }}>
+            <View
               style={{
-                fontWeight: "bold",
-                color: "#1B1931",
-                fontFamily: "Urbanist_700Bold",
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+
+                //backgroundColor: "green",
               }}
             >
-              {event?.event_title}
-            </Text>
+              <Image
+                // source={{
+                //   uri: event.event_image,
+                // }}
+                source={{
+                  uri: `${BaseURL}/${event?.organization?.logo}`,
+                }}
+                style={{ height: 50, width: 50, borderRadius: 100 }}
+              />
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "#1B1931",
+                  fontFamily: "Urbanist_700Bold",
+                }}
+              >
+                {event?.event_title}
+              </Text>
+            </View>
+            <Text>{event?.organization?.name}</Text>
           </View>
         </View>
 
@@ -133,8 +141,8 @@ const EventCard = ({ event, id }) => {
         >
           {eventCategoryNames}
         </View>
-        {/* <Text>{event?.organization.name}</Text>
-        <Text>{id}</Text> */}
+        {/* <Text>{event?.organization.name}</Text> */}
+        {/* <Text>{id}</Text> */}
         <View
           style={{
             height: "auto",

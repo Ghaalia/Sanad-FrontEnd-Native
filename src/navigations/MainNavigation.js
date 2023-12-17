@@ -50,6 +50,7 @@ const MainNavigation = () => {
   };
   return (
     <Tab.Navigator
+      initialRouteName="exploreNavigation"
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,

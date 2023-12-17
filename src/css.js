@@ -84,11 +84,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     gap: 10,
-    opacity: 0.3, // Default opacity for unselected buttons
+    opacity: 0.3,
   },
   genderButtonText: {
     color: colors.SanadWhite,
     fontWeight: "600",
+    fontFamily: "Urbanist_400Regular",
   },
   selectDate: {
     width: "100%",
@@ -109,6 +110,13 @@ const styles = StyleSheet.create({
     color: colors.SanadRed,
     fontWeight: "600",
     fontSize: 15,
+    fontFamily: "Urbanist_600SemiBold",
+  },
+  fontRegular: {
+    fontFamily: "Urbanist_400Regular",
+  },
+  fontSemibold: {
+    fontFamily: "Urbanist_600SemiBold",
   },
 });
 

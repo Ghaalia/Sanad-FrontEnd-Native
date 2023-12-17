@@ -50,6 +50,7 @@ const Setting = () => {
           justifyContent: "center",
           alignItems: "center",
           fontSize: 28,
+          fontFamily: "Urbanist_600SemiBold",
         }}
       >
         Settings
@@ -90,6 +91,7 @@ const Setting = () => {
             style={{
               width: "50%",
               fontSize: 17,
+              fontFamily: "Urbanist_400Regular",
             }}
           >
             Language
@@ -121,6 +123,7 @@ const Setting = () => {
           <Text
             style={{
               fontSize: 17,
+              fontFamily: "Urbanist_400Regular",
             }}
           >
             Dark/Light mode
@@ -144,6 +147,7 @@ const Setting = () => {
           <Text
             style={{
               fontSize: 17,
+              fontFamily: "Urbanist_400Regular",
             }}
           >
             Allow Notifications
@@ -167,7 +171,8 @@ const Setting = () => {
             style={{
               color: colors.SanadWhite,
               fontWeight: fonts.bold,
-              fontSize: 15,
+              fontSize: 20,
+              fontFamily: "Urbanist_600SemiBold",
             }}
           >
             Logout

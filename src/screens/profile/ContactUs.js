@@ -25,6 +25,7 @@ const ContactUs = () => {
           justifyContent: "center",
           alignItems: "center",
           fontSize: 28,
+          fontFamily: "Urbanist_600SemiBold",
         }}
       >
         Contact Us
@@ -61,7 +62,10 @@ const ContactUs = () => {
             padding: 10,
           }}
         >
-          <Text> +965 99776567 </Text>
+          <Text style={{ fontFamily: "Urbanist_600SemiBold" }}>
+            {" "}
+            +965 99776567{" "}
+          </Text>
           <MessageCircle color="#F5574E" />
         </View>
 
@@ -76,7 +80,10 @@ const ContactUs = () => {
             padding: 10,
           }}
         >
-          <Text> @Sanad.kw </Text>
+          <Text style={{ fontFamily: "Urbanist_600SemiBold" }}>
+            {" "}
+            @Sanad.kw{" "}
+          </Text>
           <Instagram color="#F5574E" />
         </View>
 
@@ -91,7 +98,10 @@ const ContactUs = () => {
             padding: 10,
           }}
         >
-          <Text> Sanadkw@gmail.com </Text>
+          <Text style={{ fontFamily: "Urbanist_600SemiBold" }}>
+            {" "}
+            Sanadkw@gmail.com{" "}
+          </Text>
           <MailIcon color="#F5574E" />
         </View>
       </View>

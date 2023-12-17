@@ -68,7 +68,10 @@ const EventDetails = () => {
         }}
       >
         <Image
-          source={require("../../../../assets/explore/default-event.png")}
+          source={{
+            uri: event?.event_image,
+          }}
+          // source={require("../../../../assets/explore/default-event.png")}
           style={{
             borderBottomEndRadius: 30,
             borderBottomLeftRadius: 30,
@@ -90,6 +93,7 @@ const EventDetails = () => {
             width: "100%",
           }}
         />
+
         <View
           style={{
             flexDirection: "row",
@@ -108,19 +112,28 @@ const EventDetails = () => {
               borderRadius: 100,
             }}
           />
-
-          <Text
-            style={{
-              fontWeight: "bold",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            {event?.event_title}
-            {/* {eventId} */}
-            {/* {event?.event_title} */}
-            {/* {event?.event_title}{" "} */}
-          </Text>
+          <View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                justifyContent: "center",
+                color: "white",
+                fontFamily: "",
+              }}
+            >
+              {event?.event_title}
+            </Text>
+            <Text
+              style={{
+                fontWeight: "semibold",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              {" "}
+              {event?.organization?.name}
+            </Text>
+          </View>
         </View>
       </View>
 
