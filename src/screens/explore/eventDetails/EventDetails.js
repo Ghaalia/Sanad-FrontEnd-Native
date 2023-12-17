@@ -315,7 +315,6 @@ const EventDetails = () => {
               marginTop: 30,
             }}
             onPress={() => {
-              // login_mutate();
               mutate();
             }}
           >

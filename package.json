@@ -16,8 +16,13 @@
   },
   "dependencies": {
     "@expo-google-fonts/urbanist": "^0.2.3",
+<<<<<<< HEAD
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
+=======
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "@expo/vector-icons": "^13.0.0",
+>>>>>>> newbebe
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
@@ -46,7 +51,12 @@
     "react-native-google-fonts": "^0.0.0",
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+<<<<<<< HEAD
     "react-native-modal-datetime-picker": "^17.1.0"
+=======
+    "react-native-modal-datetime-picker": "^17.1.0",
+    "expo-print": "~12.4.2"
+>>>>>>> newbebe
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
