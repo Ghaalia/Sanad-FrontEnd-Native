@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { instance } from ".";
 import * as SecureStore from "expo-secure-store";
-
+import { jwtDecode } from "jwt-decode";
 const login = async (email, password) => {
   const res = await instance.post("/api/user/signin", {
     email,
@@ -38,8 +38,8 @@ const register = async (userInfo, imageUri) => {
 
   return res.data;
 };
-
 // const register = async (userInfo, imageFile) => {
+
 //   const formData = new FormData();
 
 //   for (let key in userInfo) {
@@ -117,6 +117,18 @@ const updateProfile = async (updatedUserData) => {
 //   });
 // };
 
+const checkToken = async () => {
+  const token = await getToken();
+  if (token) {
+    console.log(token);
+    const decode = jwtDecode(token);
+    if (decode) {
+      return decode;
+    }
+  }
+  return false;
+};
+
 export {
   login,
   register,
@@ -128,4 +140,5 @@ export {
   updateProfile,
   // updateMyProfile,
   // useUpdateProfile,
+  checkToken,
 };
