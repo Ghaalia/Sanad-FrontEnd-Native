@@ -2,14 +2,14 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../config/theme";
-import placeholder from "./../../assets/profile/profile.jpg";
 import UserContext from "../../context/UserContext";
 import { useQuery } from "@tanstack/react-query";
 import { getMyProfile } from "../apis/auth";
 import defaultImage from "./../../assets/profile/profileimg.png";
 
-const ProfileImage = ({ onButtonPress, uri }) => {
+const ProfileImageDuplicates = ({ onButtonPress, uri }) => {
   const userContext = useContext(UserContext);
+
   const [image, setImage] = useState("");
   const { data: profile } = useQuery({
     queryKey: ["profile"],
@@ -55,16 +55,16 @@ const ProfileImage = ({ onButtonPress, uri }) => {
         }}
         onPress={onButtonPress}
       >
-        {/* <MaterialCommunityIcons
+        <MaterialCommunityIcons
           name="camera-outline"
           size={30}
           color={colors.SanadRed}
-        /> */}
+        />
       </TouchableOpacity>
     </View>
   );
 };
 
-export default ProfileImage;
+export default ProfileImageDuplicates;
 
 const styles = StyleSheet.create({});

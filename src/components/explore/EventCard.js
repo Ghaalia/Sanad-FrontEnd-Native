@@ -96,7 +96,6 @@ const EventCard = ({ event, id }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            // backgroundColor: "red",
           }}
         >
           <View style={{ flexDirection: "column" }}>
@@ -105,14 +104,9 @@ const EventCard = ({ event, id }) => {
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 10,
-
-                //backgroundColor: "green",
               }}
             >
               <Image
-                // source={{
-                //   uri: event.event_image,
-                // }}
                 source={{
                   uri: `${BaseURL}/${event?.organization?.logo}`,
                 }}
@@ -141,15 +135,13 @@ const EventCard = ({ event, id }) => {
         >
           {eventCategoryNames}
         </View>
-        {/* <Text>{event?.organization.name}</Text> */}
-        {/* <Text>{id}</Text> */}
+
         <View
           style={{
             height: "auto",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            // backgroundColor: "yellow",
           }}
         >
           <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
@@ -189,8 +181,5 @@ const EventCard = ({ event, id }) => {
     </TouchableOpacity>
   );
 };
-// const styles = StyleSheet.create({});
 
 export default EventCard;
-
-/* <Text style={{ color: "red" }}>{item.price}</Text> */
