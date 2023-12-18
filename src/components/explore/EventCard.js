@@ -8,7 +8,7 @@ import {
   FontAwesome5,
   Entypo,
 } from "@expo/vector-icons";
-import { colors } from "../../config/theme";
+import { colors, fonts } from "../../config/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Navigation } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/core";
@@ -144,36 +144,108 @@ const EventCard = ({ event, id }) => {
             alignItems: "flex-end",
           }}
         >
-          <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-            <Entypo name="calendar" size={20} color="#1B1931" />
-            <Text
+          <View style={{ flexDirection: "column", gap: 3 }}>
+            <View
               style={{
-                fontSize: 12,
-                fontWeight: "500",
-                color: "#1B1931",
-                fontFamily: "Urbanist_500Medium",
+                flexDirection: "row",
+                gap: 30,
+                justifyContent: "space-between",
               }}
             >
-              {event?.event_date}
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
-            <MaterialIcons
-              style={{}}
-              name="access-time"
-              size={20}
-              color="#1B1931"
-            />
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: "500",
-                color: "#1B1931",
-                fontFamily: "Urbanist_500Medium",
-              }}
-            >
-              {event?.event_start_time} to {event?.event_end_time}
-            </Text>
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <Text
+                  style={{
+                    width: 45,
+                    fontWeight: fonts.semibold,
+                    fontSize: 13,
+                  }}
+                >
+                  Start
+                </Text>
+                <Entypo name="calendar" size={20} color="#1B1931" />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_date}
+                </Text>
+              </View>
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <MaterialIcons
+                  style={{}}
+                  name="access-time"
+                  size={20}
+                  color="#1B1931"
+                />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_start_time}
+                  {/* to {event?.event_end_time} */}
+                </Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: "row", gap: 30 }}>
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <Text
+                  style={{
+                    width: 45,
+                    fontWeight: fonts.semibold,
+                    fontSize: 13,
+                  }}
+                >
+                  End
+                </Text>
+                <Entypo name="calendar" size={20} color="#1B1931" />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_date}
+                </Text>
+              </View>
+
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <MaterialIcons
+                  style={{}}
+                  name="access-time"
+                  size={20}
+                  color="#1B1931"
+                />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_start_time}
+                  {/* to {event?.event_end_time} */}
+                </Text>
+              </View>
+            </View>
           </View>
           <Feather style={{}} name="share-2" size={24} color="#F5574E" />
         </View>
