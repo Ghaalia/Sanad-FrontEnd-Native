@@ -6,20 +6,21 @@ import placeholder from "./../../assets/profile/profile.jpg";
 import UserContext from "../../context/UserContext";
 import { useQuery } from "@tanstack/react-query";
 import { getMyProfile } from "../apis/auth";
+import defaultImage from "./../../assets/profile/profileimg.png";
 
 const ProfileImage = ({ onButtonPress, uri }) => {
-  // const userContext = useContext(UserContext);
-  // // const { userId } = userContext.user;
-  // const [image, setImage] = useState("");
-  // const { data: profile } = useQuery({
-  //   queryKey: ["profile"],
-  //   queryFn: () => getMyProfile(),
-  // });
-  // useEffect(() => {
-  //   if (profile) {
-  //     setImage(profile.image);
-  //   }
-  // }, [profile]);
+  const userContext = useContext(UserContext);
+  // const { userId } = userContext.user;
+  const [image, setImage] = useState("");
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+  useEffect(() => {
+    if (profile) {
+      setImage(profile.image);
+    }
+  }, [profile]);
 
   // console.log("photo");
   // console.log({ uri: profile.image });
@@ -34,7 +35,7 @@ const ProfileImage = ({ onButtonPress, uri }) => {
       <TouchableOpacity onPress={onButtonPress}>
         <Image
           // source={profile?.image}
-          source={uri ? { uri } : placeholder}
+          source={uri ? { uri } : defaultImage}
           style={{
             borderRadius: 90,
             width: 160,
