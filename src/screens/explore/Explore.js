@@ -144,9 +144,24 @@ const Explore = () => {
           >
             {events
               ?.filter((e) => {
-                return e.organization?.name.includes(filtered);
-                // return e.events_category[0]?.category_name.includes(filtered);
+                return (
+                  e.organization?.name.includes(filtered) ||
+                  (e.event_category &&
+                    e.event_category.some((category) =>
+                      category.category_name.includes(filtered)
+                    ))
+                );
               })
+              // ?.filter((e) => {
+              //   return e.organization?.name.includes(filtered);
+              // })
+
+              // e.event_category?.category_name.includes(filtered)
+              // return e.events_category[0]?.category_name.includes(filtered);
+
+              // .filter((e) => {
+              //   return e.event_category?.category_name.includes(filtered);
+              // })
               .map((el) => (
                 <EventCard event={el} id={el._id} />
               ))}
