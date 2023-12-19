@@ -26,6 +26,7 @@ import {
 } from "../../../apis/event";
 import { BaseURL } from "../../../apis";
 import { colors } from "../../../config/theme";
+import Location from "../../../components/explore/Location";
 
 const EventDetails = () => {
   const route = useRoute();
@@ -277,13 +278,13 @@ const EventDetails = () => {
           </View>
         ) : (
           <View style={{ width: "100%" }}>
-            <Button
+            {/* <Button
               title="go to event description"
               onPress={() => {
                 navigation.navigate("Description");
               }}
-            />
-            <Text>EventDetails</Text>
+            /> */}
+            <Location />
           </View>
         )}
 
