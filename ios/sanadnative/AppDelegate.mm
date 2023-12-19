@@ -7,12 +7,17 @@
 #import <React/RCTLinkingManager.h>
 #import <GoogleMaps/GoogleMaps.h>
 
-@interface AppDelegate () <RCTBridgeDelegate>
+// @interface AppDelegate () <RCTBridgeDelegate>
 
-@end
+// @end
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  [GMSServices provideAPIKey:@"AIzaSyAWHn5-3x_x_sM3lwyVskvkAYoi8fqD0qA"];
+  return YES;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.moduleName = @"main";
@@ -61,10 +66,6 @@
 {
   return [super application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-  [GMSServices provideAPIKey:@"AIzaSyCbFD6GG7Z9B7wC0twTVZInPQLdHtOOXlY"];
-  return YES;
-}
+
 
 @end

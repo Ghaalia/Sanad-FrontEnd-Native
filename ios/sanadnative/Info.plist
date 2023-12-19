@@ -48,6 +48,9 @@
         </dict>
       </dict>
     </dict>
+    <key>GOOGLE_MAPS_API_KEY</key>
+<string>AIzaSyCbFD6GG7Z9B7wC0twTVZInPQLdHtOOXlY</string>
+
     <key>NSCameraUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your camera</string>
     <key>NSMicrophoneUsageDescription</key>

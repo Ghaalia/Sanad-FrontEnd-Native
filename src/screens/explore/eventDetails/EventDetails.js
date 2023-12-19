@@ -281,7 +281,7 @@ const EventDetails = () => {
             {/* <Button
               title="go to event description"
               onPress={() => {
-                navigation.navigate("Description");
+                navigation.navigate("Location");
               }}
             /> */}
             <Location />
