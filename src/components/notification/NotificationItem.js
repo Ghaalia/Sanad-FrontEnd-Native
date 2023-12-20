@@ -10,14 +10,13 @@ const NotificationItem = () => {
     fetch(`${BaseURL}/notifications/:userId`, {
       method: "GET",
       headers: {
-        // // Include any necessary headers for authentication, e.g., JWT token
-        // Authorization: "Bearer YOUR_JWT_TOKEN",
+        Authorization: "Bearer YOUR_JWT_TOKEN",
       },
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setNotifications(data.notifications);
+          setNotifications(data?.notifications);
         } else {
           console.error("Failed to fetch notification!!!!!!");
         }
