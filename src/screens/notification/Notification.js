@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,26 +10,36 @@ import {
 import { getNotificationsByUser } from "../../apis/notification";
 import NotificationItem from "../../components/notification/NotificationItem";
 import { colors, fonts } from "../../config/theme";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../apis/auth";
+import UserContext from "../../../context/UserContext";
 
 const Notification = ({ route }) => {
-  //   const { userId } = route.params;
+  //   console.log(`Im userId ${userId}`);
+  const userContext = useContext(UserContext);
+  const { userId } = userContext.user;
 
-  //   const [notifications, setNotifications] = useState([]);
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getMyProfile(),
+  });
+  // const { userId } = route.params;
+  const [notifications, setNotifications] = useState([]);
 
-  //   useEffect(() => {
-  //     if (userId) {
-  //       fetchNotifications(userId);
-  //     }
-  //   }, [userId]);
+  useEffect(() => {
+    if (userId) {
+      fetchNotifications(userId);
+    }
+  }, [userId]);
 
-  //   const fetchNotifications = async (userId) => {
-  //     try {
-  //       const fetchedNotifications = await getNotificationsByUser(userId);
-  //       setNotifications(fetchedNotifications);
-  //     } catch (error) {
-  //       console.error("Error fetching notifications:", error);
-  //     }
-  //   };
+  const fetchNotifications = async (userId) => {
+    try {
+      const fetchedNotifications = await getNotificationsByUser(userId);
+      setNotifications(fetchedNotifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   return (
     <View
@@ -86,44 +96,8 @@ const Notification = ({ route }) => {
           paddingVertical: 30,
         }}
       >
-        <View
-          style={{
-            width: "100%",
-            height: 80,
-            backgroundColor: "white",
-            flexDirection: "row",
-            alignItems: "center",
-            borderRadius: 10,
-            overflow: "hidden",
-            gap: 15,
-          }}
-        >
-          <View
-            style={{
-              width: 80,
-              height: "100%",
-              backgroundColor: colors.SanadRed,
-              padding: 10,
-            }}
-          >
-            <Image
-              style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-              source={require("../../../assets/notifications/sanad-white.png")}
-            />
-          </View>
-          <View
-            style={{
-              height: "100%",
-              justifyContent: "space-evenly",
-              //   backgroundColor: "yellow",
-            }}
-          >
-            <Text style={{ fontWeight: fonts.bold, color: colors.SanadBlue1 }}>
-              Notification Title
-            </Text>
-            <Text style={{ color: colors.SanadBlue1 }}>Notification Body</Text>
-          </View>
-        </View>
+        <Text>{user?._id}</Text>
+        <NotificationItem />
       </ScrollView>
     </View>
   );

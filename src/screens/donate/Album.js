@@ -447,7 +447,7 @@ const Album = () => {
             <TouchableOpacity
               onPress={() => {
                 handleOpenDoneModal();
-                handleUpload();
+                // handleUpload();
               }}
               style={{
                 flexDirection: "row",
@@ -475,9 +475,9 @@ const Album = () => {
             <TouchableOpacity onPress={toggleRemovalMode}>
               <Ionicons name="ios-trash" size={24} color="#9e9e9e" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSharePdf}>
+            {/* <TouchableOpacity onPress={handleSharePdf}>
               <AntDesign name="pdffile1" size={20} color="red" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <ScrollView
@@ -695,6 +695,8 @@ const Album = () => {
         onRemovePress={() => removeImage()}
       />
       <ShareDonateModal
+        handleSharePdf={handleSharePdf}
+        handleUpload={handleUpload}
         handleShareLink={handleShareLink}
         doneModalVisible={doneModalVisible}
         onBackPress={() => {

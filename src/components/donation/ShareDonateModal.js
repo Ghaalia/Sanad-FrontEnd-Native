@@ -17,6 +17,8 @@ import { colors } from "../../config/theme";
 import placeholder from "../../../assets/profile/profile.jpg";
 
 const ShareDonateModal = ({
+  handleSharePdf,
+  handleUpload,
   doneModalVisible,
   onBackPress,
   isLoading = false,
@@ -77,7 +79,15 @@ const ShareDonateModal = ({
 
               <View style={styles.decisionRow}>
                 <TouchableOpacity
-                  onPress={handleShareLink}
+                  // onPress={()=>{
+                  //   handleShareLink(),
+                  //   handleUpload(),
+                  // }}
+                  // onPress={handleShareLink}
+                  onPress={() => {
+                    handleShareLink();
+                    handleUpload();
+                  }}
                   style={styles.optionBtn}
                 >
                   <Octicons name="link" size={30} color={colors.SanadRed} />
@@ -104,7 +114,7 @@ const ShareDonateModal = ({
                 </Text>
                 <TouchableOpacity
                   style={styles.optionBtn}
-                  //   onPress={onCameraPress}
+                  onPress={handleSharePdf}
                 >
                   <AntDesign
                     name="pdffile1"
