@@ -13,7 +13,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.a767bc91-efcd-4ac7-9a4c-27ed17387d4c",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAWHn5-3x_x_sM3lwyVskvkAYoi8fqD0qA"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {

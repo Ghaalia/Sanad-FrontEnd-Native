@@ -10,45 +10,6 @@ import { instance } from "../../apis";
 import filter from "lodash.filter";
 
 const Search = ({ setFiltered }) => {
-  // const [searchQuery, setSearchQuery] = useState("");
-  // // const [data, setData] = useState([]);
-  // const [filteredEvents, setFilteredEvents] = useState([]);
-  // const [allEvents, setAllEvents] = useState([]);
-  // const handleSearch = (query) => {
-  //   setSearchQuery(query);
-  //   // const filteredData = filter(allEvents)
-  // };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await instance.get("/api/event");
-  //       // setData(response.data);
-  //       console.log("im here ");
-  //       console.log(response.data);
-  //       setAllEvents(response.data);
-  //       setFilteredEvents(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching data", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-  // console.log("hello this is the data");
-  // console.log(allEvents);
-
-  // const searchEvents = (query) => {
-  //   const lowerCaseQuery = query.toLowerCase();
-  //   const filtered = allEvents.filter(
-  //     (event) =>
-  //       event?.event_title.toLowerCase().includes(lowerCaseQuery) ||
-  //       event?.organization?.name.toLowerCase().includes(lowerCaseQuery)
-  //   );
-  //   setFilteredEvents(filtered);
-  // };
-
   return (
     <View
       style={{
@@ -78,18 +39,13 @@ const Search = ({ setFiltered }) => {
           shadowRadius: 4,
           shadowOpacity: 0.1,
           borderRadius: 50,
-          // borderWidth: "1",
-          // borderRadius: 10,
           paddingHorizontal: 50,
         }}
         placeholder="Search"
         clearButtonMode="always"
         onChangeText={setFiltered}
-        // onChangeText={(query) => handleSearch(query)}
-        // value={searchQuery}
         autoCapitalize="none"
         autoCorrect={false}
-        // onChange={handleSearch}
       />
     </View>
   );

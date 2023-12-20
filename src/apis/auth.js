@@ -76,6 +76,7 @@ const getToken = async () => {
   ///// check exp time
   return token;
 };
+
 //delete
 const logout = async () => {
   await SecureStore.deleteItemAsync("token");
@@ -91,16 +92,6 @@ const getMyProfile = async () => {
   return res.data;
 };
 
-// const updateMyProfile = async (userId, formData) => {
-//   // const formData = new FormData();
-//   // for (let key in userInfo) {
-//   //   formData.append(key, userInfo[key]);
-//   // }
-//   // (`/api/user/updateuser/${userId}`, formData);
-
-//   const res = await instance.put(`/api/user/updateuser/${userId}`);
-//   return res.data;
-// };
 const updateProfile = async (updatedUserData) => {
   const res = await instance.put(`/api/user/updateuser`, updatedUserData);
   return res.data;

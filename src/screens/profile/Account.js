@@ -139,7 +139,7 @@ const Account = () => {
 
           <TouchableOpacity
             style={{
-              width: "100%",
+              width: 280,
               height: 40,
               alignItems: "center",
               justifyContent: "center",
@@ -154,7 +154,7 @@ const Account = () => {
                 color: colors.SanadWhite,
                 fontWeight: "600",
                 fontSize: 20,
-                fontFamily: "Urbanist_600SemiBold",
+                fontFamily: "Urbanist_400Regular",
               }}
             >
               Save Changes
