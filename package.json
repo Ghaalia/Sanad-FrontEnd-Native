@@ -18,12 +18,12 @@
     "@expo-google-fonts/urbanist": "^0.2.3",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
-    "@react-native-community/geolocation": "^3.1.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
     "@tanstack/react-query": "^5.8.7",
     "axios": "^1.6.2",
+    "core-js": "^3.34.0",
     "expo": "~49.0.15",
     "expo-app-loading": "^2.1.1",
     "expo-file-system": "~15.4.5",
@@ -33,7 +33,11 @@
     "expo-linear-gradient": "~12.3.0",
     "expo-notifications": "~0.20.1",
     "expo-print": "~12.4.2",
+<<<<<<< HEAD
     "expo-secure-store": "~12.3.1",
+=======
+    "expo-secure-store": "^12.5.0",
+>>>>>>> moodhy13/12
     "expo-sharing": "~11.5.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
@@ -50,9 +54,7 @@
     "react-native-image-picker": "^7.0.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal-datetime-picker": "^17.1.0",
-    "to-regex-range": "^5.0.1",
-    "react-native-maps": "1.8.4"
- 
+    "to-regex-range": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { instance } from ".";
 import * as SecureStore from "expo-secure-store";
-
+import { jwtDecode } from "jwt-decode";
 const login = async (email, password) => {
   const res = await instance.post("/api/user/signin", {
     email,
@@ -38,6 +38,34 @@ const register = async (userInfo, imageUri) => {
 
   return res.data;
 };
+// const register = async (userInfo, imageFile) => {
+
+//   const formData = new FormData();
+
+//   for (let key in userInfo) {
+//     formData.append(key, userInfo[key]); //other info
+//   }
+//   if (imageFile) {
+//     formData.append("image", imageFile); //only image
+//   }
+//   const res = await instance.post("/api/user/register", formData); //send formdata to server
+//   if (res?.data.token) {
+//     await saveToken(res.data.token);
+//   }
+//   return res.data;
+// };
+
+// const register = async (userInfo) => {
+//   const formData = new FormData();
+//   for (let key in userInfo) formData.append(key, userInfo[key]);
+
+//   const res = await instance.post("/api/user/register", formData);
+//   if (res?.data.token) await saveToken(res.data.token);
+
+//   return res.data;
+// };
+
+//save
 
 const saveToken = async (token) => {
   await SecureStore.setItemAsync("token", token);
@@ -69,6 +97,29 @@ const updateProfile = async (updatedUserData) => {
   return res.data;
 };
 
+// const useUpdateProfile = () => {
+//   const queryClient = useQueryClient();
+
+//   return useMutation(updateProfile, {
+//     onSuccess: (data, variables) => {
+//       // Invalidate and refetch the user profile query after a successful update
+//       queryClient.invalidateQueries(["profile"]);
+//     },
+//   });
+// };
+
+const checkToken = async () => {
+  const token = await getToken();
+  if (token) {
+    console.log(token);
+    const decode = jwtDecode(token);
+    if (decode) {
+      return decode;
+    }
+  }
+  return false;
+};
+
 export {
   login,
   register,
@@ -78,4 +129,7 @@ export {
   storeNotificatioToken,
   getMyProfile,
   updateProfile,
+  // updateMyProfile,
+  // useUpdateProfile,
+  checkToken,
 };

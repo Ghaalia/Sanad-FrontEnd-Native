@@ -1,3 +1,4 @@
+import "core-js/stable/atob";
 import React, { useEffect, useState } from "react";
 import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,7 +17,7 @@ import {
   Urbanist_500Medium,
 } from "@expo-google-fonts/urbanist";
 import UserContext from "./context/UserContext";
-import { getToken } from "./src/apis/auth";
+import { checkToken, getToken } from "./src/apis/auth";
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
@@ -55,13 +56,13 @@ export default function App() {
   });
 
   const checkUser = async () => {
-    const user = await getToken();
+    const user = await checkToken();
     setUser(user);
   };
   useEffect(() => {
     checkUser();
   }, []);
-
+  console.log({ "---------": user });
   if (!fontsLoaded) return <AppLoading />;
 
   return (

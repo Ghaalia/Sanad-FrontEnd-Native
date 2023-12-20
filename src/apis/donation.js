@@ -2,12 +2,12 @@ import { BaseURL, instance } from ".";
 
 export const uploadImages = async (imagesData) => {
   const formData = new FormData();
-
+  console.log(imagesData);
   imagesData.forEach((uri, index) => {
-    const fileType = uri.split(".").pop();
+    const fileType = uri.image.split(".").pop();
     formData.append("images", {
-      uri,
-      name: `photo_${index}.${fileType}`,
+      uri: uri.image,
+      name: `photo_${uri.category}_${index}.${fileType}`,
       type: `image/${fileType}`,
     });
   });
@@ -21,5 +21,17 @@ export const uploadImages = async (imagesData) => {
     console.log(response.data);
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getSelectedUnselectedImages = async (userId) => {
+  try {
+    const response = await instance.get(
+      `/images/selected-unselected/${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching images:", error);
+    throw error;
   }
 };
