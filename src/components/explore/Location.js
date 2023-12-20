@@ -62,7 +62,7 @@ const Location = () => {
             borderColor: "lightgray",
             borderWidth: 2,
             borderRadius: 13,
-          }} // Adjust dimensions as needed
+          }}
         />
       </TouchableOpacity>
     </View>
