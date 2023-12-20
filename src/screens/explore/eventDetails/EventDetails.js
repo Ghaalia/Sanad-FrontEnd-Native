@@ -25,7 +25,7 @@ import {
   requestVolunterNow,
 } from "../../../apis/event";
 import { BaseURL } from "../../../apis";
-import { colors } from "../../../config/theme";
+import { colors, fonts } from "../../../config/theme";
 
 const EventDetails = () => {
   const route = useRoute();
@@ -137,7 +137,13 @@ const EventDetails = () => {
         </View>
       </View>
 
-      <View style={{ flex: 5, flexDirection: "row", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 5,
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
         <TouchableOpacity
           style={styles.tabButton}
           onPress={() => handleDescriptionClick()}
@@ -292,12 +298,16 @@ const EventDetails = () => {
             <View
               style={{
                 backgroundColor: colors.SanadRed,
-                width: "100%",
+                width: "85%",
                 height: 50,
                 justifyContent: "center",
                 alignItems: "center",
+                alignSelf: "center",
                 borderRadius: 30,
                 marginTop: 30,
+                position: "absolute",
+                bottom: 130,
+                zIndex: 100,
               }}
             >
               <Text style={styles.button}>{data.status}</Text>
@@ -307,18 +317,22 @@ const EventDetails = () => {
           <TouchableOpacity
             style={{
               backgroundColor: colors.SanadRed,
-              width: "100%",
+              width: "85%",
               height: 50,
               justifyContent: "center",
               alignItems: "center",
+              alignSelf: "center",
               borderRadius: 30,
               marginTop: 30,
+              position: "absolute",
+              bottom: 130,
+              zIndex: 100,
             }}
             onPress={() => {
               mutate();
             }}
           >
-            <Text style={styles.button}>Volunteer Now</Text>
+            <Text style={styles.button_text}>Volunteer Now</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -337,6 +351,10 @@ const styles = StyleSheet.create({
     paddingLeft: 3,
     display: "flex",
     flexDirection: "row",
+  },
+  button_text: {
+    color: colors.SanadWhite,
+    fontWeight: fonts.semibold,
   },
 });
 

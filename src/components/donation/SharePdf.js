@@ -6,35 +6,22 @@ import {
   TouchableOpacity,
   ScrollView,
   Pressable,
-  Clipboard,
-  Alert,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { colors, fonts } from "../../config/theme";
-import {
-  MaterialCommunityIcons,
-  Ionicons,
-  Entypo,
-  AntDesign,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons, Entypo } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-// import Clipboard from "@react-native-community/clipboard";
-
-import DonateUploadModal from "../../components/profile/DonateUploadModal";
 import { saveSecurely, fetchSecurely } from "../../utils/storage";
+import DonateUploadModal from "../../components/profile/DonateUploadModal";
+import * as FileSystem from "expo-file-system";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { printToFileAsync } from "expo-print";
 import * as Sharing from "expo-sharing";
 import { useNavigation } from "@react-navigation/native";
 import { uploadImages } from "../../apis/donation";
-import { WEBSITE_URL } from "../../apis";
-import UserContext from "../../../context/UserContext";
-import ShareDonateModal from "../../components/donation/ShareDonateModal";
-import { useEffect } from "react";
 
 const Album = () => {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(UserContext);
-  const [doneModalVisible, setDoneModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [isRemovalMode, setIsRemovalMode] = useState(false);
@@ -44,10 +31,6 @@ const Album = () => {
     Electronics: [],
     Clothes: [],
   });
-
-  const handleOpenDoneModal = () => {
-    setDoneModalVisible(true);
-  };
 
   const onGalleryPress = async () => {
     if (!currentCategory) {
@@ -67,16 +50,13 @@ const Album = () => {
         return;
       }
 
-      const newImages = result.assets.map((asset) => ({
-        image: asset.uri,
-        category: currentCategory,
-      }));
+      const newImages = result.assets.map((asset) => asset.uri);
       setCategoryImages((prevImages) => {
         const updatedImages = { ...prevImages };
         updatedImages[currentCategory] = [
           ...updatedImages[currentCategory],
           ...newImages,
-        ].slice(0, 12); // adjust this logic based on your requirements
+        ].slice(0, 12); // You may need to adjust this logic based on your requirements
         return updatedImages;
       });
     }
@@ -93,7 +73,7 @@ const Album = () => {
   const uploadImage = async (mode, category) => {
     try {
       let result = {};
-      // console.log("jkhsjksh");
+
       if (mode === "gallery") {
         await ImagePicker.requestMediaLibraryPermissionsAsync();
         result = await ImagePicker.launchImageLibraryAsync({
@@ -113,10 +93,8 @@ const Album = () => {
       }
 
       if (!result.canceled) {
-        const newImage = { image: result.assets[0].uri, category };
+        const newImage = result.assets[0].uri;
         handleImagePicked(newImage, category);
-        console.log(newImage);
-        // handleImagePicked(newImage, category);
         setCategoryImages((prevImages) => {
           // Create a copy of the current state
           const updatedImages = { ...prevImages };
@@ -137,11 +115,12 @@ const Album = () => {
   const handleUpload = async () => {
     try {
       const allImages = [].concat(...Object.values(categoryImages));
-      console.log(categoryImages);
       const response = await uploadImages(allImages);
       console.log("Images uploaded successfully:", response);
+      // Handle success, such as showing a message
     } catch (error) {
       console.error("Error uploading images:", error);
+      // Handle error, such as showing an error message
     }
   };
 
@@ -167,7 +146,26 @@ const Album = () => {
     setIsRemovalMode(!isRemovalMode);
   };
 
-  //i might erase this part
+  // const loadImages = async () => {
+  // try {
+  // const storedImages = await AsyncStorage.getItem("categoryImages");
+  // if (storedImages !== null) {
+  // setCategoryImages(JSON.parse(storedImages));
+  // }
+  // } catch (error) {
+  // console.error("Error fetching images from AsyncStorage:", error);
+  // }
+  // };
+
+  // const saveImagesToStorage = async (images) => {
+  // try {
+  // const jsonValue = JSON.stringify(images);
+  // await AsyncStorage.setItem("categoryImages", jsonValue);
+  // } catch (error) {
+  // console.error("Error saving images to AsyncStorage:", error);
+  // }
+  // };
+
   useEffect(() => {
     const loadImages = async () => {
       try {
@@ -210,119 +208,46 @@ const Album = () => {
       console.error("Error in saveImage:", error);
       alert("Error while saving image");
     }
-  }; //end
-
-  // const imageToBase64 = async (uri) => {
-  //   const response = await fetch(uri);
-  //   const blob = await response.blob();
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => resolve(reader.result);
-  //     reader.onerror = reject;
-  //     reader.readAsDataURL(blob);
-  //   });
-  // };
-
-  const imageToBase64 = async (uri) => {
-    try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          const base64 = reader.result.split(",")[1]; // Extract base64 data part
-          resolve(base64);
-        };
-
-        reader.onerror = (error) => {
-          reject(error);
-        };
-
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error(`Error converting image to Base64: ${error}`);
-      return ""; // Handle the error gracefully
-    }
   };
 
-  // const createCategoryPage = async (categoryName, imageUris) => {
-  //   if (!Array.isArray(imageUris)) {
-  //     console.error(`Invalid image URIs for category ${categoryName}`);
-  //     return "";
-  //   }
-  //   const base64Images = await Promise.all(
-  //     imageUris.map((uri) => imageToBase64(uri))
-  //   );
-
-  //   const imagesHtml = base64Images
-  //     .slice(0, 12)
-  //     .map(
-  //       (base64, index) => `<div class="image-container">
-  //       <img src="${base64}" alt="Image ${index + 1}" class="image" />
-  //       <div class="image-number"><h4 class="text-number">${
-  //         index + 1
-  //       }</h4></div>
-  //     </div>`
-  //     )
-  //     .join("");
-
-  //   return `
-  //     <div class="page">
-  //     <h2 style="color: #F5574E;">${categoryName}</h2>
-  //       <div class="grid-container">
-  //         ${imagesHtml}
-  //       </div>
-  //     </div>
-  //   `;
-  // };
+  const imageToBase64 = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
 
   const createCategoryPage = async (categoryName, imageUris) => {
-    try {
-      if (!Array.isArray(imageUris)) {
-        console.error(`Invalid image URIs for category ${categoryName}`);
-        return "";
-      }
-      const base64Images = await Promise.all(
-        imageUris.map(async (uri) => {
-          try {
-            const base64 = await imageToBase64(uri);
-            return base64;
-          } catch (error) {
-            console.error(`Error converting image to base64: ${error}`);
-            return ""; // Handle the error gracefully
-          }
-        })
-      );
-
-      const imagesHtml = base64Images
-        .slice(0, 12)
-        .map(
-          (base64, index) => `<div class="image-container">
-          <img src="data:image/jpeg;base64,${base64}" alt="Image ${
-            index + 1
-          }" class="image" />
-          <div class="image-number"><h4 class="text-number">${
-            index + 1
-          }</h4></div>
-        </div>`
-        )
-        .join("");
-
-      return `
-        <div class="page">
-          <h2 style="color: #F5574E;">${categoryName}</h2>
-          <div class="grid-container">
-            ${imagesHtml}
-          </div>
-        </div>
-      `;
-    } catch (error) {
-      console.error(`Error creating category page: ${error}`);
-      return ""; // Handle the error gracefully
+    if (!Array.isArray(imageUris)) {
+      console.error(`Invalid image URIs for category ${categoryName}`);
+      return "";
     }
+    const base64Images = await Promise.all(
+      imageUris.map((uri) => imageToBase64(uri))
+    );
+
+    const imagesHtml = base64Images
+      .slice(0, 12)
+      .map(
+        (base64, index) => `<div class="image-container">
+    <img src="${base64}" alt="Image ${index + 1}" class="image" />
+    <div class="image-number"><h4 class="text-number">${index + 1}</h4></div>
+    </div>`
+      )
+      .join("");
+
+    return `
+    <div class="page">
+    <h2 style="color: #F5574E;">${categoryName}</h2>
+    <div class="grid-container">
+    ${imagesHtml}
+    </div>
+    </div>
+    `;
   };
 
   const createAndSharePDF = async (categories) => {
@@ -334,64 +259,57 @@ const Album = () => {
     const html = `
     <html>
     <head>
-      <style>
-        body { margin: 0; padding: 0; }
-        .page { width: 210mm; height: 297mm; page-break-after: always; }
-        .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); grid-gap: 5mm; }
-        .image-container {
-          position: relative;
-          padding-top: 100%; /* This ensures a square aspect ratio */
-          overflow: hidden;
-        }
-        .image-number {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          background-color: red;
-          color: white;
-          border-radius: 50%;
-          padding: 5px;
-          font-size: 12px;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .text-number{
-          color: #F5574E;
-          font-size: 16px;
-        }
-        .image {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-        h2 { text-align: center; }
-      </style>
+    <style>
+    body { margin: 0; padding: 0; }
+    .page { width: 210mm; height: 297mm; page-break-after: always; }
+    .grid-container { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); grid-gap: 5mm; }
+    .image-container {
+    position: relative;
+    padding-top: 100%; /* This ensures a square aspect ratio */
+    overflow: hidden;
+    }
+    .image-number {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    .text-number{
+    color: #F5574E;
+    font-size: 16px;
+    }
+    .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+    h2 { text-align: center; }
+    </style>
     </head>
     <body>
-      ${pagesHtml}
+    ${pagesHtml}
     </body>
-  </html>
-`;
+    </html>
+   `;
 
     const { uri } = await printToFileAsync({ html });
     await Sharing.shareAsync(uri);
   };
 
-  // const handleSharePress = async () => {
-  //   await createAndSharePDF(categoryImages);
-  // };
-  const handleSharePdf = async () => {
+  const handleSharePress = async () => {
     await createAndSharePDF(categoryImages);
-  };
-  const handleShareLink = () => {
-    Clipboard.setString(`${WEBSITE_URL}/image-gallery/${user.id}`);
-    Alert.alert("Link Copied", "The link has been copied to the clipboard.");
   };
 
   return (
@@ -445,10 +363,7 @@ const Album = () => {
           <Text style={styles.container_title_text}>Item Categories</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
             <TouchableOpacity
-              onPress={() => {
-                handleOpenDoneModal();
-                handleUpload();
-              }}
+              onPress={handleSharePress}
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
@@ -470,13 +385,10 @@ const Album = () => {
               >
                 Share
               </Text>
-              {/* <Entypo name="export" size={20} color="white" /> */}
+              <Entypo name="export" size={20} color="white" />
             </TouchableOpacity>
             <TouchableOpacity onPress={toggleRemovalMode}>
               <Ionicons name="ios-trash" size={24} color="#9e9e9e" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleSharePdf}>
-              <AntDesign name="pdffile1" size={20} color="red" />
             </TouchableOpacity>
           </View>
         </View>
@@ -501,10 +413,7 @@ const Album = () => {
             </View>
             {categoryImages.Furniture.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image
-                  style={styles.imageStyle}
-                  source={{ uri: imageUri.image }}
-                />
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -551,10 +460,7 @@ const Album = () => {
             </View>
             {categoryImages.Devices.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image
-                  style={styles.imageStyle}
-                  source={{ uri: imageUri.image }}
-                />
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -601,10 +507,7 @@ const Album = () => {
             </View>
             {categoryImages.Electronics.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image
-                  style={styles.imageStyle}
-                  source={{ uri: imageUri.image }}
-                />
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -647,10 +550,7 @@ const Album = () => {
             </View>
             {categoryImages.Clothes.map((imageUri, index) => (
               <View key={index} style={styles.imageContainer}>
-                <Image
-                  style={styles.imageStyle}
-                  source={{ uri: imageUri.image }}
-                />
+                <Image style={styles.imageStyle} source={{ uri: imageUri }} />
                 <View style={styles.imageNumber}>
                   <Text style={styles.number_text}>{index + 1}</Text>
                 </View>
@@ -678,9 +578,9 @@ const Album = () => {
               </TouchableOpacity>
             )}
           </View>
-          {/* <TouchableOpacity style={styles.redbutton} onPress={handleUpload}>
-            <Text style={styles.button}>Send</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity style={styles.redbutton} onPress={handleUpload}>
+            <Text style={styles.button}>Done</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
 
@@ -693,13 +593,6 @@ const Album = () => {
         onCameraPress={() => uploadImage("camera", currentCategory)}
         onGalleryPress={onGalleryPress}
         onRemovePress={() => removeImage()}
-      />
-      <ShareDonateModal
-        handleShareLink={handleShareLink}
-        doneModalVisible={doneModalVisible}
-        onBackPress={() => {
-          setDoneModalVisible(false);
-        }}
       />
     </View>
   );
@@ -839,101 +732,3 @@ const styles = StyleSheet.create({
     fontFamily: "Urbanist_600SemiBold",
   },
 });
-
-// const downloadImage = async (imageUrl) => {
-//   const fileName = imageUrl.split("/").pop(); // Extract the filename
-//   const fileUri = FileSystem.documentDirectory + fileName;
-
-//   try {
-//     await FileSystem.downloadAsync(imageUrl, fileUri);
-//     return fileUri;
-//   } catch (error) {
-//     console.error("Error downloading the image:", error);
-//   }
-// };
-
-// const handleUpload = async () => {
-//   try {
-//     // Iterate over each category
-//     for (const category of Object.keys(categoryImages)) {
-//       // Get up to 12 images for the current category
-//       const imagesForCategory = categoryImages[category].slice(0, 12);
-
-//       // If there are images to upload
-//       if (imagesForCategory.length > 0) {
-//         console.log(`Uploading images for category: ${category}`);
-//         const response = await uploadImages(imagesForCategory);
-//         console.log(
-//           `Images uploaded successfully for ${category}:`,
-//           response
-//         );
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Error uploading images:", error);
-//   }
-// };
-
-// const loadImages = async () => {
-//   try {
-//     const storedImages = await AsyncStorage.getItem("categoryImages");
-//     if (storedImages !== null) {
-//       setCategoryImages(JSON.parse(storedImages));
-//     }
-//   } catch (error) {
-//     console.error("Error fetching images from AsyncStorage:", error);
-//   }
-// };
-
-// const saveImagesToStorage = async (images) => {
-//   try {
-//     const jsonValue = JSON.stringify(images);
-//     await AsyncStorage.setItem("categoryImages", jsonValue);
-//   } catch (error) {
-//     console.error("Error saving images to AsyncStorage:", error);
-//   }
-// };
-
-// useEffect(() => {
-//   const loadImages = async () => {
-//     try {
-//       const storedImagesString = await fetchSecurely("categoryImages");
-//       if (storedImagesString) {
-//         const storedImages = JSON.parse(storedImagesString);
-//         setCategoryImages(storedImages);
-//       }
-//     } catch (error) {
-//       console.error("Error fetching images:", error);
-//     }
-//   };
-
-//   loadImages();
-// }, []);
-
-// const saveImage = async (uri, category, removeUri = null) => {
-//   try {
-//     if (uri) {
-//       const localUri = await downloadImage(uri);
-//       const updatedImages = [...categoryImages[category], localUri];
-//       const newCategoryImages = {
-//         ...categoryImages,
-//         [category]: updatedImages,
-//       };
-//       setCategoryImages(newCategoryImages);
-//       await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
-//     } else if (removeUri) {
-//       const updatedImages = categoryImages[category].filter(
-//         (imageUri) => imageUri !== removeUri
-//       );
-//       const newCategoryImages = {
-//         ...categoryImages,
-//         [category]: updatedImages,
-//       };
-//       setCategoryImages(newCategoryImages);
-//       await saveSecurely("categoryImages", JSON.stringify(newCategoryImages));
-//     }
-//   } catch (error) {
-//     console.error("Error in saveImage:", error);
-//     alert("Error while saving image");
-//   }
-// };

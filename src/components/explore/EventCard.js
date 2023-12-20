@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Share } from "react-native";
 import React from "react";
 import {
   Ionicons,
@@ -18,6 +18,26 @@ const EventCard = ({ event, id }) => {
   const navigation = new useNavigation();
   const oneEvent = event;
   const test_event = { name: "hi" };
+
+  const handleShareEvent = () => {
+    const wikipediaLink = "https://www.wikipedia.org/";
+    // const shareableLink = `https://ourwebsite.com/event/${eventId}`; //share my local dev url
+    const url = "https://www.youtube.com/"; // Replace with your desired URL
+    const shareMessage = `Check out this event: ${event.event_title}\nEvent Date: ${event.event_date}\nLocation: ${event.location}\nLink:${wikipediaLink}`;
+    const shareOptions = {
+      message: shareMessage,
+    };
+
+    Share.share(shareOptions)
+      .then((result) => {
+        if (result.action === Share.sharedAction) {
+          console.log("Event shared successfully");
+        } else if (result.action === Share.dismissedAction) {
+          console.log("Sharing dismissed");
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
   const eventCategoryNames = event?.event_category?.map((category) => {
     return (
@@ -183,7 +203,15 @@ const EventCard = ({ event, id }) => {
               {event?.event_start_time} to {event?.event_end_time}
             </Text>
           </View>
-          <Feather style={{}} name="share-2" size={24} color="#F5574E" />
+          <TouchableOpacity
+            onPress={handleShareEvent}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Feather name="share-2" size={24} color="#F5574E" />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
