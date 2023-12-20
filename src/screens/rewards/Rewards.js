@@ -149,7 +149,38 @@ const Rewards = () => {
           </View>
 
           <View
-            style={{ flexDirection: "columns", gap: 20, paddingVertical: 20 }}
+            style={{
+              flexDirection: "column",
+              gap: 10,
+              paddingVertical: 20,
+              borderBottomWidth: 1.5,
+              borderColor: "white",
+            }}
+          >
+            <Text
+              style={{
+                color: colors.SanadBlue1,
+                fontSize: 16,
+                fontWeight: fonts.bold,
+                textAlign: "center",
+              }}
+            >
+              Current Points
+            </Text>
+            <Text
+              style={{
+                color: colors.SanadBlue1,
+                fontSize: 40,
+                fontWeight: fonts.bold,
+                textAlign: "center",
+              }}
+            >
+              60
+            </Text>
+          </View>
+
+          <View
+            style={{ flexDirection: "column", gap: 20, paddingVertical: 20 }}
           >
             <Text
               style={{

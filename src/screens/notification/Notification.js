@@ -95,13 +95,14 @@ const Notification = ({ route }) => {
             alignItems: "center",
             borderRadius: 10,
             overflow: "hidden",
+            gap: 15,
           }}
         >
           <View
             style={{
               width: 80,
               height: "100%",
-              backgroundColor: "lightgrey",
+              backgroundColor: colors.SanadRed,
               padding: 10,
             }}
           >
@@ -109,6 +110,18 @@ const Notification = ({ route }) => {
               style={{ width: "100%", height: "100%", resizeMode: "contain" }}
               source={require("../../../assets/notifications/sanad-white.png")}
             />
+          </View>
+          <View
+            style={{
+              height: "100%",
+              justifyContent: "space-evenly",
+              //   backgroundColor: "yellow",
+            }}
+          >
+            <Text style={{ fontWeight: fonts.bold, color: colors.SanadBlue1 }}>
+              Notification Title
+            </Text>
+            <Text style={{ color: colors.SanadBlue1 }}>Notification Body</Text>
           </View>
         </View>
       </ScrollView>
