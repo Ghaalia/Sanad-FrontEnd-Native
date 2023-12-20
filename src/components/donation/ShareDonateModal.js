@@ -22,7 +22,7 @@ const ShareDonateModal = ({
   isLoading = false,
   handleShareLink,
 }) => {
-  console.log("IM HERE");
+  // console.log("IM HERE");
   return (
     <View>
       {/* <Image

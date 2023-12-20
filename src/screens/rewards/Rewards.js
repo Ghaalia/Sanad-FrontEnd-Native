@@ -81,7 +81,7 @@ const Rewards = () => {
               style={{
                 fontSize: 20,
                 color: colors.SanadRed,
-                fontWeight: fonts.semibold,
+                fontWeight: fonts.bold,
               }}
             >
               UserName
@@ -144,6 +144,88 @@ const Rewards = () => {
                   30
                 </Text>
                 <Text style={styles.you_have_text}>times</Text>
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{ flexDirection: "columns", gap: 20, paddingVertical: 20 }}
+          >
+            <Text
+              style={{
+                color: colors.SanadBlue1,
+                fontSize: 16,
+                fontWeight: fonts.bold,
+                textAlign: "center",
+              }}
+            >
+              Achievements
+            </Text>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            >
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  backgroundColor: "white",
+                  gap: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 10,
+                }}
+              >
+                <Image
+                  style={{
+                    height: "55%",
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  }}
+                  source={require("../../../assets/rewards/star.png")}
+                />
+                <Text style={styles.you_have_text}>10 Points</Text>
+              </View>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  backgroundColor: "white",
+                  gap: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 10,
+                }}
+              >
+                <Image
+                  style={{
+                    height: "55%",
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  }}
+                  source={require("../../../assets/rewards/star.png")}
+                />
+                <Text style={styles.you_have_text}>20 Points</Text>
+              </View>
+              <View
+                style={{
+                  width: 100,
+                  height: 100,
+                  backgroundColor: "white",
+                  gap: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 10,
+                }}
+              >
+                <Image
+                  style={{
+                    height: "55%",
+                    resizeMode: "contain",
+                    alignSelf: "center",
+                  }}
+                  source={require("../../../assets/rewards/star.png")}
+                />
+                <Text style={styles.you_have_text}>30 Points</Text>
               </View>
             </View>
           </View>
