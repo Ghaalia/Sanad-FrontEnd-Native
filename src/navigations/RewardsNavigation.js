@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const RewardsNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="rewards" component={Rewards} />
     </Stack.Navigator>
   );
