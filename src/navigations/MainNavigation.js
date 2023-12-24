@@ -40,7 +40,6 @@ const MainNavigation = () => {
       const expoPushToken = await Notifications.getExpoPushTokenAsync({
         projectId: "a767bc91-efcd-4ac7-9a4c-27ed17387d4c",
       });
-      console.log("hiiiiiiiii");
       console.log({ expoPushToken });
       // send request to save user token
       mutate(expoPushToken);

@@ -61,7 +61,7 @@ const EventDetails = () => {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          flex: 30,
+          flex: 35,
           justifyContent: "flex-end",
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 30,
@@ -143,6 +143,8 @@ const EventDetails = () => {
           flex: 5,
           flexDirection: "row",
           justifyContent: "center",
+          paddingTop: 10,
+          // backgroundColor: "red",
         }}
       >
         <TouchableOpacity
@@ -185,11 +187,16 @@ const EventDetails = () => {
         {DescriptionClicked ? (
           <View
             style={{
-              width: "100%",
+              width: "85%",
+              height: 334,
               gap: 20,
               paddingHorizontal: 30,
+              paddingVertical: 20,
               marginTop: 10,
-              // backgroundColor: "yellow",
+              justifyContent: "space-between",
+              alignSelf: "center",
+              borderRadius: 10,
+              backgroundColor: colors.SanadWhite,
             }}
           >
             <View style={{ gap: 10 }}>
@@ -200,6 +207,7 @@ const EventDetails = () => {
               </Text>
               <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
             </View>
+
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
@@ -212,6 +220,18 @@ const EventDetails = () => {
                 }}
               >
                 <Entypo name="calendar" size={20} color="#1B1931" />
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                    }}
+                  >
+                    {event?.event_date}
+                  </Text>
+                </View>
+                <Text>to</Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text
                     style={{
@@ -241,7 +261,13 @@ const EventDetails = () => {
                 <Text
                   style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
                 >
-                  {event?.event_start_time} | {event?.event_end_time}
+                  {event?.event_start_time}
+                </Text>
+                <Text>to</Text>
+                <Text
+                  style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
+                >
+                  {event?.event_end_time}
                 </Text>
               </View>
               <View

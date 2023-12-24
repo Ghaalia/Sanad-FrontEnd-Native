@@ -72,16 +72,16 @@ const EventCard = ({ event, id }) => {
           shadowOffset: { height: 4, width: 1 },
           shadowRadius: 5,
           shadowOpacity: 0.1,
-          height: 200,
+          height: 230,
           width: "85%",
-          borderRadius: 10,
-          paddingHorizontal: 10,
+          borderRadius: 30,
+          paddingHorizontal: 15,
           paddingTop: 10,
           margin: 10,
           marginBottom: 10,
           gap: 10,
           alignSelf: "center",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
         }}
       >
         <View
@@ -89,11 +89,12 @@ const EventCard = ({ event, id }) => {
             position: "absolute",
             right: 0,
             top: 21,
+            width: "auto",
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
             gap: 2,
-            paddingHorizontal: 5,
+            paddingHorizontal: 8,
             paddingVertical: 4,
             borderTopStartRadius: 20,
             borderBottomStartRadius: 20,
@@ -134,18 +135,27 @@ const EventCard = ({ event, id }) => {
               />
               <Text
                 style={{
-                  fontWeight: "bold",
-                  color: "#1B1931",
+                  fontWeight: fonts.bold,
+                  color: colors.SanadBlue1,
                   fontFamily: "Urbanist_700Bold",
                 }}
               >
-                {event?.event_title}
+                {event?.organization?.name}
               </Text>
             </View>
-            <Text>{event?.organization?.name}</Text>
           </View>
         </View>
-
+        <View>
+          <Text
+            style={{
+              fontSize: 16,
+              color: colors.SanadRed,
+              fontWeight: fonts.bold,
+            }}
+          >
+            {event?.event_title}
+          </Text>
+        </View>
         <View
           style={{
             display: "flex",
@@ -214,7 +224,6 @@ const EventCard = ({ event, id }) => {
                   }}
                 >
                   {event?.event_start_time}
-                  {/* to {event?.event_end_time} */}
                 </Text>
               </View>
             </View>

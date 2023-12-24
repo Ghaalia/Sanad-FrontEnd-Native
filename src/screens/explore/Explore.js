@@ -137,7 +137,10 @@ const Explore = () => {
           // backgroundColor: "yellow",
         }}
       >
-        <ScrollView scrollEnabled style={{ width: "100%", paddingVertical: 5 }}>
+        <ScrollView
+          scrollEnabled
+          style={{ width: "100%", paddingVertical: 5, marginBottom: 130 }}
+        >
           <Pressable
             onPress={() => {
               navigation.navigate("eventDetails");
@@ -167,44 +170,3 @@ const Explore = () => {
 export default Explore;
 
 const styles = StyleSheet.create({});
-
-/* <Button
-        title="go to event details"
-        onPress={() => {
-          navigation.navigate("eventDetails");
-        }}
-      /> */
-
-// <ScrollView
-//   horizontal
-//   contentContainerStyle={{
-//     gap: 7,
-//     alignItems: "center",
-//     paddingHorizontal: 17,
-//     backgroundColor: "black",
-//   }}
-// ></ScrollView>
-
-// <View
-// style={{
-//   flex: 5,
-//
-// }}
-// >
-
-// <View
-//   style={{
-//     display: "flex",
-//     alignItems: "flex-start",
-//     justifyContent: "flex-start",
-//   }}
-// >
-//   <Text
-//     style={{
-//       color: "lightgray",
-//     }}
-//   >
-//     Available events
-//   </Text>
-// </View>
-// </View>

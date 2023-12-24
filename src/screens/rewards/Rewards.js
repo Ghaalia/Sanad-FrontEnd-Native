@@ -1,6 +1,5 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Svg, { Circle, Rect } from "react-native-svg";
 import { colors, fonts } from "../../config/theme";
 
 const Rewards = () => {
@@ -10,7 +9,7 @@ const Rewards = () => {
         flex: 1,
         width: "100%",
         backgroundColor: colors.SanadBgGrey,
-        alignItems: "center",
+        // alignItems: "center",
       }}
     >
       <View
@@ -51,10 +50,13 @@ const Rewards = () => {
         />
       </View>
       <ScrollView
+        scrollEnabled
         style={{
           width: "100%",
+          // height: "70%",
           // backgroundColor: "pink",
           flexDirection: "column",
+          marginBottom: 100,
         }}
       >
         <View style={{ height: 150 }}>
@@ -180,7 +182,13 @@ const Rewards = () => {
           </View>
 
           <View
-            style={{ flexDirection: "column", gap: 20, paddingVertical: 20 }}
+            style={{
+              flexDirection: "column",
+              gap: 20,
+              paddingVertical: 20,
+              // backgroundColor: "red",
+              paddingBottom: 100,
+            }}
           >
             <Text
               style={{
@@ -262,9 +270,6 @@ const Rewards = () => {
           </View>
         </View>
       </ScrollView>
-
-      {/* <View style={{ flex: 40, backgroundColor: "yellow" }}></View>
-      <View style={{ flex: 1, marginTop: 200 }}></View> */}
     </View>
   );
 };
