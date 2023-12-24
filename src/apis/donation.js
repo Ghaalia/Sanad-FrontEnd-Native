@@ -27,7 +27,7 @@ export const uploadImages = async (imagesData) => {
 export const getSelectedUnselectedImages = async (userId) => {
   try {
     const response = await instance.get(
-      `/images/selected-unselected/${userId}`
+      `${BaseURL}/images/selected-unselected/${userId}`
     );
     return response.data;
   } catch (error) {

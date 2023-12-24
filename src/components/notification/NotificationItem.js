@@ -2,29 +2,12 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { BaseURL } from "../../apis";
 import { colors, fonts } from "../../config/theme";
+import * as SecureStore from "expo-secure-store";
+import { getNotificationsByUser } from "../../apis/notification";
 
-const NotificationItem = () => {
-  const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    fetch(`${BaseURL}/notifications/:userId`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer YOUR_JWT_TOKEN",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          setNotifications(data?.notifications);
-        } else {
-          console.error("Failed to fetch notification!!!!!!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching notifications:", error);
-      });
-  }, []);
+const NotificationItem = ({ notification, id }) => {
+  console.log("Get Notification:", notification);
+  console.log("Get ID:", id);
 
   return (
     <View
@@ -60,9 +43,11 @@ const NotificationItem = () => {
         }}
       >
         <Text style={{ fontWeight: fonts.bold, color: colors.SanadBlue1 }}>
-          Notification Title
+          {notification?.title}
         </Text>
-        <Text style={{ color: colors.SanadBlue1 }}>Notification Body</Text>
+        <Text style={{ color: colors.SanadBlue1 }}>
+          {notification?.description}
+        </Text>
       </View>
     </View>
   );
@@ -89,3 +74,23 @@ export default NotificationItem;
       ))}
     </View> */
 }
+
+// useEffect(() => {
+//   fetch(`${BaseURL}/notifications/${userId}`, {
+//     method: "GET",
+//     headers: {
+//       Authorization: `Bearer ${userToken}`,
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (data.success) {
+//         setNotifications(data?.notifications);
+//       } else {
+//         console.error("Failed to fetch notification!!!!!!");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching notifications:", error);
+//     });
+// }, []);

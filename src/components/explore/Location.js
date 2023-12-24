@@ -1,6 +1,6 @@
 import { Alert, Image, Linking, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Location = () => {

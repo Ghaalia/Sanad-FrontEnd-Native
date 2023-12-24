@@ -14,32 +14,30 @@ import { useQuery } from "@tanstack/react-query";
 import { getMyProfile } from "../../apis/auth";
 import UserContext from "../../../context/UserContext";
 
-const Notification = ({ route }) => {
-  //   console.log(`Im userId ${userId}`);
-  const userContext = useContext(UserContext);
-  const { userId } = userContext.user;
+const Notification = () => {
+  const [userId, setUserId] = useState("");
 
   const { data: user } = useQuery({
     queryKey: ["user"],
     queryFn: () => getMyProfile(),
   });
-  // const { userId } = route.params;
-  const [notifications, setNotifications] = useState([]);
+
+  const { data: allNotifications } = useQuery({
+    queryKey: ["Notifications", userId],
+    queryFn: () => getNotificationsByUser(userId),
+  });
+  console.log("Nothing yet moodhy!", allNotifications);
 
   useEffect(() => {
-    if (userId) {
-      fetchNotifications(userId);
-    }
-  }, [userId]);
+    // Fetch the userId and set it in the state
+    const fetchUserId = async () => {
+      // Fetch the userId from your source (e.g., context, storage, etc.)
+      const userId = await fetchUserIdFromSomewhere();
+      setUserId(userId);
+    };
 
-  const fetchNotifications = async (userId) => {
-    try {
-      const fetchedNotifications = await getNotificationsByUser(userId);
-      setNotifications(fetchedNotifications);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-    }
-  };
+    fetchUserId();
+  }, []);
 
   return (
     <View
@@ -96,8 +94,11 @@ const Notification = ({ route }) => {
           paddingVertical: 30,
         }}
       >
-        <Text>{user?._id}</Text>
-        <NotificationItem />
+        {/* <Text>{user?._id}</Text> */}
+        {allNotifications?.map((el) => (
+          <NotificationItem id={el?._id} notification={el} />
+        ))}
+        {/* <NotificationItem notifications={el} id={el._id}/> */}
       </ScrollView>
     </View>
   );
@@ -126,3 +127,60 @@ const styles = StyleSheet.create({
       />
       <NotificationItem route={route}  /> */
 }
+
+// useEffect(() => {
+//   getNotificationsByUser();
+// }, []);
+
+// useEffect(() => {
+//   if (userId) {
+//     fetchNotifications(userId);
+//   }
+// }, [userId]);
+
+// const getNotificationsByUser = async () => {
+//   try {
+//     const userId = await SecureStore.getItemAsync("userId");
+//     const userToken = await SecureStore.getItemAsync("userToken");
+
+//     setUserId(userId);
+//     setUserToken(userToken);
+
+//     fetchNotifications(userId, userToken);
+//   } catch (error) {
+//     console.error("Error fetching notifications:", error);
+//   }
+// };
+
+// const fetchNotifications = async (userId, userToken) => {
+//   try {
+//     const response = await fetch(`${BaseURL}/notifications/${userId}`, {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${userToken}`,
+//       },
+//     });
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       if (data.success) {
+//         setNotifications(data.notifications);
+//       } else {
+//         console.error("Failed to fetch notifications!!!!!!");
+//       }
+//     } else {
+//       console.error("Failed to fetch notifications!!!!!!");
+//     }
+//   } catch (error) {
+//     console.error("Error fetching notifications:", error);
+//   }
+// };
+
+// const fetchNotifications = async (userId) => {
+//   try {
+//     const fetchedNotifications = await getNotificationsByUser(userId);
+//     setNotifications(fetchedNotifications);
+//   } catch (error) {
+//     console.error("Error fetching notifications:", error);
+//   }
+// };
