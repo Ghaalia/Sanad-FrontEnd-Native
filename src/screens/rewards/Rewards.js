@@ -1,8 +1,27 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { colors, fonts } from "../../config/theme";
+import React, { useContext, useEffect, useState } from "react";
+import { colors, family, fonts } from "../../config/theme";
+import { useQuery } from "@tanstack/react-query";
+import { getMyProfile } from "../../apis/auth";
+import UserContext from "../../../context/UserContext";
+import { Urbanist_600SemiBold } from "@expo-google-fonts/urbanist";
 
 const Rewards = () => {
+  const userContext = useContext(UserContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const { data: profile } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getMyProfile(),
+  });
+  useEffect(() => {
+    if (profile) {
+      setFirstName(profile.first_name);
+      setLastName(profile.last_name);
+    }
+  }, [profile]);
+
   return (
     <View
       style={{
@@ -53,10 +72,11 @@ const Rewards = () => {
         scrollEnabled
         style={{
           width: "100%",
-          // height: "70%",
+          // height: "60%",
           // backgroundColor: "pink",
           flexDirection: "column",
-          marginBottom: 100,
+
+          // marginBottom: 200,
         }}
       >
         <View style={{ height: 150 }}>
@@ -83,16 +103,18 @@ const Rewards = () => {
               style={{
                 fontSize: 20,
                 color: colors.SanadRed,
-                fontWeight: fonts.bold,
+                fontFamily: family.bold,
+                // fontWeight: fonts.bold,
               }}
             >
-              UserName
+              {profile?.first_name} {profile?.last_name}
             </Text>
             <Text
               style={{
                 textAlign: "center",
                 color: colors.SanadBlue1,
-                fontWeight: fonts.semibold,
+                // fontWeight: fonts.semibold,
+                fontFamily: family.semibold,
               }}
             >
               for all those selfless acts you did, and for giving your hand to
@@ -126,7 +148,8 @@ const Rewards = () => {
                   style={{
                     color: colors.SanadRed,
                     fontSize: 28,
-                    fontWeight: fonts.bold,
+                    // fontWeight: fonts.bold,
+                    fontFamily: family.semibold,
                   }}
                 >
                   4
@@ -140,7 +163,8 @@ const Rewards = () => {
                   style={{
                     color: colors.SanadRed,
                     fontSize: 28,
-                    fontWeight: fonts.bold,
+                    // fontWeight: fonts.bold,
+                    fontFamily: family.semibold,
                   }}
                 >
                   30
@@ -162,8 +186,9 @@ const Rewards = () => {
             <Text
               style={{
                 color: colors.SanadBlue1,
-                fontSize: 16,
-                fontWeight: fonts.bold,
+                fontSize: 17,
+                // fontWeight: fonts.bold,
+                fontFamily: family.bold,
                 textAlign: "center",
               }}
             >
@@ -173,7 +198,8 @@ const Rewards = () => {
               style={{
                 color: colors.SanadBlue1,
                 fontSize: 40,
-                fontWeight: fonts.bold,
+                // fontWeight: fonts.bold,
+                fontFamily: family.bold,
                 textAlign: "center",
               }}
             >
@@ -193,8 +219,9 @@ const Rewards = () => {
             <Text
               style={{
                 color: colors.SanadBlue1,
-                fontSize: 16,
-                fontWeight: fonts.bold,
+                fontSize: 17,
+                // fontWeight: fonts.bold,
+                fontFamily: family.bold,
                 textAlign: "center",
               }}
             >
@@ -280,6 +307,7 @@ const styles = StyleSheet.create({
   you_have_text: {
     textAlign: "center",
     color: colors.SanadBlue1,
-    fontWeight: fonts.semibold,
+    // fontWeight: fonts.semibold,
+    fontFamily: family.semibold,
   },
 });
