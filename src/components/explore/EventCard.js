@@ -43,7 +43,9 @@ const EventCard = ({ event, id }) => {
     return (
       <View
         style={{
-          width: 95,
+          minWidth: 95,
+          maxWidth: 300,
+          paddingHorizontal: 10,
           height: 30,
           justifyContent: "center",
           padding: 5,
