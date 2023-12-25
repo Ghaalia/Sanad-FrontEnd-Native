@@ -10,6 +10,7 @@ const Rewards = () => {
   const userContext = useContext(UserContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [volunteerPoints, setVolunteerPoints] = useState(0);
 
   const { data: profile } = useQuery({
     queryKey: ["profile"],
@@ -19,6 +20,7 @@ const Rewards = () => {
     if (profile) {
       setFirstName(profile.first_name);
       setLastName(profile.last_name);
+      setVolunteerPoints(profile.volunteer_points);
     }
   }, [profile]);
 
@@ -68,235 +70,238 @@ const Rewards = () => {
           source={require("../../../assets/onlylogo.png")}
         />
       </View>
-      <ScrollView
-        scrollEnabled
-        style={{
-          width: "100%",
-          // height: "60%",
-          // backgroundColor: "pink",
-          flexDirection: "column",
+      <View style={{ height: "72%" }}>
+        <ScrollView
+          scrollEnabled
+          style={{
+            width: "100%",
+            // height: "60%",
+            // backgroundColor: "pink",
+            flexDirection: "column",
 
-          // marginBottom: 200,
-        }}
-      >
-        <View style={{ height: 150 }}>
-          <Image
-            style={{
-              height: "100%",
-              resizeMode: "contain",
-              alignSelf: "center",
-            }}
-            source={require("../../../assets/rewards/thankyou.png")}
-          />
-          <View
-            style={{
-              width: "100%",
-              alignItems: "center",
-              paddingHorizontal: 30,
-              gap: 10,
-              paddingBottom: 20,
-              borderBottomWidth: 1.5,
-              borderColor: "white",
-            }}
-          >
-            <Text
+            // marginBottom: 200,
+          }}
+        >
+          <View style={{ height: 150 }}>
+            <Image
               style={{
-                fontSize: 20,
-                color: colors.SanadRed,
-                fontFamily: family.bold,
-                // fontWeight: fonts.bold,
+                height: "100%",
+                resizeMode: "contain",
+                alignSelf: "center",
               }}
-            >
-              {profile?.first_name} {profile?.last_name}
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                color: colors.SanadBlue1,
-                // fontWeight: fonts.semibold,
-                fontFamily: family.semibold,
-              }}
-            >
-              for all those selfless acts you did, and for giving your hand to
-              the needful.
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-              paddingVertical: 20,
-              borderBottomWidth: 1.5,
-              borderColor: "white",
-            }}
-          >
+              source={require("../../../assets/rewards/thankyou.png")}
+            />
             <View
               style={{
                 width: "100%",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
+                alignItems: "center",
+                paddingHorizontal: 30,
+                gap: 10,
+                paddingBottom: 20,
+                borderBottomWidth: 1.5,
+                borderColor: "white",
               }}
             >
-              <View
+              <Text
                 style={{
-                  alignItems: "center",
+                  fontSize: 20,
+                  color: colors.SanadRed,
+                  fontFamily: family.bold,
+                  // fontWeight: fonts.bold,
                 }}
               >
-                <Text style={styles.you_have_text}>Participated in</Text>
-                <Text
-                  style={{
-                    color: colors.SanadRed,
-                    fontSize: 28,
-                    // fontWeight: fonts.bold,
-                    fontFamily: family.semibold,
-                  }}
-                >
-                  4
-                </Text>
-                <Text style={styles.you_have_text}>organizations</Text>
-              </View>
-              <View style={{ width: 1.5, backgroundColor: "white" }}></View>
-              <View style={{ alignItems: "center" }}>
-                <Text style={styles.you_have_text}>Volunteered</Text>
-                <Text
-                  style={{
-                    color: colors.SanadRed,
-                    fontSize: 28,
-                    // fontWeight: fonts.bold,
-                    fontFamily: family.semibold,
-                  }}
-                >
-                  30
-                </Text>
-                <Text style={styles.you_have_text}>times</Text>
-              </View>
+                {profile?.first_name} {profile?.last_name}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: colors.SanadBlue1,
+                  // fontWeight: fonts.semibold,
+                  fontFamily: family.semibold,
+                }}
+              >
+                for all those selfless acts you did, and for giving your hand to
+                the needful.
+              </Text>
             </View>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 10,
-              paddingVertical: 20,
-              borderBottomWidth: 1.5,
-              borderColor: "white",
-            }}
-          >
-            <Text
-              style={{
-                color: colors.SanadBlue1,
-                fontSize: 17,
-                // fontWeight: fonts.bold,
-                fontFamily: family.bold,
-                textAlign: "center",
-              }}
-            >
-              Current Points
-            </Text>
-            <Text
-              style={{
-                color: colors.SanadBlue1,
-                fontSize: 40,
-                // fontWeight: fonts.bold,
-                fontFamily: family.bold,
-                textAlign: "center",
-              }}
-            >
-              60
-            </Text>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 20,
-              paddingVertical: 20,
-              // backgroundColor: "red",
-              paddingBottom: 100,
-            }}
-          >
-            <Text
-              style={{
-                color: colors.SanadBlue1,
-                fontSize: 17,
-                // fontWeight: fonts.bold,
-                fontFamily: family.bold,
-                textAlign: "center",
-              }}
-            >
-              Achievements
-            </Text>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              style={{
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 10,
+                paddingVertical: 20,
+                borderBottomWidth: 1.5,
+                borderColor: "white",
+              }}
             >
               <View
                 style={{
-                  width: 100,
-                  height: 100,
-                  backgroundColor: "white",
-                  gap: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 10,
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Image
+                <View
                   style={{
-                    height: "55%",
-                    resizeMode: "contain",
-                    alignSelf: "center",
+                    alignItems: "center",
                   }}
-                  source={require("../../../assets/rewards/star.png")}
-                />
-                <Text style={styles.you_have_text}>10 Points</Text>
+                >
+                  <Text style={styles.you_have_text}>Participated in</Text>
+                  <Text
+                    style={{
+                      color: colors.SanadRed,
+                      fontSize: 28,
+                      // fontWeight: fonts.bold,
+                      fontFamily: family.semibold,
+                    }}
+                  >
+                    4
+                  </Text>
+                  <Text style={styles.you_have_text}>organizations</Text>
+                </View>
+                <View style={{ width: 1.5, backgroundColor: "white" }}></View>
+                <View style={{ alignItems: "center" }}>
+                  <Text style={styles.you_have_text}>Volunteered</Text>
+                  <Text
+                    style={{
+                      color: colors.SanadRed,
+                      fontSize: 28,
+                      // fontWeight: fonts.bold,
+                      fontFamily: family.semibold,
+                    }}
+                  >
+                    30
+                  </Text>
+                  <Text style={styles.you_have_text}>times</Text>
+                </View>
               </View>
-              <View
+            </View>
+
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 10,
+                paddingVertical: 20,
+                borderBottomWidth: 1.5,
+                borderColor: "white",
+              }}
+            >
+              <Text
                 style={{
-                  width: 100,
-                  height: 100,
-                  backgroundColor: "white",
-                  gap: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 10,
+                  color: colors.SanadBlue1,
+                  fontSize: 17,
+                  // fontWeight: fonts.bold,
+                  fontFamily: family.bold,
+                  textAlign: "center",
                 }}
               >
-                <Image
-                  style={{
-                    height: "55%",
-                    resizeMode: "contain",
-                    alignSelf: "center",
-                  }}
-                  source={require("../../../assets/rewards/star.png")}
-                />
-                <Text style={styles.you_have_text}>20 Points</Text>
-              </View>
-              <View
+                Current Points
+              </Text>
+              <Text
                 style={{
-                  width: 100,
-                  height: 100,
-                  backgroundColor: "white",
-                  gap: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 10,
+                  color: colors.SanadBlue1,
+                  fontSize: 40,
+                  // fontWeight: fonts.bold,
+                  fontFamily: family.bold,
+                  textAlign: "center",
                 }}
               >
-                <Image
+                60
+                {profile?.volunteer_points}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 20,
+                paddingVertical: 20,
+                // backgroundColor: "red",
+                paddingBottom: 100,
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.SanadBlue1,
+                  fontSize: 17,
+                  // fontWeight: fonts.bold,
+                  fontFamily: family.bold,
+                  textAlign: "center",
+                }}
+              >
+                Achievements
+              </Text>
+              <View
+                style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+              >
+                <View
                   style={{
-                    height: "55%",
-                    resizeMode: "contain",
-                    alignSelf: "center",
+                    width: 100,
+                    height: 100,
+                    backgroundColor: "white",
+                    gap: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 10,
                   }}
-                  source={require("../../../assets/rewards/star.png")}
-                />
-                <Text style={styles.you_have_text}>30 Points</Text>
+                >
+                  <Image
+                    style={{
+                      height: "55%",
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    }}
+                    source={require("../../../assets/rewards/star.png")}
+                  />
+                  <Text style={styles.you_have_text}>10 Points</Text>
+                </View>
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: "white",
+                    gap: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 10,
+                  }}
+                >
+                  <Image
+                    style={{
+                      height: "55%",
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    }}
+                    source={require("../../../assets/rewards/star.png")}
+                  />
+                  <Text style={styles.you_have_text}>20 Points</Text>
+                </View>
+                <View
+                  style={{
+                    width: 100,
+                    height: 100,
+                    backgroundColor: "white",
+                    gap: 10,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 10,
+                  }}
+                >
+                  <Image
+                    style={{
+                      height: "55%",
+                      resizeMode: "contain",
+                      alignSelf: "center",
+                    }}
+                    source={require("../../../assets/rewards/star.png")}
+                  />
+                  <Text style={styles.you_have_text}>30 Points</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 };
