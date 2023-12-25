@@ -88,17 +88,18 @@ const Notification = () => {
       <ScrollView
         style={{
           width: "100%",
-          //   backgroundColor: "yellow",
+          // backgroundColor: "yellow",
           flexDirection: "column",
           paddingHorizontal: 30,
           paddingVertical: 30,
         }}
       >
         {/* <Text>{user?._id}</Text> */}
-        {allNotifications?.map((el) => (
+        {/* {allNotifications?.map((el) => (
           <NotificationItem id={el?._id} notification={el} />
-        ))}
+        ))} */}
         {/* <NotificationItem notifications={el} id={el._id}/> */}
+        <NotificationItem />
       </ScrollView>
     </View>
   );
