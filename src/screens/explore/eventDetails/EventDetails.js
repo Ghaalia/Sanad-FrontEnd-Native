@@ -104,9 +104,9 @@ const EventDetails = () => {
           }}
         >
           <Image
-            source={{
-              uri: `${BaseURL}/${event?.organization.logo}`,
-            }}
+            // source={{
+            //   uri: `${BaseURL}/${event?.organization?.logo}`,
+            // }}
             style={{
               height: 50,
               width: 50,
@@ -228,7 +228,7 @@ const EventDetails = () => {
                       color: "#1B1931",
                     }}
                   >
-                    {event?.event_date}
+                    {event?.event_start_date}
                   </Text>
                 </View>
                 <Text>to</Text>
@@ -240,7 +240,7 @@ const EventDetails = () => {
                       color: "#1B1931",
                     }}
                   >
-                    {event?.event_date}
+                    {event?.event_end_date}
                   </Text>
                 </View>
               </View>
@@ -304,7 +304,7 @@ const EventDetails = () => {
                 WhatsApp
               </Text>
               <Text style={{ color: "#1B1931" }}>
-                +965 {event?.organization.phone_number}
+                +965 {event?.organization?.phone_number}
               </Text>
             </View>
           </View>

@@ -50,10 +50,10 @@ const ProfileImage = ({ onButtonPress, uri }) => {
           position: "absolute",
           right: 5,
           bottom: 5,
-          borderColor: colors.SanadBgGrey,
-          borderWidth: 1,
+          // borderColor: colors.SanadBgGrey,
+          // borderWidth: 1,
         }}
-        onPress={onButtonPress}
+        // onPress={onButtonPress}
       >
         {/* <MaterialCommunityIcons
           name="camera-outline"

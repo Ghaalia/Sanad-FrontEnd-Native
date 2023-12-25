@@ -54,7 +54,7 @@ const EventCard = ({ event, id }) => {
           alignItems: "center",
         }}
       >
-        <Text>{category.category_name}</Text>
+        <Text>{category?.category_name}</Text>
       </View>
     );
   });
@@ -127,12 +127,12 @@ const EventCard = ({ event, id }) => {
                 gap: 10,
               }}
             >
-              <Image
-                source={{
-                  uri: `${BaseURL}/${event?.organization?.logo}`,
-                }}
+              {/* <Image
+                // source={{
+                //   uri: `${BaseURL}/${event?.organization?.logo}`,
+                // }}
                 style={{ height: 50, width: 50, borderRadius: 100 }}
-              />
+              /> */}
               <Text
                 style={{
                   fontWeight: fonts.bold,
@@ -203,7 +203,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_date}
+                  {event?.event_start_date}
                 </Text>
               </View>
               <View
@@ -249,7 +249,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_date}
+                  {event?.event_end_date}
                 </Text>
               </View>
 
@@ -270,7 +270,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_start_time}
+                  {event?.event_end_time}
                   {/* to {event?.event_end_time} */}
                 </Text>
               </View>
