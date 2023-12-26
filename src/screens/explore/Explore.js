@@ -19,7 +19,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const Explore = () => {
   const [filtered, setFiltered] = useState("");
-  const { data: events } = useQuery({
+  const { data: events, isLoading } = useQuery({
     queryKey: ["events"],
     queryFn: () => getAllEvents(),
   });
@@ -158,7 +158,7 @@ const Explore = () => {
               })
 
               .map((el) => (
-                <EventCard event={el} id={el._id} />
+                <EventCard event={el} id={el._id} isLoading={isLoading} />
               ))}
           </Pressable>
         </ScrollView>

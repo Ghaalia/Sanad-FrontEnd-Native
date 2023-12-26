@@ -28,8 +28,10 @@ import {
 import { BaseURL } from "../../../apis";
 import Location from "../../../components/explore/Location";
 import { colors, fonts } from "../../../config/theme";
+import VolThankUModal from "../../../components/explore/VolThankUModal";
 
 const EventDetails = () => {
+  const [showModal, setShowModal] = useState(false);
   const route = useRoute();
   const { event, id } = route.params || {};
 
@@ -184,20 +186,27 @@ const EventDetails = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ height: "70%", backgroundColor: "#EFEFEF" }}>
+      <View style={{ height: "70%", backgroundColor: colors.SanadBgGrey }}>
         {DescriptionClicked ? (
-          <View>
+          <View
+            style={{
+              height: 370,
+              backgroundColor: colors.SanadWhite,
+              marginTop: 10,
+              width: "85%",
+              alignSelf: "center",
+              borderRadius: 10,
+              overflow: "scroll",
+            }}
+          >
             <ScrollView
+              scrollEnabled
               style={{
-                width: "85%",
-                height: 350,
+                height: "auto",
                 flexDirection: "column",
                 paddingHorizontal: 30,
                 paddingVertical: 20,
-                marginTop: 10,
-                alignSelf: "center",
-                borderRadius: 10,
-                backgroundColor: colors.SanadWhite,
+                paddingBottom: 100,
               }}
             >
               <View style={{ gap: 10, paddingBottom: 30 }}>
@@ -208,46 +217,77 @@ const EventDetails = () => {
                 </Text>
                 <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
               </View>
-
               <View
                 style={{
                   flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  gap: 5,
+                  width: "100%",
+                  paddingVertical: 10,
+                  borderRadius: 10,
+                  backgroundColor: colors.SanadBgGrey,
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="human-male"
+                  size={20}
+                  color="#F5574E"
+                />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "600",
+                    color: colors.SanadRed,
+                  }}
+                >
+                  Volunteers
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "600",
+                    color: colors.SanadRed,
+                  }}
+                >
+                  {event?.volunteer_list.length} | {event?.no_of_volunteer}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
                   justifyContent: "space-between",
                   paddingBottom: 30,
+                  marginTop: 30,
+                  gap: 30,
                 }}
               >
                 <View
                   style={{
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                     gap: 5,
-                    width: 80,
-                    borderRadius: 10,
-                    backgroundColor: colors.SanadRed,
                   }}
                 >
-                  <MaterialCommunityIcons
-                    name="human-male"
-                    size={20}
-                    color="white"
-                  />
                   <Text
-                    style={{ fontSize: 12, fontWeight: "600", color: "white" }}
+                    style={{
+                      fontSize: 15,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                      paddingBottom: 10,
+                    }}
                   >
-                    {event?.volunteer_list.length} | {event?.no_of_volunteer}
+                    Start
                   </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: 5,
-                  }}
-                >
-                  <Entypo name="calendar" size={20} color="#1B1931" />
-                  <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <Entypo name="calendar" size={20} color="#1B1931" />
                     <Text
                       style={{
                         fontSize: 12,
@@ -255,11 +295,22 @@ const EventDetails = () => {
                         color: "#1B1931",
                       }}
                     >
-                      {event?.event_date}
+                      {event?.event_start_date}
                     </Text>
                   </View>
-                  <Text>to</Text>
-                  <View style={{ flexDirection: "row" }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <MaterialIcons
+                      style={{}}
+                      name="access-time"
+                      size={20}
+                      color="#1B1931"
+                    />
                     <Text
                       style={{
                         fontSize: 12,
@@ -267,7 +318,7 @@ const EventDetails = () => {
                         color: "#1B1931",
                       }}
                     >
-                      {event?.event_date}
+                      {event?.event_start_time}
                     </Text>
                   </View>
                 </View>
@@ -275,41 +326,68 @@ const EventDetails = () => {
                   style={{
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                     gap: 5,
                   }}
                 >
-                  <MaterialIcons
-                    style={{}}
-                    name="access-time"
-                    size={20}
-                    color="#1B1931"
-                  />
                   <Text
                     style={{
-                      fontSize: 12,
+                      fontSize: 15,
                       fontWeight: "600",
                       color: "#1B1931",
+                      paddingBottom: 10,
                     }}
                   >
-                    {event?.event_start_time}
+                    End
                   </Text>
-                  <Text>to</Text>
-                  <Text
+                  <View
                     style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
                     }}
                   >
-                    {event?.event_end_time}
-                  </Text>
+                    <Entypo name="calendar" size={20} color="#1B1931" />
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "#1B1931",
+                      }}
+                    >
+                      {event?.event_end_date}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <MaterialIcons
+                      style={{}}
+                      name="access-time"
+                      size={20}
+                      color="#1B1931"
+                    />
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "#1B1931",
+                      }}
+                    >
+                      {event?.event_end_time}
+                    </Text>
+                  </View>
                 </View>
               </View>
               <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "center",
+                  alignItems: "center",
                   gap: 10,
                 }}
               >
@@ -323,6 +401,7 @@ const EventDetails = () => {
                   +965 {event?.organization?.phone_number}
                 </Text>
               </View>
+              <View style={{ backgroundColor: "white", height: 50 }}></View>
             </ScrollView>
           </View>
         ) : (
@@ -374,12 +453,19 @@ const EventDetails = () => {
             }}
             onPress={() => {
               mutate();
+              setShowModal(true);
             }}
           >
             <Text style={styles.button_text}>Volunteer Now</Text>
           </TouchableOpacity>
         )}
       </View>
+      <VolThankUModal
+        showModal={showModal}
+        onBackPress={() => {
+          setShowModal(false);
+        }}
+      />
     </View>
   );
 };

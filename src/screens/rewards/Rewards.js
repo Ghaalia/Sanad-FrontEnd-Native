@@ -53,7 +53,7 @@ const Rewards = () => {
         scrollEnabled
         style={{
           width: "100%",
-          // height: "70%",
+          // height: "75%",
           // backgroundColor: "pink",
           flexDirection: "column",
           marginBottom: 100,
@@ -270,6 +270,7 @@ const Rewards = () => {
           </View>
         </View>
       </ScrollView>
+      {/* <View style={{ backgroundColor: "white", height: 150 }}></View> */}
     </View>
   );
 };
