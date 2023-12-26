@@ -69,10 +69,10 @@ const EventDetails = () => {
         }}
       >
         <Image
-          source={{
-            uri: event?.event_image,
-          }}
-          // source={require("../../../../assets/explore/default-event.png")}
+          // source={{
+          //   uri: event?.event_image,
+          // }}
+          source={require("../../../../assets/explore/default-event.png")}
           style={{
             borderBottomEndRadius: 30,
             borderBottomLeftRadius: 30,

@@ -129,17 +129,19 @@ const EventCard = ({ event, id }) => {
                 gap: 10,
               }}
             >
-              {/* <Image
-                // source={{
-                //   uri: `${BaseURL}/${event?.organization?.logo}`,
-                // }}
+              <Image
+                source={{
+                  uri: `${BaseURL}/${event?.organization?.logo}`,
+                }}
                 style={{ height: 50, width: 50, borderRadius: 100 }}
-              /> */}
+              />
               <Text
                 style={{
                   fontWeight: fonts.bold,
                   color: colors.SanadBlue1,
                   fontFamily: "Urbanist_700Bold",
+                  flexWra: "center",
+                  width: "70%",
                 }}
               >
                 {event?.organization?.name}
