@@ -32,10 +32,10 @@ const EventDetails = () => {
   const route = useRoute();
   const { event, id } = route.params || {};
 
-  console.log({ event: id });
   const navigation = useNavigation();
   const [DescriptionClicked, setDescriptionClicked] = useState(true);
   const [LocationClicked, setLocationClicked] = useState(false);
+  const [volunteermsg, setVolunteermsg] = useState(false);
 
   const handleDescriptionClick = () => {
     setDescriptionClicked(true);
@@ -46,16 +46,26 @@ const EventDetails = () => {
     setDescriptionClicked(false);
     setLocationClicked(true);
   };
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["getParticipationsOnEvent", id],
     queryFn: () => getParticipationsOnEvent(id),
   });
-  const { mutate } = useMutation({
+
+  const { mutate: volunteer } = useMutation({
     mutationFn: () => requestVolunterNow(id),
     onSuccess: () => {
+      setVolunteermsg(true);
       refetch();
     },
   });
+
+  const acceptedVol = event?.volunteer_list?.filter(
+    (v) => v.status === "Accepted"
+  );
+
+  console.log(data?.status);
+  console.log(data);
 
   return (
     <View style={{ flex: 1 }}>
@@ -105,7 +115,7 @@ const EventDetails = () => {
         >
           <Image
             source={{
-              uri: `${BaseURL}/${event?.organization.logo}`,
+              uri: `${BaseURL}/${event?.organization?.logo}`,
             }}
             style={{
               height: 50,
@@ -220,7 +230,8 @@ const EventDetails = () => {
                       color: "#1B1931",
                     }}
                   >
-                    {event?.event_date}
+                    {event?.event_start_date}
+                    {"  | "} {event?.event_end_date}
                   </Text>
                 </View>
               </View>
@@ -260,7 +271,7 @@ const EventDetails = () => {
                 <Text
                   style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
                 >
-                  {event?.volunteer_list.length} | {event?.no_of_volunteer}
+                  {acceptedVol?.length} | {event?.no_of_volunteer}
                 </Text>
               </View>
             </View>
@@ -278,7 +289,7 @@ const EventDetails = () => {
                 WhatsApp
               </Text>
               <Text style={{ color: "#1B1931" }}>
-                +965 {event?.organization.phone_number}
+                +965 {event?.organization?.phone_number}
               </Text>
             </View>
           </View>
@@ -294,7 +305,7 @@ const EventDetails = () => {
           </View>
         )}
 
-        {data ? (
+        {volunteermsg && (
           <>
             <View
               style={{
@@ -310,11 +321,11 @@ const EventDetails = () => {
                 bottom: 130,
                 zIndex: 100,
               }}
-            >
-              <Text style={styles.button}>{data.status}</Text>
-            </View>
+            ></View>
           </>
-        ) : (
+        )}
+        <View style={{ backgroundColor: "blue" }}>
+          <Text style={{ backgroundColor: "green" }}>hala</Text>
           <TouchableOpacity
             style={{
               backgroundColor: colors.SanadRed,
@@ -330,12 +341,12 @@ const EventDetails = () => {
               zIndex: 100,
             }}
             onPress={() => {
-              mutate();
+              volunteer();
             }}
           >
             <Text style={styles.button_text}>Volunteer Now</Text>
           </TouchableOpacity>
-        )}
+        </View>
       </View>
     </View>
   );

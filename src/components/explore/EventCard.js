@@ -39,6 +39,10 @@ const EventCard = ({ event, id }) => {
       .catch((error) => console.error(error));
   };
 
+  const acceptedVolunteer = event?.volunteer_list?.filter(
+    (v) => v.status === "Accepted"
+  );
+
   const eventCategoryNames = event?.event_category?.map((category) => {
     return (
       <View
@@ -102,7 +106,7 @@ const EventCard = ({ event, id }) => {
         >
           <MaterialCommunityIcons name="human-male" size={20} color="white" />
           <Text style={{ color: "white", fontWeight: "500" }}>
-            {event?.volunteer_list.length}
+            {acceptedVolunteer.length}
           </Text>
           <Text style={{ color: "white", fontWeight: "500" }}>|</Text>
           <Text style={{ color: "white", fontWeight: "500" }}>
@@ -182,7 +186,7 @@ const EventCard = ({ event, id }) => {
                     fontSize: 13,
                   }}
                 >
-                  Start
+                  Starts
                 </Text>
                 <Entypo name="calendar" size={20} color="#1B1931" />
                 <Text
@@ -193,7 +197,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_date}
+                  {event?.event_start_date}
                 </Text>
               </View>
               <View
@@ -229,9 +233,9 @@ const EventCard = ({ event, id }) => {
                     fontSize: 13,
                   }}
                 >
-                  End
+                  Ends
                 </Text>
-                <Entypo name="calendar" size={20} color="#1B1931" />
+                <Entypo name="calendar" size={20} color="white" />
                 <Text
                   style={{
                     fontSize: 12,
@@ -240,7 +244,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_date}
+                  {event?.event_end_date}
                 </Text>
               </View>
 
@@ -251,7 +255,7 @@ const EventCard = ({ event, id }) => {
                   style={{}}
                   name="access-time"
                   size={20}
-                  color="#1B1931"
+                  color="white"
                 />
                 <Text
                   style={{
@@ -261,7 +265,7 @@ const EventCard = ({ event, id }) => {
                     fontFamily: "Urbanist_500Medium",
                   }}
                 >
-                  {event?.event_start_time}
+                  {event?.event_end_time}
                   {/* to {event?.event_end_time} */}
                 </Text>
               </View>

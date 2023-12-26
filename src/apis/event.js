@@ -16,9 +16,24 @@ const requestVolunterNow = async (eventID) => {
   return res.data;
 };
 
+// const getParticipationsOnEvent = async (eventID) => {
+//   console.log("res.data?.status");
+
+//   const res = await instance.get(`/api/participation/event/${eventID}`);
+//   console.log(res.data?.status);
+//   return res.data;
+// };
+
 const getParticipationsOnEvent = async (eventID) => {
-  const res = await instance.get(`/api/participation/event/${eventID}`);
-  return res.data;
+  try {
+    const res = await instance.get(`/api/participation/event/${eventID}`);
+    console.log("API response:", res); // Log the entire response
+    console.log("Status:", res.data?.status);
+    return res.data;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw new Error("Error fetching data");
+  }
 };
 
 export {

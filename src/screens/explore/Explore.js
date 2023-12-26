@@ -16,6 +16,7 @@ import ExploreEventFilter from "../../components/explore/ExploreEventFilter";
 import { colors } from "../../config/theme";
 import { getAllEvents } from "../../apis/event";
 import { useQuery } from "@tanstack/react-query";
+import { parseISO, isBefore, isAfter } from "date-fns";
 
 const Explore = () => {
   const [filtered, setFiltered] = useState("");
@@ -25,12 +26,46 @@ const Explore = () => {
   });
   const navigation = useNavigation();
 
+  console.log(events);
   // useEffect(() => {
   //   console.log(events);
   // }, [events]);
 
   //console.log(events[0]?._id);
 
+  // Function to compare event_start_date
+  const compareEventDates = (a, b) => {
+    const startDateA = a?.event_start_date
+      ? parseISO(a?.event_start_date)
+      : null;
+    const startDateB = b?.event_start_date
+      ? parseISO(b?.event_start_date)
+      : null;
+    const endDateA = a?.event_end_date ? parseISO(a?.event_end_date) : null;
+    const endDateB = b?.event_end_date ? parseISO(b?.event_end_date) : null;
+
+    // Compare start dates
+    if (isBefore(startDateA, startDateB)) {
+      return 1;
+    }
+    if (isAfter(startDateA, startDateB)) {
+      return -1;
+    }
+
+    // If start dates are equal, compare end dates
+    if (isBefore(endDateA, endDateB)) {
+      return 1;
+    }
+    if (isAfter(endDateA, endDateB)) {
+      return -1;
+    }
+
+    return 0; // Events are equal
+  };
+
+  // Sort the events array based on start and end dates
+  const sortedEvents = events ? [...events].sort(compareEventDates) : [];
+  console.log(sortedEvents);
   return (
     <View
       style={{
@@ -143,7 +178,7 @@ const Explore = () => {
               navigation.navigate("eventDetails");
             }}
           >
-            {events
+            {sortedEvents
               ?.filter((e) => {
                 return (
                   e.organization?.name.includes(filtered) ||
