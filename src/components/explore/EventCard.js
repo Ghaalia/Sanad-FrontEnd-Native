@@ -44,7 +44,9 @@ const EventCard = ({ event, id, isLoading }) => {
     return (
       <View
         style={{
-          width: "auto",
+          minWidth: 95,
+          maxWidth: 300,
+          paddingHorizontal: 10,
           height: 30,
           justifyContent: "center",
           padding: 5,
@@ -94,7 +96,34 @@ const EventCard = ({ event, id, isLoading }) => {
             justifyContent: "center",
           }}
         >
-          <View
+          <View style={{ flexDirection: "column" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
+              {/* <Image
+                // source={{
+                //   uri: `${BaseURL}/${event?.organization?.logo}`,
+                // }}
+                style={{ height: 50, width: 50, borderRadius: 100 }}
+              /> */}
+              <Text
+                style={{
+                  fontWeight: fonts.bold,
+                  color: colors.SanadBlue1,
+                  fontFamily: "Urbanist_700Bold",
+                }}
+              >
+                {event?.organization?.name}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <Text
             style={{
               position: "absolute",
               right: 0,
@@ -111,14 +140,128 @@ const EventCard = ({ event, id, isLoading }) => {
               backgroundColor: colors.SanadRed,
             }}
           >
-            <MaterialCommunityIcons name="human-male" size={20} color="white" />
-            <Text style={{ color: "white", fontWeight: "500" }}>
-              {event?.volunteer_list.length}
-            </Text>
-            <Text style={{ color: "white", fontWeight: "500" }}>|</Text>
-            <Text style={{ color: "white", fontWeight: "500" }}>
-              {event?.no_of_volunteer}
-            </Text>
+            {event?.event_title}
+          </Text>
+        </View>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 5,
+          }}
+        >
+          {eventCategoryNames}
+        </View>
+
+        <View
+          style={{
+            height: "auto",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
+          <View style={{ flexDirection: "column", gap: 3 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 30,
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <Text
+                  style={{
+                    width: 45,
+                    fontWeight: fonts.semibold,
+                    fontSize: 13,
+                  }}
+                >
+                  Start
+                </Text>
+                <Entypo name="calendar" size={20} color="#1B1931" />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_start_date}
+                </Text>
+              </View>
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <MaterialIcons
+                  style={{}}
+                  name="access-time"
+                  size={20}
+                  color="#1B1931"
+                />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_start_time}
+                </Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: "row", gap: 30 }}>
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <Text
+                  style={{
+                    width: 45,
+                    fontWeight: fonts.semibold,
+                    fontSize: 13,
+                  }}
+                >
+                  End
+                </Text>
+                <Entypo name="calendar" size={20} color="#1B1931" />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_end_date}
+                </Text>
+              </View>
+
+              <View
+                style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
+              >
+                <MaterialIcons
+                  style={{}}
+                  name="access-time"
+                  size={20}
+                  color="#1B1931"
+                />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "500",
+                    color: "#1B1931",
+                    fontFamily: "Urbanist_500Medium",
+                  }}
+                >
+                  {event?.event_end_time}
+                  {/* to {event?.event_end_time} */}
+                </Text>
+              </View>
+            </View>
           </View>
           <View
             style={{

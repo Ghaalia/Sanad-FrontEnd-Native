@@ -21,7 +21,7 @@ const UploadModal = ({
   uri,
   isLoading = false,
 }) => {
-  console.log("IM HERE");
+  // console.log("IM HERE");
   return (
     <View>
       {/* <Image

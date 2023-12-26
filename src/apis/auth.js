@@ -112,7 +112,7 @@ const updateProfile = async (updatedUserData) => {
 const checkToken = async () => {
   const token = await getToken();
   if (token) {
-    console.log(token);
+    // console.log(token);
     const decode = jwtDecode(token);
     if (decode) {
       return decode;

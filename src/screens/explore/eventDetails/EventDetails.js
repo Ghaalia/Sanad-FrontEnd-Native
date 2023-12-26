@@ -219,6 +219,39 @@ const EventDetails = () => {
               </View>
               <View
                 style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <Entypo name="calendar" size={20} color="#1B1931" />
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                    }}
+                  >
+                    {event?.event_start_date}
+                  </Text>
+                </View>
+                <Text>to</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                    }}
+                  >
+                    {event?.event_end_date}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
                   alignItems: "center",
@@ -406,12 +439,12 @@ const EventDetails = () => {
           </View>
         ) : (
           <View style={{ width: "100%" }}>
-            {/* <Button
+            <Button
               title="go to event description"
               onPress={() => {
                 navigation.navigate("Location");
               }}
-            /> */}
+            />
             <Location />
           </View>
         )}
