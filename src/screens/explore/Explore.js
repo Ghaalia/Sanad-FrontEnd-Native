@@ -139,7 +139,7 @@ const Explore = () => {
       >
         <ScrollView
           scrollEnabled
-          style={{ width: "100%", paddingVertical: 5, marginBottom: 130 }}
+          style={{ width: "100%", paddingVertical: 15, marginBottom: 130 }}
         >
           <Pressable
             onPress={() => {

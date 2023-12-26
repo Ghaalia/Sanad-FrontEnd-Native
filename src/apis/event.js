@@ -43,9 +43,15 @@ const getParticipationsOnEvent = async (eventID) => {
   return res.data;
 };
 
+const getEventById = async (eventId) => {
+  const res = await instance.get(`/api/event/${eventId}`);
+  return res.data;
+};
+
 export {
   getAllEvents,
   getOneEvent,
   requestVolunterNow,
   getParticipationsOnEvent,
+  getEventById,
 };

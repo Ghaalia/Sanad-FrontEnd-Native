@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -61,7 +62,7 @@ const EventDetails = () => {
     <View style={{ flex: 1 }}>
       <View
         style={{
-          flex: 35,
+          flex: 25,
           justifyContent: "flex-end",
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 30,
@@ -79,7 +80,7 @@ const EventDetails = () => {
             overflow: "hidden",
             height: "100%",
             width: "100%",
-            resizeMode: "cover",
+            resizeMode: "contain",
             position: "absolute",
             backgroundColor: "white",
           }}
@@ -105,7 +106,7 @@ const EventDetails = () => {
         >
           <Image
             source={{
-              uri: `${BaseURL}/${event?.organization.logo}`,
+              uri: `${BaseURL}/${event?.organization?.logo}`,
             }}
             style={{
               height: 50,
@@ -183,130 +184,146 @@ const EventDetails = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ flex: 75, backgroundColor: "#EFEFEF" }}>
+      <View style={{ height: "70%", backgroundColor: "#EFEFEF" }}>
         {DescriptionClicked ? (
-          <View
-            style={{
-              width: "85%",
-              height: 334,
-              gap: 20,
-              paddingHorizontal: 30,
-              paddingVertical: 20,
-              marginTop: 10,
-              justifyContent: "space-between",
-              alignSelf: "center",
-              borderRadius: 10,
-              backgroundColor: colors.SanadWhite,
-            }}
-          >
-            <View style={{ gap: 10 }}>
-              <Text
-                style={{ fontSize: 15, fontWeight: "600", color: "#1B1931" }}
-              >
-                Description
-              </Text>
-              <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
-            </View>
-
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <Entypo name="calendar" size={20} color="#1B1931" />
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    {event?.event_date}
-                  </Text>
-                </View>
-                <Text>to</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    {event?.event_date}
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <MaterialIcons
-                  style={{}}
-                  name="access-time"
-                  size={20}
-                  color="#1B1931"
-                />
-                <Text
-                  style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
-                >
-                  {event?.event_start_time}
-                </Text>
-                <Text>to</Text>
-                <Text
-                  style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
-                >
-                  {event?.event_end_time}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="human-male"
-                  size={20}
-                  color="#1B1931"
-                />
-                <Text
-                  style={{ fontSize: 12, fontWeight: "600", color: "#1B1931" }}
-                >
-                  {event?.volunteer_list.length} | {event?.no_of_volunteer}
-                </Text>
-              </View>
-            </View>
-            <View
+          <View>
+            <ScrollView
               style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                gap: 10,
+                width: "85%",
+                height: 350,
+                flexDirection: "column",
+                paddingHorizontal: 30,
+                paddingVertical: 20,
+                marginTop: 10,
+                alignSelf: "center",
+                borderRadius: 10,
+                backgroundColor: colors.SanadWhite,
               }}
             >
-              <FontAwesome5 name="whatsapp" size={20} color="#1B1931" />
-              <Text
-                style={{ fontSize: 15, fontWeight: "600", color: "#1B1931" }}
+              <View style={{ gap: 10, paddingBottom: 30 }}>
+                <Text
+                  style={{ fontSize: 15, fontWeight: "600", color: "#1B1931" }}
+                >
+                  Description
+                </Text>
+                <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingBottom: 30,
+                }}
               >
-                WhatsApp
-              </Text>
-              <Text style={{ color: "#1B1931" }}>
-                +965 {event?.organization.phone_number}
-              </Text>
-            </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 5,
+                    width: 80,
+                    borderRadius: 10,
+                    backgroundColor: colors.SanadRed,
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    name="human-male"
+                    size={20}
+                    color="white"
+                  />
+                  <Text
+                    style={{ fontSize: 12, fontWeight: "600", color: "white" }}
+                  >
+                    {event?.volunteer_list.length} | {event?.no_of_volunteer}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  <Entypo name="calendar" size={20} color="#1B1931" />
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "#1B1931",
+                      }}
+                    >
+                      {event?.event_date}
+                    </Text>
+                  </View>
+                  <Text>to</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: "600",
+                        color: "#1B1931",
+                      }}
+                    >
+                      {event?.event_date}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  <MaterialIcons
+                    style={{}}
+                    name="access-time"
+                    size={20}
+                    color="#1B1931"
+                  />
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                    }}
+                  >
+                    {event?.event_start_time}
+                  </Text>
+                  <Text>to</Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#1B1931",
+                    }}
+                  >
+                    {event?.event_end_time}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  gap: 10,
+                }}
+              >
+                <FontAwesome5 name="whatsapp" size={20} color="#1B1931" />
+                <Text
+                  style={{ fontSize: 15, fontWeight: "600", color: "#1B1931" }}
+                >
+                  WhatsApp
+                </Text>
+                <Text style={{ color: "#1B1931" }}>
+                  +965 {event?.organization?.phone_number}
+                </Text>
+              </View>
+            </ScrollView>
           </View>
         ) : (
           <View style={{ width: "100%" }}>
@@ -344,7 +361,7 @@ const EventDetails = () => {
           <TouchableOpacity
             style={{
               backgroundColor: colors.SanadRed,
-              width: "85%",
+              width: "75%",
               height: 50,
               justifyContent: "center",
               alignItems: "center",

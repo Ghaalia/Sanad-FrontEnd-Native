@@ -43,7 +43,7 @@ const EventCard = ({ event, id }) => {
     return (
       <View
         style={{
-          width: 95,
+          width: "auto",
           height: 30,
           justifyContent: "center",
           padding: 5,
@@ -54,7 +54,7 @@ const EventCard = ({ event, id }) => {
           alignItems: "center",
         }}
       >
-        <Text>{category.category_name}</Text>
+        <Text>{category?.category_name}</Text>
       </View>
     );
   });
@@ -72,16 +72,16 @@ const EventCard = ({ event, id }) => {
           shadowOffset: { height: 4, width: 1 },
           shadowRadius: 5,
           shadowOpacity: 0.1,
-          height: 230,
+          height: "auto",
           width: "85%",
           borderRadius: 30,
           paddingHorizontal: 15,
-          paddingTop: 10,
-          margin: 10,
-          marginBottom: 10,
-          gap: 10,
+          paddingVertical: 20,
+          // margin: 10,
+          // marginBottom: 10,
+          gap: 20,
           alignSelf: "center",
-          justifyContent: "space-around",
+          justifyContent: "center",
         }}
       >
         <View
@@ -156,14 +156,16 @@ const EventCard = ({ event, id }) => {
             {event?.event_title}
           </Text>
         </View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 5,
-          }}
-        >
-          {eventCategoryNames}
+        <View>
+          <View
+            style={{
+              flexWrap: "wrap",
+              flexDirection: "row",
+              gap: 5,
+            }}
+          >
+            {eventCategoryNames}
+          </View>
         </View>
 
         <View
@@ -192,7 +194,7 @@ const EventCard = ({ event, id }) => {
                     fontSize: 13,
                   }}
                 >
-                  Start
+                  Starts
                 </Text>
                 <Entypo name="calendar" size={20} color="#1B1931" />
                 <Text
@@ -238,7 +240,7 @@ const EventCard = ({ event, id }) => {
                     fontSize: 13,
                   }}
                 >
-                  End
+                  Ends
                 </Text>
                 <Entypo name="calendar" size={20} color="#1B1931" />
                 <Text
