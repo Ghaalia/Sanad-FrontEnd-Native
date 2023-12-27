@@ -18,9 +18,9 @@ const Rewards = () => {
   });
   useEffect(() => {
     if (profile) {
-      setFirstName(profile?.first_name);
-      setLastName(profile?.last_name);
-      setVolunteerPoints(profile?.volunteer_points);
+      setFirstName(profile.first_name);
+      setLastName(profile.last_name);
+      setVolunteerPoints(profile.volunteer_points);
     }
   }, [profile]);
 
@@ -70,37 +70,20 @@ const Rewards = () => {
           source={require("../../../assets/onlylogo.png")}
         />
       </View>
-      <ScrollView
-        scrollEnabled
-        style={{
-          width: "100%",
-          // height: "75%",
-          // backgroundColor: "pink",
-          flexDirection: "column",
-          marginBottom: 100,
-        }}
-      >
-        <View style={{ height: 150 }}>
-          <Image
-            style={{
-              height: "100%",
-              resizeMode: "contain",
-              alignSelf: "center",
-            }}
-            source={require("../../../assets/rewards/thankyou.png")}
-          />
-          <View
-            style={{
-              width: "100%",
-              alignItems: "center",
-              paddingHorizontal: 30,
-              gap: 10,
-              paddingBottom: 20,
-              borderBottomWidth: 1.5,
-              borderColor: "white",
-            }}
-          >
-            <Text
+      <View style={{ height: "72%" }}>
+        <ScrollView
+          scrollEnabled
+          style={{
+            width: "100%",
+            // height: "60%",
+            // backgroundColor: "pink",
+            flexDirection: "column",
+
+            // marginBottom: 200,
+          }}
+        >
+          <View style={{ height: 150 }}>
+            <Image
               style={{
                 height: "100%",
                 resizeMode: "contain",
@@ -317,9 +300,8 @@ const Rewards = () => {
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      {/* <View style={{ backgroundColor: "white", height: 150 }}></View> */}
+        </ScrollView>
+      </View>
     </View>
   );
 };

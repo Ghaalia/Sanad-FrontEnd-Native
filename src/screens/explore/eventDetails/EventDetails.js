@@ -7,9 +7,9 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Share,
 } from "react-native";
 import { useMutation, useQuery } from "@tanstack/react-query";
-
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MapPin } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -19,6 +19,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
   FontAwesome5,
+  Feather,
 } from "@expo/vector-icons";
 import {
   getOneEvent,
@@ -60,10 +61,31 @@ const EventDetails = () => {
     },
   });
 
+  const handleShareEvent = () => {
+    const wikipediaLink = "https://www.wikipedia.org/";
+    // const shareableLink = `https://ourwebsite.com/event/${eventId}`; //share my local dev url
+    // const url = "https://www.youtube.com/"; // Replace with your desired URL
+    const shareMessage = `Check out this event: ${event.event_title}\nEvent Date: ${event.event_date}\nLocation: ${event.location}\nLink:${wikipediaLink}`;
+    const shareOptions = {
+      message: shareMessage,
+    };
+
+    Share.share(shareOptions)
+      .then((result) => {
+        if (result.action === Share.sharedAction) {
+          console.log("Event shared successfully");
+        } else if (result.action === Share.dismissedAction) {
+          console.log("Sharing dismissed");
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View
         style={{
+          position: "relative",
           flex: 25,
           justifyContent: "flex-end",
           borderBottomLeftRadius: 50,
@@ -97,6 +119,19 @@ const EventDetails = () => {
             width: "100%",
           }}
         />
+        <TouchableOpacity
+          onPress={handleShareEvent}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            position: "absolute",
+            bottom: 20,
+            right: 25,
+            zIndex: 100,
+          }}
+        >
+          <Feather name="share-2" size={24} color="white" />
+        </TouchableOpacity>
 
         <View
           style={{
@@ -216,39 +251,6 @@ const EventDetails = () => {
                   Description
                 </Text>
                 <Text style={{ color: "#1B1931" }}>{event?.description}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <Entypo name="calendar" size={20} color="#1B1931" />
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    {event?.event_start_date}
-                  </Text>
-                </View>
-                <Text>to</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                      color: "#1B1931",
-                    }}
-                  >
-                    {event?.event_end_date}
-                  </Text>
-                </View>
               </View>
               <View
                 style={{

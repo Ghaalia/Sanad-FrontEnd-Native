@@ -61,6 +61,16 @@ const EventCard = ({ event, id, isLoading }) => {
       </View>
     );
   });
+
+  // const maxCharacterCount = 25; //max count
+
+  // const organizationName = event?.organization?.name || "";
+
+  // const truncatedName =
+  //   organizationName.length > maxCharacterCount
+  //     ? organizationName.substring(0, maxCharacterCount) + "..."
+  //     : organizationName;
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -68,91 +78,101 @@ const EventCard = ({ event, id, isLoading }) => {
       }}
       style={{ alignItems: "center" }}
     >
-      <Skeleton
-        show={isLoading}
-        colorMode="light"
-        backgroundColor="#D4D4D4"
-        radius={30}
-        width={"87%"}
-        transition={{
-          type: "timing",
-          duration: 2000,
+      <View
+        style={{
+          position: "relative",
+          backgroundColor: "white",
+          shadowColor: "black",
+          shadowOffset: { height: 4, width: 1 },
+          shadowRadius: 5,
+          shadowOpacity: 0.1,
+          height: "auto",
+          width: "85%",
+          borderRadius: 30,
+          paddingHorizontal: 20,
+          paddingVertical: 20,
+          gap: 20,
+          justifyContent: "center",
         }}
       >
         <View
           style={{
-            position: "relative",
-            backgroundColor: "white",
-            shadowColor: "black",
-            shadowOffset: { height: 4, width: 1 },
-            shadowRadius: 5,
-            shadowOpacity: 0.1,
-            height: "auto",
-            width: "85%",
-            borderRadius: 30,
-            paddingHorizontal: 15,
-            paddingVertical: 20,
-            gap: 20,
+            position: "absolute",
+            right: 0,
+            top: 21,
+            width: "auto",
+            flexDirection: "row",
             justifyContent: "center",
+            alignItems: "center",
+            gap: 2,
+            paddingHorizontal: 8,
+            paddingVertical: 4,
+            borderTopStartRadius: 20,
+            borderBottomStartRadius: 20,
+            backgroundColor: colors.SanadRed,
           }}
         >
-          <View style={{ flexDirection: "column" }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-              }}
-            >
-              {/* <Image
-                // source={{
-                //   uri: `${BaseURL}/${event?.organization?.logo}`,
-                // }}
-                style={{ height: 50, width: 50, borderRadius: 100 }}
-              /> */}
-              <Text
-                style={{
-                  fontWeight: fonts.bold,
-                  color: colors.SanadBlue1,
-                  fontFamily: "Urbanist_700Bold",
-                }}
-              >
-                {event?.organization?.name}
-              </Text>
-            </View>
-          </View>
+          <Text
+            style={{
+              color: colors.SanadWhite,
+              fontWeight: fonts.semibold,
+            }}
+          >
+            {event?.volunteer_list.length} | {event?.no_of_volunteer}
+          </Text>
         </View>
+
+        <View
+          style={{
+            width: 200,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+            paddingTop: 10,
+          }}
+        >
+          <Image
+            source={{
+              uri: `${BaseURL}/${event?.organization?.logo}`,
+            }}
+            style={{ height: 50, width: 50, borderRadius: 100 }}
+          />
+          <Text
+            style={{
+              fontWeight: fonts.bold,
+              color: colors.SanadBlue1,
+              fontFamily: "Urbanist_700Bold",
+              flexWrap: "wrap",
+            }}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
+            {event?.organization?.name}
+          </Text>
+        </View>
+
         <View>
           <Text
             style={{
-              position: "absolute",
-              right: 0,
-              top: 21,
-              width: "auto",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 2,
-              paddingHorizontal: 8,
-              paddingVertical: 4,
-              borderTopStartRadius: 20,
-              borderBottomStartRadius: 20,
-              backgroundColor: colors.SanadRed,
+              fontSize: 16,
+              color: colors.SanadRed,
+              fontWeight: fonts.bold,
             }}
           >
             {event?.event_title}
           </Text>
         </View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 5,
-          }}
-        >
-          {eventCategoryNames}
+        <View>
+          <View
+            style={{
+              flexWrap: "wrap",
+              flexDirection: "row",
+              gap: 5,
+            }}
+          >
+            {eventCategoryNames}
+          </View>
         </View>
-
         <View
           style={{
             height: "auto",
@@ -266,170 +286,11 @@ const EventCard = ({ event, id, isLoading }) => {
           <View
             style={{
               height: "auto",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <View style={{ flexDirection: "column" }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                <Image
-                  source={{
-                    uri: `${BaseURL}/${event?.organization?.logo}`,
-                  }}
-                  style={{ height: 50, width: 50, borderRadius: 100 }}
-                />
-                <Text
-                  style={{
-                    fontWeight: fonts.bold,
-                    color: colors.SanadBlue1,
-                    fontFamily: "Urbanist_700Bold",
-                  }}
-                >
-                  {event?.organization?.name}
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontSize: 16,
-                color: colors.SanadRed,
-                fontWeight: fonts.bold,
-              }}
-            >
-              {event?.event_title}
-            </Text>
-          </View>
-          <View>
-            <View
-              style={{
-                flexWrap: "wrap",
-                flexDirection: "row",
-                gap: 5,
-              }}
-            >
-              {eventCategoryNames}
-            </View>
-          </View>
-
-          <View
-            style={{
-              height: "auto",
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "flex-end",
             }}
           >
-            <View style={{ flexDirection: "column", gap: 3 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  gap: 30,
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
-                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-                >
-                  <Text
-                    style={{
-                      width: 45,
-                      fontWeight: fonts.semibold,
-                      fontSize: 13,
-                    }}
-                  >
-                    Starts
-                  </Text>
-                  <Entypo name="calendar" size={20} color="#1B1931" />
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "500",
-                      color: "#1B1931",
-                      fontFamily: "Urbanist_500Medium",
-                    }}
-                  >
-                    {event?.event_start_date}
-                  </Text>
-                </View>
-                <View
-                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-                >
-                  <MaterialIcons
-                    style={{}}
-                    name="access-time"
-                    size={20}
-                    color="#1B1931"
-                  />
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "500",
-                      color: "#1B1931",
-                      fontFamily: "Urbanist_500Medium",
-                    }}
-                  >
-                    {event?.event_start_time}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", gap: 30 }}>
-                <View
-                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-                >
-                  <Text
-                    style={{
-                      width: 45,
-                      fontWeight: fonts.semibold,
-                      fontSize: 13,
-                    }}
-                  >
-                    Ends
-                  </Text>
-                  <Entypo name="calendar" size={20} color="#1B1931" />
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "500",
-                      color: "#1B1931",
-                      fontFamily: "Urbanist_500Medium",
-                    }}
-                  >
-                    {event?.event_end_date}
-                  </Text>
-                </View>
-
-                <View
-                  style={{ flexDirection: "row", gap: 5, alignItems: "center" }}
-                >
-                  <MaterialIcons
-                    style={{}}
-                    name="access-time"
-                    size={20}
-                    color="#1B1931"
-                  />
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "500",
-                      color: "#1B1931",
-                      fontFamily: "Urbanist_500Medium",
-                    }}
-                  >
-                    {event?.event_end_time}
-                  </Text>
-                </View>
-              </View>
-            </View>
             <TouchableOpacity
               onPress={handleShareEvent}
               style={{
@@ -441,7 +302,7 @@ const EventCard = ({ event, id, isLoading }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Skeleton>
+      </View>
     </TouchableOpacity>
   );
 };

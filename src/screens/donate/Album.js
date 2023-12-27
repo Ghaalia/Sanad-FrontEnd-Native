@@ -762,8 +762,11 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   photos_container_wrap: {
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
     flexWrap: "wrap",
-    paddingVertical: 20,
+    paddingVertical: 15,
     gap: 6.5,
   },
   add_button: {

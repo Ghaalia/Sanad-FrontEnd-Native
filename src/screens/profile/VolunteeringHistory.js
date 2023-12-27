@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { colors } from "../../config/theme";
+import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { colors, fonts } from "../../config/theme";
 import { getEventById } from "../../apis/event";
 import { useQuery } from "@tanstack/react-query";
 
@@ -55,7 +55,33 @@ const VolunteeringHistory = () => {
           borderTopLeftRadius: 16,
           position: "relative",
         }}
-      ></View>
+      >
+        {!eventsByUser && (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              paddingHorizontal: 30,
+              paddingTop: 110,
+            }}
+          >
+            <Text
+              style={{
+                color: colors.SanadRed,
+                fontSize: 20,
+                fontWeight: fonts.semibold,
+                textAlign: "center",
+              }}
+            >
+              You have not attended any event yet!
+            </Text>
+            <Image
+              style={{ width: 250, height: 250, resizeMode: "contain" }}
+              source={require("../../../assets/profile/no-events.png")}
+            />
+          </View>
+        )}
+      </View>
     </View>
   );
 };
