@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, Entypo, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import ExploreNavigation from "./ExploreNavigation";
@@ -9,13 +9,23 @@ import NotificationNavigation from "./NotificationNavigation";
 import ProfileNavigation from "./ProfileNavigation";
 
 import * as Notifications from "expo-notifications";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { storeNotificatioToken } from "../apis/auth";
 import { colors } from "../config/theme";
+import { getNotificationsByUser } from "../apis/notification";
+import UserContext from "../../context/UserContext";
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigation = () => {
+  const { user } = useContext(UserContext);
+  const { data } = useQuery({
+    queryKey: ["Notifications_", user.id],
+    queryFn: () => {
+      return getNotificationsByUser(user.id);
+    },
+  });
+
   const { mutate } = useMutation({
     mutationFn: (token) => storeNotificatioToken(token),
   });
@@ -194,9 +204,33 @@ const MainNavigation = () => {
                 justifyContent: "center",
                 display: "flex",
                 flexDirection: "column",
+                position: "relative",
                 gap: 1,
               }}
             >
+              {data?.length > 0 && (
+                <View
+                  style={{
+                    position: "absolute",
+                    width: 20,
+                    height: 20,
+                    borderRadius: 20,
+                    backgroundColor: colors.SanadRed,
+                    zIndex: 10,
+                    top: -8,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: colors.SanadWhite, fontWeight: "bold" }}
+                  >
+                    {data?.length}
+                  </Text>
+                </View>
+              )}
+
               <Ionicons
                 name="notifications"
                 size={24}

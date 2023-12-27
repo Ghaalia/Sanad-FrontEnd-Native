@@ -6,25 +6,31 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  RefreshControl,
 } from "react-native";
 import { getNotificationsByUser } from "../../apis/notification";
-import NotificationItem from "../../components/notification/NotificationItem";
+import NotificationItemNew from "../../components/notification/NotificationItemNew";
 import { colors, fonts } from "../../config/theme";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMyProfile } from "../../apis/auth";
 import UserContext from "../../../context/UserContext";
 
 const Notification = () => {
-  const [userId, setUserId] = useState("");
-
-  const { data: user } = useQuery({
+  const { user } = useContext(UserContext);
+  const userId = 0;
+  const queryClient = useQueryClient();
+  const { data: user_ } = useQuery({
     queryKey: ["user"],
     queryFn: () => getMyProfile(),
   });
 
-  const { data: allNotifications } = useQuery({
-    queryKey: ["Notifications", userId],
-    queryFn: () => getNotificationsByUser(userId),
+  const {
+    data: allNotifications,
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["Notifications", user.id],
+    queryFn: () => getNotificationsByUser(user.id),
   });
   console.log("Nothing yet moodhy!", allNotifications);
 
@@ -86,6 +92,16 @@ const Notification = () => {
         />
       </View>
       <ScrollView
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => {
+              refetch();
+
+              queryClient.invalidateQueries(["Notifications_", user.id]);
+            }}
+            refreshing={isLoading}
+          />
+        }
         style={{
           width: "100%",
           // backgroundColor: "yellow",
@@ -95,11 +111,13 @@ const Notification = () => {
         }}
       >
         {/* <Text>{user?._id}</Text> */}
-        {/* {allNotifications?.map((el) => (
-          <NotificationItem id={el?._id} notification={el} />
-        ))} */}
+        {allNotifications?.map((el) => (
+          <NotificationItemNew notification={el} />
+          // <Text>{el.title}</Text>
+          // <NotificationItem id={el?._id} notification={el} />
+        ))}
         {/* <NotificationItem notifications={el} id={el._id}/> */}
-        <NotificationItem />
+        {/* <NotificationItem /> */}
       </ScrollView>
     </View>
   );

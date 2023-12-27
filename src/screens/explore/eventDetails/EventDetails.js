@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Image,
@@ -9,7 +9,7 @@ import {
   ScrollView,
   Share,
 } from "react-native";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { MapPin } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -28,14 +28,17 @@ import {
 } from "../../../apis/event";
 import { BaseURL } from "../../../apis";
 import Location from "../../../components/explore/Location";
-import { colors, fonts } from "../../../config/theme";
+import { colors, family, fonts } from "../../../config/theme";
 import VolThankUModal from "../../../components/explore/VolThankUModal";
+import UserContext from "../../../../context/UserContext";
 
 const EventDetails = () => {
   const [showModal, setShowModal] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const { user } = useContext(UserContext);
   const route = useRoute();
   const { event, id } = route.params || {};
-
+  const queryClient = useQueryClient();
   console.log({ event: id });
   const navigation = useNavigation();
   const [DescriptionClicked, setDescriptionClicked] = useState(true);
@@ -54,10 +57,14 @@ const EventDetails = () => {
     queryKey: ["getParticipationsOnEvent", id],
     queryFn: () => getParticipationsOnEvent(id),
   });
+
   const { mutate } = useMutation({
     mutationFn: () => requestVolunterNow(id),
     onSuccess: () => {
+      queryClient.invalidateQueries(["Notifications", user.id]);
+      queryClient.invalidateQueries(["Notifications_", user.id]);
       refetch();
+      setButtonClicked(true);
     },
   });
 
@@ -80,13 +87,14 @@ const EventDetails = () => {
       })
       .catch((error) => console.error(error));
   };
+  console.log({ data });
 
   return (
     <View style={{ flex: 1 }}>
       <View
         style={{
           position: "relative",
-          flex: 25,
+          flex: 35,
           justifyContent: "flex-end",
           borderBottomLeftRadius: 50,
           borderBottomRightRadius: 30,
@@ -146,30 +154,30 @@ const EventDetails = () => {
               uri: `${BaseURL}/${event?.organization?.logo}`,
             }}
             style={{
-              height: 50,
-              width: 50,
+              height: 60,
+              width: 60,
               borderRadius: 100,
             }}
           />
           <View>
             <Text
               style={{
-                fontWeight: "bold",
                 justifyContent: "center",
                 color: "white",
-                fontFamily: "",
+                fontFamily: family.bold,
               }}
             >
               {event?.event_title}
             </Text>
             <Text
               style={{
-                fontWeight: "semibold",
+                width: "95%",
+                fontFamily: family.regular,
                 justifyContent: "center",
                 color: "white",
+                flexWrap: "wrap",
               }}
             >
-              {" "}
               {event?.organization?.name}
             </Text>
           </View>
@@ -451,11 +459,11 @@ const EventDetails = () => {
           </View>
         )}
 
-        {data ? (
+        {data?.find((e) => e.user == user.id) ? (
           <>
             <View
               style={{
-                backgroundColor: colors.SanadRed,
+                backgroundColor: colors.SanadMedGrey,
                 width: "85%",
                 height: 50,
                 justifyContent: "center",
@@ -468,30 +476,41 @@ const EventDetails = () => {
                 zIndex: 100,
               }}
             >
-              <Text style={styles.button}>{data.status}</Text>
+              <Text style={[styles.button, { color: colors.SanadWhite }]}>
+                {data?.find((e) => e.user == user.id)?.status}
+              </Text>
             </View>
           </>
         ) : (
           <TouchableOpacity
-            style={{
-              backgroundColor: colors.SanadRed,
-              width: "75%",
-              height: 50,
-              justifyContent: "center",
-              alignItems: "center",
-              alignSelf: "center",
-              borderRadius: 30,
-              marginTop: 30,
-              position: "absolute",
-              bottom: 130,
-              zIndex: 100,
-            }}
+            style={[
+              {
+                backgroundColor: colors.SanadRed,
+                width: "75%",
+                height: 50,
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                borderRadius: 30,
+                marginTop: 30,
+                position: "absolute",
+                bottom: 130,
+                zIndex: 100,
+              },
+              buttonClicked && { opacity: 0.3 }, // Apply opacity style if buttonClicked is true
+            ]}
             onPress={() => {
-              mutate();
-              setShowModal(true);
+              if (!buttonClicked) {
+                // Only allow click if the button hasn't been clicked yet
+                mutate();
+                setShowModal(true);
+              }
             }}
+            disabled={buttonClicked} // Disable the button when it has been clicked
           >
-            <Text style={styles.button_text}>Volunteer Now</Text>
+            <Text style={styles.button_text}>
+              {buttonClicked ? "Volunteered" : "Volunteer Now"}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
@@ -524,3 +543,27 @@ const styles = StyleSheet.create({
 });
 
 export default EventDetails;
+
+{
+  /* <TouchableOpacity
+            style={{
+              backgroundColor: colors.SanadRed,
+              width: "75%",
+              height: 50,
+              justifyContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+              borderRadius: 30,
+              marginTop: 30,
+              position: "absolute",
+              bottom: 130,
+              zIndex: 100,
+            }}
+            onPress={() => {
+              mutate();
+              setShowModal(true);
+            }}
+          >
+            <Text style={styles.button_text}>Volunteer Now</Text>
+          </TouchableOpacity> */
+}

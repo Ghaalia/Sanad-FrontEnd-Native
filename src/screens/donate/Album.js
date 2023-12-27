@@ -390,6 +390,7 @@ const Album = () => {
     await createAndSharePDF(categoryImages);
   };
   const handleShareLink = () => {
+    console.log(`${WEBSITE_URL}/image-gallery/${user.id}`);
     Clipboard.setString(`${WEBSITE_URL}/image-gallery/${user.id}`);
     Alert.alert("Link Copied", "The link has been copied to the clipboard.");
   };
