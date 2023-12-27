@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Share,
+  Linking,
 } from "react-native";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -448,38 +449,42 @@ const EventDetails = () => {
             </ScrollView>
           </View>
         ) : (
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "100%", flex: 1 }}>
             <Button
-              title="go to event description"
+              title="go to google "
               onPress={() => {
-                navigation.navigate("Location");
+                Linking.openURL(
+                  `https://google.com/maps/dir//29.3568421,47.9090918/@${event.lat},${event.lng},15z/`
+                );
               }}
             />
-            <Location />
+            <Location event={event} />
           </View>
         )}
 
         {data?.find((e) => e.user == user.id) ? (
           <>
-            <View
-              style={{
-                backgroundColor: colors.SanadMedGrey,
-                width: "85%",
-                height: 50,
-                justifyContent: "center",
-                alignItems: "center",
-                alignSelf: "center",
-                borderRadius: 30,
-                marginTop: 30,
-                position: "absolute",
-                bottom: 130,
-                zIndex: 100,
-              }}
-            >
-              <Text style={[styles.button, { color: colors.SanadWhite }]}>
-                {data?.find((e) => e.user == user.id)?.status}
-              </Text>
-            </View>
+            {DescriptionClicked && (
+              <View
+                style={{
+                  backgroundColor: colors.SanadMedGrey,
+                  width: "85%",
+                  height: 50,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  borderRadius: 30,
+                  marginTop: 30,
+                  position: "absolute",
+                  bottom: 130,
+                  zIndex: 100,
+                }}
+              >
+                <Text style={[styles.button, { color: colors.SanadWhite }]}>
+                  {data?.find((e) => e.user == user.id)?.status}
+                </Text>
+              </View>
+            )}
           </>
         ) : (
           <TouchableOpacity
