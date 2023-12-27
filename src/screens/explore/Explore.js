@@ -142,7 +142,7 @@ const Explore = () => {
           style={{
             width: "100%",
             paddingVertical: 15,
-            marginBottom: 130,
+            marginBottom: 100,
           }}
         >
           <Pressable
@@ -160,7 +160,7 @@ const Explore = () => {
                     ))
                 );
               })
-
+              .reverse()
               .map((el) => (
                 <EventCard event={el} id={el._id} isLoading={isLoading} />
               ))}

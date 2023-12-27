@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View, Share } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -14,8 +14,10 @@ import { Navigation } from "lucide-react-native";
 import { useNavigation } from "@react-navigation/core";
 import { BaseURL } from "../../apis";
 import { Skeleton } from "moti/skeleton";
+import SkeletonWithGradient from "../skeleton/SkeletonWithGradient";
 
 const EventCard = ({ event, id, isLoading }) => {
+  const [showSkeleton, setShowSkeleton] = useState(true);
   const navigation = new useNavigation();
   const oneEvent = event;
   const test_event = { name: "hi" };
@@ -62,14 +64,23 @@ const EventCard = ({ event, id, isLoading }) => {
     );
   });
 
-  // const maxCharacterCount = 25; //max count
+  // if (isLoading) {
+  //   return <SkeletonWithGradient width={200} height={200} />;
+  // }
 
-  // const organizationName = event?.organization?.name || "";
+  useEffect(() => {
+    if (!isLoading) {
+      const delayTimer = setTimeout(() => {
+        setShowSkeleton(false);
+      }, 2000);
 
-  // const truncatedName =
-  //   organizationName.length > maxCharacterCount
-  //     ? organizationName.substring(0, maxCharacterCount) + "..."
-  //     : organizationName;
+      return () => clearTimeout(delayTimer);
+    }
+  }, [isLoading]);
+
+  if (isLoading || showSkeleton) {
+    return <SkeletonWithGradient width={320} height={240} />;
+  }
 
   return (
     <TouchableOpacity
@@ -181,7 +192,7 @@ const EventCard = ({ event, id, isLoading }) => {
             alignItems: "flex-end",
           }}
         >
-          <View style={{ flexDirection: "column", gap: 3 }}>
+          <View style={{ flexDirection: "column", gap: 10 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -194,12 +205,12 @@ const EventCard = ({ event, id, isLoading }) => {
               >
                 <Text
                   style={{
-                    width: 45,
+                    width: 70,
                     fontWeight: fonts.semibold,
                     fontSize: 13,
                   }}
                 >
-                  Start
+                  Starts
                 </Text>
                 <Entypo name="calendar" size={20} color="#1B1931" />
                 <Text
@@ -240,12 +251,12 @@ const EventCard = ({ event, id, isLoading }) => {
               >
                 <Text
                   style={{
-                    width: 45,
+                    width: 70,
                     fontWeight: fonts.semibold,
                     fontSize: 13,
                   }}
                 >
-                  End
+                  Ends
                 </Text>
                 <Entypo name="calendar" size={20} color="#1B1931" />
                 <Text
@@ -283,24 +294,6 @@ const EventCard = ({ event, id, isLoading }) => {
               </View>
             </View>
           </View>
-          <View
-            style={{
-              height: "auto",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-            }}
-          >
-            <TouchableOpacity
-              onPress={handleShareEvent}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Feather name="share-2" size={24} color="#F5574E" />
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -308,3 +301,12 @@ const EventCard = ({ event, id, isLoading }) => {
 };
 
 export default EventCard;
+
+// const maxCharacterCount = 25; //max count
+
+// const organizationName = event?.organization?.name || "";
+
+// const truncatedName =
+//   organizationName.length > maxCharacterCount
+//     ? organizationName.substring(0, maxCharacterCount) + "..."
+//     : organizationName;
