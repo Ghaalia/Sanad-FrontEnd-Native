@@ -287,8 +287,9 @@ const Album = () => {
       }
       const base64Images = await Promise.all(
         imageUris.map(async (uri) => {
+          console.log({ uri });
           try {
-            const base64 = await imageToBase64(uri);
+            const base64 = await imageToBase64(uri.image);
             return base64;
           } catch (error) {
             console.error(`Error converting image to base64: ${error}`);

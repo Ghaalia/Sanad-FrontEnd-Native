@@ -26,9 +26,7 @@ export const uploadImages = async (imagesData) => {
 
 export const getSelectedUnselectedImages = async (userId) => {
   try {
-    const response = await instance.get(
-      `${BaseURL}/images/selected-unselected/${userId}`
-    );
+    const response = await instance.get(`/image-gallery/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching images:", error);
