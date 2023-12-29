@@ -206,8 +206,7 @@ const Rewards = () => {
                   textAlign: "center",
                 }}
               >
-                60
-                {profile?.volunteer_points}
+                5{profile?.volunteer_points}
               </Text>
             </View>
 
