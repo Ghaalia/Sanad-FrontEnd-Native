@@ -2,6 +2,7 @@ import {
   Button,
   Image,
   Pressable,
+  RefreshControl,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -19,7 +20,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const Explore = () => {
   const [filtered, setFiltered] = useState("");
-  const { data: events, isLoading } = useQuery({
+  const {
+    data: events,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["events"],
     queryFn: () => getAllEvents(),
   });
@@ -138,6 +143,9 @@ const Explore = () => {
         }}
       >
         <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={isLoading} onRefresh={refetch} />
+          }
           scrollEnabled
           style={{
             width: "100%",

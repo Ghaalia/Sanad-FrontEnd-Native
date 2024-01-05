@@ -449,14 +449,21 @@ const EventDetails = () => {
             </ScrollView>
           </View>
         ) : (
-          <View style={{ width: "100%", flex: 1 }}>
+          <View
+            style={{
+              width: "100%",
+              flex: 1,
+            }}
+          >
             <Button
-              title="go to google "
+              color={colors.SanadRed}
+              title="Go to Google Maps "
               onPress={() => {
                 Linking.openURL(
                   `https://google.com/maps/dir//29.3568421,47.9090918/@${event.lat},${event.lng},15z/`
                 );
               }}
+              style={styles.customButton}
             />
             <Location event={event} />
           </View>
@@ -544,6 +551,13 @@ const styles = StyleSheet.create({
   button_text: {
     color: colors.SanadWhite,
     fontWeight: fonts.semibold,
+  },
+  customButton: {
+    backgroundColor: "blue",
+    color: "white",
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 5,
   },
 });
 

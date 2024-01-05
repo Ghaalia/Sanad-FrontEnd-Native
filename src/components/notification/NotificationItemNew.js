@@ -7,15 +7,18 @@ const NotificationItemNew = ({ notification }) => {
     <View style={{ gap: 10 }}>
       <View
         style={{
-          width: "100%",
+          // width: "100%",
           height: 80,
           backgroundColor: "white",
           flexDirection: "row",
           alignItems: "center",
           borderRadius: 10,
-          overflow: "hidden",
           gap: 15,
           marginBottom: 10,
+          shadowColor: "black",
+          shadowOffset: { height: 2, width: 1 },
+          shadowRadius: 2,
+          shadowOpacity: 0.15,
         }}
       >
         <View
@@ -24,19 +27,25 @@ const NotificationItemNew = ({ notification }) => {
             height: "100%",
             backgroundColor: colors.SanadRed,
             padding: 10,
+            borderTopLeftRadius: 10,
+            borderBottomLeftRadius: 10,
           }}
         >
           <Image
-            style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              resizeMode: "contain",
+            }}
             source={require("../../../assets/notifications/sanad-white.png")}
           />
         </View>
+
         <View
           style={{
+            width: "100%",
             height: "100%",
             justifyContent: "space-evenly",
-            flexWrap: "wrap",
-            //   backgroundColor: "yellow",
           }}
         >
           <Text
@@ -51,10 +60,24 @@ const NotificationItemNew = ({ notification }) => {
 
             {/* You have been accepted to attend */}
           </Text>
-          <Text style={{ color: colors.SanadBlue1, fontFamily: fonts.bold }}>
-            {notification?.description}
-            {/* See you soon */}
-          </Text>
+          <View
+            style={{
+              width: "100%",
+            }}
+          >
+            <Text
+              style={{
+                color: colors.SanadBlue1,
+                fontFamily: fonts.bold,
+                flexWrap: "wrap",
+                width: "70%",
+                // backgroundColor: "green",
+              }}
+            >
+              {notification?.description}
+              {/* See you soon */}
+            </Text>
+          </View>
         </View>
       </View>
     </View>

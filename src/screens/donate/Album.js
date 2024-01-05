@@ -680,9 +680,14 @@ const Album = () => {
               </TouchableOpacity>
             )}
           </View>
-          {/* <TouchableOpacity style={styles.redbutton} onPress={handleUpload}>
-            <Text style={styles.button}>Send</Text>
-          </TouchableOpacity> */}
+          <TouchableOpacity
+            style={styles.redbutton}
+            onPress={() => {
+              navigation.navigate("donate");
+            }}
+          >
+            <Text style={styles.button}>Check Selected Items</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
 

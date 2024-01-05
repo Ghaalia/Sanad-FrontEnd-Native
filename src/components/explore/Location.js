@@ -6,10 +6,15 @@ import MapView, { Marker } from "react-native-maps";
 
 const Location = ({ event }) => {
   return (
-    <View style={{ padding: 50, backgroundColor: "red", flex: 1 }}>
-      <Text>HERE IS GOOGLE MAP</Text>
+    <View
+      style={{
+        paddingHorizontal: 30,
+        paddingBottom: 30,
+        flex: 1,
+        borderRadius: 10,
+      }}
+    >
       <View style={styles.container}>
-        <Text>HI</Text>
         <MapView
           style={styles.map}
           initialRegion={{
@@ -72,12 +77,12 @@ const Location = ({ event }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "red",
     flex: 1,
   },
   map: {
+    borderRadius: 10,
     width: "100%",
-    height: "100%",
+    height: "66%",
   },
 });
 

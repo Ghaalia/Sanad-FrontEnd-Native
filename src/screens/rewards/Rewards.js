@@ -155,7 +155,7 @@ const Rewards = () => {
                       fontFamily: family.semibold,
                     }}
                   >
-                    4
+                    1
                   </Text>
                   <Text style={styles.you_have_text}>organizations</Text>
                 </View>
@@ -170,7 +170,7 @@ const Rewards = () => {
                       fontFamily: family.semibold,
                     }}
                   >
-                    30
+                    1
                   </Text>
                   <Text style={styles.you_have_text}>times</Text>
                 </View>
@@ -206,8 +206,7 @@ const Rewards = () => {
                   textAlign: "center",
                 }}
               >
-                60
-                {profile?.volunteer_points}
+                5{/* {profile?.volunteer_points} */}
               </Text>
             </View>
 

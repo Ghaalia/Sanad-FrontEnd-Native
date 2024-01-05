@@ -1,5 +1,12 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useContext, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, Entypo, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import ExploreNavigation from "./ExploreNavigation";
@@ -19,6 +26,8 @@ const Tab = createBottomTabNavigator();
 
 const MainNavigation = () => {
   const { user } = useContext(UserContext);
+  const [hideNot, setHideNot] = useState(true);
+
   const { data } = useQuery({
     queryKey: ["Notifications_", user.id],
     queryFn: () => {
